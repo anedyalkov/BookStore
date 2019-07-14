@@ -50,6 +50,8 @@ namespace BookStore.Data.Migrations
 
                     b.Property<int>("AuthorId");
 
+                    b.Property<DateTime>("CreatedOn");
+
                     b.Property<DateTime?>("DeletedOn");
 
                     b.Property<string>("Description")
@@ -66,8 +68,6 @@ namespace BookStore.Data.Migrations
                     b.Property<decimal>("Price");
 
                     b.Property<int>("PublisherId");
-
-                    b.Property<DateTime>("ReleaseDate");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -229,6 +229,29 @@ namespace BookStore.Data.Migrations
                     b.ToTable("Publishers");
                 });
 
+            modelBuilder.Entity("BookStore.Domain.Review", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("BookId");
+
+                    b.Property<DateTime>("CreatedOn");
+
+                    b.Property<string>("CreatorId");
+
+                    b.Property<string>("Text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BookId");
+
+                    b.HasIndex("CreatorId");
+
+                    b.ToTable("Reviews");
+                });
+
             modelBuilder.Entity("BookStore.Domain.ShoppingCart", b =>
                 {
                     b.Property<int>("Id")
@@ -299,7 +322,7 @@ namespace BookStore.Data.Migrations
                     b.ToTable("AspNetRoleClaims");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.BookStoreUserClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -319,7 +342,7 @@ namespace BookStore.Data.Migrations
                     b.ToTable("AspNetUserClaims");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.BookStoreUserLogin<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider");
 
@@ -337,7 +360,7 @@ namespace BookStore.Data.Migrations
                     b.ToTable("AspNetUserLogins");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.BookStoreUserRole<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
                     b.Property<string>("UserId");
 
@@ -350,7 +373,7 @@ namespace BookStore.Data.Migrations
                     b.ToTable("AspNetUserRoles");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.BookStoreUserToken<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
                     b.Property<string>("UserId");
 
@@ -419,6 +442,18 @@ namespace BookStore.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("BookStore.Domain.Review", b =>
+                {
+                    b.HasOne("BookStore.Domain.Book", "Book")
+                        .WithMany("Reviews")
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("BookStore.Domain.BookStoreUser", "Creator")
+                        .WithMany("Reviews")
+                        .HasForeignKey("CreatorId");
+                });
+
             modelBuilder.Entity("BookStore.Domain.ShoppingCartBook", b =>
                 {
                     b.HasOne("BookStore.Domain.Book", "Book")
@@ -440,7 +475,7 @@ namespace BookStore.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.BookStoreUserClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
                     b.HasOne("BookStore.Domain.BookStoreUser")
                         .WithMany()
@@ -448,7 +483,7 @@ namespace BookStore.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.BookStoreUserLogin<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.HasOne("BookStore.Domain.BookStoreUser")
                         .WithMany()
@@ -456,7 +491,7 @@ namespace BookStore.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.BookStoreUserRole<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
                         .WithMany()
@@ -469,7 +504,7 @@ namespace BookStore.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.BookStoreUserToken<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
                     b.HasOne("BookStore.Domain.BookStoreUser")
                         .WithMany()

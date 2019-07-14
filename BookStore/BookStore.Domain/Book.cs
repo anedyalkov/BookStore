@@ -28,7 +28,7 @@ namespace BookStore.Domain
 
         public decimal Price { get; set; }
 
-        public DateTime ReleaseDate { get; set; } = DateTime.UtcNow;
+        public DateTime CreatedOn { get; set; } = DateTime.UtcNow;
 
         public int PublisherId { get; set; }
 
@@ -43,5 +43,7 @@ namespace BookStore.Domain
         public ICollection<ShoppingCartBook> ShoppingCartBooks { get; set; } = new List<ShoppingCartBook>();
 
         public virtual ICollection<OrderBook> OrderBooks { get; set; } = new List<OrderBook>();
+
+        public ICollection<Review> Reviews { get; set; } = new List<Review>();
     }
 }

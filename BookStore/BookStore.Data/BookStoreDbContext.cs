@@ -28,6 +28,8 @@ namespace BookStore.Data
 
         public DbSet<Order> Orders { get; set; }
 
+        public DbSet<Review> Reviews { get; set; }
+
         public DbSet<CategoryBook> CategoryBooks { get; set; }
 
         public DbSet<ShoppingCartBook> ShoppingCartBooks { get; set; }
@@ -46,6 +48,11 @@ namespace BookStore.Data
                 .WithOne(o => o.User)
                 .HasForeignKey(o => o.UserId);
 
+            modelBuilder.Entity<BookStoreUser>()
+               .HasMany(u => u.Reviews)
+               .WithOne(r => r.Creator)
+               .HasForeignKey(r => r.CreatorId);
+
             modelBuilder.Entity<ShoppingCart>()
                    .HasOne(x => x.User)
                    .WithOne(x => x.ShoppingCart)
@@ -55,6 +62,11 @@ namespace BookStore.Data
                 .HasMany(a => a.Books)
                 .WithOne(b => b.Author)
                 .HasForeignKey(b => b.AuthorId);
+
+            modelBuilder.Entity<Book>()
+            .HasMany(b => b.Reviews)
+            .WithOne(r => r.Book)
+            .HasForeignKey(r => r.BookId);
 
             modelBuilder.Entity<CategoryBook>()
                 .HasOne(cb => cb.Category)
