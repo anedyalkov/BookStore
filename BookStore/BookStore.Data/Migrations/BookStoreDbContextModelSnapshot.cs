@@ -241,6 +241,10 @@ namespace BookStore.Data.Migrations
 
                     b.Property<string>("CreatorId");
 
+                    b.Property<DateTime?>("DeletedOn");
+
+                    b.Property<bool>("IsDeleted");
+
                     b.Property<string>("Text");
 
                     b.HasKey("Id");
