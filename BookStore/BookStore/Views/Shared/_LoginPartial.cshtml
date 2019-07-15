@@ -7,12 +7,12 @@
 {
     <ul class="navbar-nav navbar-right">
         <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fas fa-user-circle"></i> Здравей, @User.Identity.Name!
+            <a class="nav-link dropdown-toggle text-white" href="#" id="dropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                 Здравей, @User.Identity.Name!
             </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a asp-area="" asp-controller="Orders" asp-action="My" class="dropdown-item nav-link text-white"><i class="fas fa-history"></i> Моите поръчки</a>
-                <a asp-area="Identity" asp-page="/Account/Logout" class="dropdown-item nav-link text-white"><i class="fas fa-sign-out-alt"></i> Изход</a>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <a asp-area="" asp-controller="Orders" asp-action="My" class="dropdown-item "> Моите поръчки</a>
+                <a asp-area="Identity" asp-page="/Account/Logout" class="dropdown-item "> Изход</a>
             </div>
         </li>
     </ul>
