@@ -17,6 +17,8 @@
   <ItemGroup>
     <ProjectReference Include="..\BookStore.Data\BookStore.Data.csproj" />
     <ProjectReference Include="..\BookStore.Domain\BookStore.Domain.csproj" />
+    <ProjectReference Include="..\BookStore.Services.Mapping\BookStore.Services.Mapping.csproj" />
+    <ProjectReference Include="..\BookStore.Services\BookStore.Services.csproj" />
   </ItemGroup>
 
 </Project>

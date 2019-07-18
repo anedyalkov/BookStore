@@ -15,6 +15,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using BookStore.Domain;
 using BookStore.Web.Infrastructure.Extensions;
+using BookStore.Models;
+using BookStore.Services.Mapping;
+using System.Reflection;
+using BookStore.Services.Admin.Models.Users;
+using BookStore.Services.Admin;
 
 namespace BookStore
 {
@@ -58,12 +63,23 @@ namespace BookStore
                 options.User.RequireUniqueEmail = true;
             });
 
+            services.AddTransient<IAdminUserService, AdminUserService>();
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            //services.AddMvc(options =>
+            //{
+            //    options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
+            //});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            AutoMapperConfig.RegisterMappings(
+                typeof(ErrorViewModel).GetTypeInfo().Assembly,
+                typeof(AdminUserListingServiceModel).GetTypeInfo().Assembly);
+
             app.UseDatabaseMigration();
 
             if (env.IsDevelopment())
