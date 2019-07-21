@@ -16,5 +16,7 @@ namespace BookStore.Web.Areas.Admin
         public const string CategoryUpdatedMsg = "Категория ({0}) беше успешно редактирана.";
         public const string CategoryHideMsg = "Категория ({0}) беше успешнo скрита.";
         public const string CategoryShowMsg = "Категория ({0}) беше успешнo разкрита.";
+
+        public const string PublisherCreatedMsg = "Издателство ({0}) беше създадена успешно.";
     }
 }
