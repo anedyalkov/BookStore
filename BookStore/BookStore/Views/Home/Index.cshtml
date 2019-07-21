@@ -2,7 +2,11 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+@if (!this.User.Identity.IsAuthenticated)
+{
+    <div class="jumbotron bg-primary mt-3 mb-3">
+        <h1 class="font-weight-bold text-white">Добре дошли в BookStore!</h1>
+        <hr class="bg-white hr-2" />
+        <h3 class="text-white">Приятно пазаруване!</h3>
+    </div>
+}

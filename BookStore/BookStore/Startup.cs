@@ -21,6 +21,7 @@ using System.Reflection;
 using BookStore.Services.Admin.Models.Users;
 using BookStore.Services.Admin;
 
+
 namespace BookStore
 {
     public class Startup
@@ -64,6 +65,7 @@ namespace BookStore
             });
 
             services.AddTransient<IAdminUserService, AdminUserService>();
+            services.AddTransient<IAdminCategoryService, AdminCategoryService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 

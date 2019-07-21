@@ -1,0 +1,49 @@
+﻿@model IEnumerable<AdminCategoryListingServiceModel>
+
+@{
+    ViewData["Title"] = "Администрация на Категории";
+}
+
+<h2>
+    @ViewData["Title"]
+</h2>
+<div class="row">
+    <div class="col-md-4 mb-3">
+        <a asp-action=@nameof(CategoriesController.Create) class="btn btn-primary pull-right">Добави категория</a>
+    </div>
+</div>
+
+<table class="table table-hover table-bordered table-striped table-responsive">
+    <thead>
+        <tr>
+            <th>Номер</th>
+            <th>Име</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var category in Model)
+        {
+            <tr>
+                <td>@category.Id</td>
+                <td>@category.Name</td>
+                <td>
+                    @if (category.IsDeleted == false)
+                    {
+                        <a asp-action=@nameof(CategoriesController.Edit) asp-route-id=@category.Id class="btn btn-warning">Редактирай</a>
+                        <a asp-action=@nameof(CategoriesController.Hide) asp-route-id=@category.Id class="btn btn-danger">Скрий</a>
+                        <a asp-action=@nameof(CategoriesController.Show) asp-route-id=@category.Id class="btn btn-success disabled">Покажи</a>
+                    }
+                    else
+                    {
+                        <a asp-action=@nameof(CategoriesController.Edit) asp-route-id=@category.Id class="btn btn-warning disabled">Редактирай</a>
+                        <a asp-action=@nameof(CategoriesController.Hide) asp-route-id=@category.Id class="btn btn-danger disabled">Скрий</a>
+                        <a asp-action=@nameof(CategoriesController.Show) asp-route-id=@category.Id class="btn btn-success">Покажи</a>
+                    }
+                    @*<a asp-action=@nameof(CategoriesController.Delete) class="btn btn-danger">Delete</a>*@
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
