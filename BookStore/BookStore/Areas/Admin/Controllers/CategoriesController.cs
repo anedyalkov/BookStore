@@ -68,21 +68,21 @@ namespace BookStore.Web.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(int id, CategoryInputModel model)
+        public async Task<IActionResult> Edit(int id, CategoryInputModel categoryModel)
         {
 
             if (!this.ModelState.IsValid)
             {
-                return this.View(model);
+                return this.View(categoryModel);
             }
 
             await this.categoryService.EditAsync(
                 id,
-                model.Name);
+                categoryModel.Name);
 
             this.TempData.AddSuccessMessage(string.Format(
                 WebAdminConstants.CategoryUpdatedMsg,
-                model.Name));
+                categoryModel.Name));
 
             return this.RedirectToAction(nameof(Index));
         }
@@ -101,7 +101,7 @@ namespace BookStore.Web.Areas.Admin.Controllers
             await this.categoryService.Hide(id);
 
             this.TempData.AddSuccessMessage(string.Format(
-              WebAdminConstants.CategoryHideMsg,
+              WebAdminConstants.CategoryHiddenMsg,
               category.Name));
 
             return this.RedirectToAction(nameof(Index));
@@ -120,7 +120,7 @@ namespace BookStore.Web.Areas.Admin.Controllers
             await this.categoryService.Show(id);
 
             this.TempData.AddSuccessMessage(string.Format(
-              WebAdminConstants.CategoryShowMsg,
+              WebAdminConstants.CategoryShowedMsg,
               category.Name));
 
             return this.RedirectToAction(nameof(Index));
