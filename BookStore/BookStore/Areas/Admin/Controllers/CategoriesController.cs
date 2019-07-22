@@ -98,7 +98,7 @@ namespace BookStore.Web.Areas.Admin.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            await this.categoryService.Hide(id);
+            await this.categoryService.HideAsync(id);
 
             this.TempData.AddSuccessMessage(string.Format(
               WebAdminConstants.CategoryHiddenMsg,
@@ -117,7 +117,7 @@ namespace BookStore.Web.Areas.Admin.Controllers
                 this.TempData.AddErrorMessage(WebAdminConstants.CategoryNotFoundMsg);
                 return RedirectToAction(nameof(Index));
             }
-            await this.categoryService.Show(id);
+            await this.categoryService.ShowAsync(id);
 
             this.TempData.AddSuccessMessage(string.Format(
               WebAdminConstants.CategoryShowedMsg,

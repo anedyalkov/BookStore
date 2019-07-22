@@ -1,0 +1,14 @@
+﻿@model PublisherInputModel
+
+@{
+    ViewData["Title"] = "Създай Издателство";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<partial name="_PublisherForm" model ="@Model">
+
+    @section Scripts {
+        @await Html.PartialAsync("_ValidationScriptsPartial")
+    }
+

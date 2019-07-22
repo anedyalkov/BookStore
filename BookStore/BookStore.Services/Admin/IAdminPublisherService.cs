@@ -1,4 +1,4 @@
-﻿using BookStore.Services.Admin.Models.Categories;
+﻿using BookStore.Services.Admin.Models.Publishers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,15 +7,15 @@ using System.Threading.Tasks;
 
 namespace BookStore.Services.Admin
 {
-    public interface IAdminCategoryService
+    public interface IAdminPublisherService
     {
-        IQueryable<AdminCategoryListingServiceModel> GetAllCategories();
+        IQueryable<AdminPublisherListingServiceModel> GetAllPublishers();
 
         Task<bool> CreateAsync(string name);
 
         Task<TModel> GetByIdAsync<TModel>(int id);
 
-        Task <bool>EditAsync(int id, string name);
+        Task<bool> EditAsync(int id, string name);
 
         Task<bool> HideAsync(int id);
 

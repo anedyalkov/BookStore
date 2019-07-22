@@ -21,6 +21,11 @@ namespace BookStore.Services.Admin
             this.db = db;
         }
 
+        public IQueryable<AdminCategoryListingServiceModel> GetAllCategories()
+        {
+            return db.Categories.To<AdminCategoryListingServiceModel>();
+        }
+
         public async Task<bool> CreateAsync(string name)
         {
             var category = new Category()
@@ -34,7 +39,32 @@ namespace BookStore.Services.Admin
 
         }
 
-        public async Task<bool> Hide(int id)
+        public async Task<AdminCategoryDetailsServiceModel> GetByIdAsync<AdminCategoryDetailsServiceModel>(int id)
+        {
+            return await this.db.Categories
+                  .Where(c => c.Id == id)
+                  .To<AdminCategoryDetailsServiceModel>()
+                  .FirstOrDefaultAsync();
+        }
+
+
+        public async Task<bool> EditAsync(int id, string name)
+        {
+            int result = 0;
+            var category = db.Categories.Find(id);
+
+            if (category == null)
+            {
+                return result > 0;
+            }
+
+            category.Name = name;
+            db.Categories.Update(category);
+            result = await db.SaveChangesAsync();
+            return result > 0;
+        }
+
+        public async Task<bool> HideAsync(int id)
         {
             int result = 0;
             var category = this.db.Categories.FirstOrDefault(x => x.Id == id);
@@ -52,7 +82,7 @@ namespace BookStore.Services.Admin
             return result > 0;
         }
 
-        public async Task<bool> Show(int id)
+        public async Task<bool> ShowAsync(int id)
         {
             int result = 0;
             var category = this.db.Categories.FirstOrDefault(x => x.Id == id);
@@ -70,31 +100,9 @@ namespace BookStore.Services.Admin
             return result > 0;
         }
 
-        public async Task EditAsync(int id, string name)
-        {
-            var category = db.Categories.Find(id);
 
-            if (category == null)
-            {
-                return;
-            }
+      
 
-            category.Name = name;
-            db.Categories.Update(category);
-            await db.SaveChangesAsync();
-        }
-
-        public IQueryable<AdminCategoryListingServiceModel> GetAllCategories()
-        {
-            return db.Categories.To<AdminCategoryListingServiceModel>();
-        }
-
-        public async Task<AdminCategoryDetailsServiceModel> GetByIdAsync<AdminCategoryDetailsServiceModel>(int id)
-        {
-           return await this.db.Categories
-                 .Where(c => c.Id == id)
-                 .To<AdminCategoryDetailsServiceModel>()
-                 .FirstOrDefaultAsync();
-        }
+       
     }
 }
