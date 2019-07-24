@@ -1,0 +1,58 @@
+﻿@model BookInputModel
+
+<div class="row">
+    <div class="col-md-3">
+        <form method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Title"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AuthorId"></label>
+                <select asp-for="AuthorId" asp-items=@Model.Authors class="form-control"></select>
+                <span asp-validation-for="AuthorId" class="text-danger"></span>
+            </div>
+            @*<div class="form-group">
+                <label asp-for="CategoryId"></label>
+                <select asp-for="CategoryId" asp-items=@Model.Categories class="form-control"></select>
+                <span asp-validation-for="CategoryId" class="text-danger"></span>
+            </div>*@
+            <div class="form-group">
+                <label asp-for="PublisherId"></label>
+                <select asp-for="PublisherId" asp-items=@Model.Publishers class="form-control"></select>
+                <span asp-validation-for="PublisherId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Language"></label>
+                <input asp-for="Language" class="form-control" />
+                <span asp-validation-for="Language" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description"></label>
+                <textarea asp-for="Description" class="form-control" rows="7"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CreatedOn"></label>
+                <input asp-for="CreatedOn" class="form-control" />
+                <span asp-validation-for="CreatedOn" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Price"></label>
+                <input asp-for="Price" type="number" step="0.01" min="0" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Image"></label>
+                <input asp-for="Image" type="file" step="0.01" min="0" class="form-control" />
+                <span asp-validation-for="Image" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn btn-block btn-primary">Запази книга</button>
+        </form>
+    </div>
+</div>
+

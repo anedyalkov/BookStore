@@ -1,0 +1,51 @@
+﻿@model IEnumerable<AdminBookListingServiceModel>
+
+@{
+    ViewData["Title"] = "Администрация на Книги";
+}
+
+<h2>
+    @ViewData["Title"]
+</h2>
+<div class="row">
+    <div class="col-md-4 mb-3">
+        <a asp-action=@nameof(BooksController.Create) class="btn btn-primary pull-right">Добави книга</a>
+    </div>
+</div>
+
+<table class="table table-hover table-bordered table-striped table-responsive">
+    <thead>
+        <tr>
+            <th>Номер</th>
+            <th>Заглавие</th>
+            <th>Автор</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var book in Model)
+        {
+        <tr>
+            <td>@book.Id</td>
+            <td>@book.Title</td>
+            <td>@book.AuthorFullName</td>
+            <td>
+                @if (book.IsDeleted == false)
+                {
+                    <a asp-action=@nameof(AuthorsController.Edit) asp-route-id=@book.Id class="btn btn-warning">Редактирай</a>
+                    <a asp-action=@nameof(AuthorsController.Hide) asp-route-id=@book.Id class="btn btn-danger">Скрий</a>
+                    <a asp-action=@nameof(AuthorsController.Show) asp-route-id=@book.Id class="btn btn-success disabled">Покажи</a>
+                    <a asp-action=@nameof(BooksController.Categories) asp-route-id=@book.Id class="btn btn-primary pull-right">Добави категория</a>
+                }
+                else
+                {
+                    <a asp-action=@nameof(AuthorsController.Edit) asp-route-id=@book.Id class="btn btn-warning disabled">Редактирай</a>
+                    <a asp-action=@nameof(AuthorsController.Hide) asp-route-id=@book.Id class="btn btn-danger disabled">Скрий</a>
+                    <a asp-action=@nameof(AuthorsController.Show) asp-route-id=@book.Id class="btn btn-success">Покажи</a>
+                }
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+
