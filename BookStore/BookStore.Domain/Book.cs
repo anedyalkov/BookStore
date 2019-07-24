@@ -23,12 +23,12 @@ namespace BookStore.Domain
         [Required]
         public string Description { get; set; }
 
-        [Required]
-        public string ImageUrl { get; set; }
+        //[Required]
+        public string Image { get; set; }
 
         public decimal Price { get; set; }
 
-        public DateTime CreatedOn { get; set; } = DateTime.UtcNow;
+        public DateTime CreatedOn { get; set; }
 
         public int PublisherId { get; set; }
 

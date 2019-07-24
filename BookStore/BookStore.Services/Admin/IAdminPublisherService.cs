@@ -10,6 +10,7 @@ namespace BookStore.Services.Admin
     public interface IAdminPublisherService
     {
         IQueryable<AdminPublisherListingServiceModel> GetAllPublishers();
+        IQueryable<AdminPublisherBasicServiceModel> GetAllAvailablePublishers();
 
         Task<bool> CreateAsync(string name);
 

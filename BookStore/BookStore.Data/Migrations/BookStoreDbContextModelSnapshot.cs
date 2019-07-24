@@ -57,8 +57,7 @@ namespace BookStore.Data.Migrations
                     b.Property<string>("Description")
                         .IsRequired();
 
-                    b.Property<string>("ImageUrl")
-                        .IsRequired();
+                    b.Property<string>("Image");
 
                     b.Property<bool>("IsDeleted");
 

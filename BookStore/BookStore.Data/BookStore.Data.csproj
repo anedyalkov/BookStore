@@ -7,6 +7,12 @@
   <ItemGroup>
     <Compile Remove="Migrations\20190706171025_InitialCreate.cs" />
     <Compile Remove="Migrations\20190706171025_InitialCreate.Designer.cs" />
+    <Compile Remove="Migrations\20190723081404_BookCreatedOnChanged.cs" />
+    <Compile Remove="Migrations\20190723081404_BookCreatedOnChanged.Designer.cs" />
+    <Compile Remove="Migrations\20190723081507_BookCreatedOnChanged.cs" />
+    <Compile Remove="Migrations\20190723081507_BookCreatedOnChanged.Designer.cs" />
+    <Compile Remove="Migrations\20190724084024_SomeChanges.cs" />
+    <Compile Remove="Migrations\20190724084024_SomeChanges.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -20,9 +20,17 @@ namespace BookStore.Services.Admin
             this.db = db;
         }
 
-        public IQueryable<AdminAuthorListingServiceModel> GetAllAuthors()
+        public IQueryable<TModel> GetAllAuthors<TModel>() where TModel : class
         {
-            return db.Authors.To<AdminAuthorListingServiceModel>();
+            return db.Authors.To<TModel>();
+        }
+
+        public IQueryable<TModel> GetAllAvailableAuthors<TModel>() where TModel : class
+        {
+            return db.Authors
+                .Where(a => a.IsDeleted == false)
+                .OrderBy(a => a.FullName)
+                .To<TModel>();
         }
 
         public async Task<bool> CreateAsync(string firstName, string lastName)
@@ -38,11 +46,11 @@ namespace BookStore.Services.Admin
             return result > 0;
         }
 
-        public async Task<AdminAuthorDetailsServiceModel> GetByIdAsync<AdminAuthorDetailsServiceModel>(int id)
+        public async Task<TModel> GetByIdAsync<TModel>(int id) where TModel : class
         {
             return await this.db.Authors
                  .Where(c => c.Id == id)
-                 .To<AdminAuthorDetailsServiceModel>()
+                 .To<TModel>()
                  .FirstOrDefaultAsync();
         }
 

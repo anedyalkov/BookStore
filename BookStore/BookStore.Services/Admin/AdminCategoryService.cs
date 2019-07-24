@@ -26,6 +26,15 @@ namespace BookStore.Services.Admin
             return db.Categories.To<AdminCategoryListingServiceModel>();
         }
 
+
+        public IQueryable<AdminCategoryBasicServiceModel> GetAllAvailableCategories()
+        {
+            return db.Categories
+                 .Where(c => c.IsDeleted == false)
+                 .OrderBy(c => c.Name)
+                 .To<AdminCategoryBasicServiceModel>();
+        }
+
         public async Task<bool> CreateAsync(string name)
         {
             var category = new Category()
@@ -99,10 +108,5 @@ namespace BookStore.Services.Admin
 
             return result > 0;
         }
-
-
-      
-
-       
     }
 }

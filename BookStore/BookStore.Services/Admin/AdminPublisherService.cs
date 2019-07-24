@@ -25,6 +25,14 @@ namespace BookStore.Services.Admin
             return db.Publishers.To<AdminPublisherListingServiceModel>();
         }
 
+        public IQueryable<AdminPublisherBasicServiceModel> GetAllAvailablePublishers()
+        {
+            return db.Publishers
+                .Where(p => p.IsDeleted == false)
+                .OrderBy(p => p.Name)
+                .To<AdminPublisherBasicServiceModel>();
+        }
+
         public async Task<bool> CreateAsync(string name)
         {
             var publisher = new Publisher()
@@ -99,5 +107,7 @@ namespace BookStore.Services.Admin
 
             return result > 0;
         }
+
+      
     }
 }

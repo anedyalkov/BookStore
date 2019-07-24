@@ -22,7 +22,7 @@ namespace BookStore.Web.Areas.Admin.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var authors = await this.authorService.GetAllAuthors().ToListAsync();
+            var authors = await this.authorService.GetAllAuthors<AdminAuthorListingServiceModel>().ToListAsync();
 
             return this.View(authors);
         }
@@ -72,7 +72,7 @@ namespace BookStore.Web.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(int id, AuthorInputModel authorModel)
         {
-
+            // TODO : check if uthor exists
             if (!this.ModelState.IsValid)
             {
                 return this.View(authorModel);
