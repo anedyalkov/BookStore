@@ -17,7 +17,8 @@ namespace BookStore.Web.Areas.Admin
         public const string CategoryHiddenMsg = "Категория ({0}) беше успешнo скрита.";
         public const string CategoryShowedMsg = "Категория ({0}) беше успешнo разкрита.";
         public const string CategoryAddedToBookMsg = "Категория ({0}) беше успешно добавена към книга ({1})";
-        public const string CategoryAllreadyAddedToBookMsg = "Категория ({0}) вече е добавена към книга ({1})";
+        public const string CategoryAlreadyAddedToBookMsg = "Категория ({0}) вече е добавена към книга ({1})";
+        public const string CategoryRemovedFromBookMsg = "Категория ({0}) беше успешно премахната от книга ({1})";
 
         public const string PublisherCreatedMsg = "Издателство ({0}) беше създадена успешно.";
         public const string PublisherNotFoundMsg = "Издателство ({0}) не беше намеренo.";

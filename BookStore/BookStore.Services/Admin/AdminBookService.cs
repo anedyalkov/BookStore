@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using BookStore.Data;
 using BookStore.Domain;
 using BookStore.Services.Admin.Models.Books;
+using BookStore.Services.Admin.Models.Categories;
 using BookStore.Services.Mapping;
 using Microsoft.EntityFrameworkCore;
 
@@ -58,11 +59,12 @@ namespace BookStore.Services.Admin
                  .FirstOrDefaultAsync();
         }
 
-        public async Task<bool> AddCategoryAsync(int id, int categoryId)
+        public async Task<bool> AddCategoryAsync(int bookId, int categoryId)
         {
-            var book = this.db.Books.Find(id);
+          
             var category = this.db.Categories.Find(categoryId);
-            var categoryBooks = this.db.CategoryBooks.Find(id, categoryId);
+            var book = this.db.Books.Find(bookId);
+            var categoryBooks = this.db.CategoryBooks.Find(categoryId,bookId);
 
             if (book == null
                 || category == null
@@ -76,6 +78,30 @@ namespace BookStore.Services.Admin
                 CategoryId = categoryId
             });
 
+            await this.db.SaveChangesAsync();
+            return true;
+        }
+
+        //public Task <AdminBookListingServiceModel> GetBookCategoriesById(int id) 
+        //{
+        //    var result = db.Books
+        //        .Where(b => b.Id == id)
+        //        .To<AdminBookListingServiceModel>(new { id })
+        //        .FirstOrDefaultAsync();
+
+
+        //    return result;
+        //}
+
+        public async Task<bool> RemoveCategoryAsync(int bookId, int categoryId)
+        {
+            var booCategory = this.db.CategoryBooks.Find(categoryId, bookId);
+            if (booCategory == null)
+            {
+                return false;
+            }
+
+            this.db.Remove(booCategory);
             await this.db.SaveChangesAsync();
             return true;
         }

@@ -10,6 +10,7 @@ namespace BookStore.Web.Areas.Admin.Models.Categories
     public class CategoryBooksViewModel
     {
         public AdminBookListingServiceModel Book { get; set; }
-        public IEnumerable<SelectListItem> Categories { get; set; } = new List<SelectListItem>();
+        public IEnumerable<SelectListItem> BookCategories { get; set; } = new List<SelectListItem>();
+        public IEnumerable<SelectListItem> AllCategories { get; set; } = new List<SelectListItem>();
     }
 }

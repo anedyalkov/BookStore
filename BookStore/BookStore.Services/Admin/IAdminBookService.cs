@@ -1,4 +1,6 @@
 ﻿using BookStore.Services.Admin.Models.Books;
+using BookStore.Services.Admin.Models.Categories;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,5 +26,8 @@ namespace BookStore.Services.Admin
         Task<TModel> GetByIdAsync<TModel>(int id) where TModel : class;
 
         Task<bool> AddCategoryAsync(int id, int categoryId);
+        Task<bool> RemoveCategoryAsync(int bookId, int categoryId);
+        //Task<AdminBookListingServiceModel>GetBookCategoriesById(int id) ;
+
     }
 }

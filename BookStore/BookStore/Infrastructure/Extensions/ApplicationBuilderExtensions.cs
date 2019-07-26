@@ -67,11 +67,11 @@ namespace BookStore.Web.Infrastructure.Extensions
                                 await userManager.AddToRoleAsync(adminUser, WebConstants.AdministratorRole);
                             }
                         }
-                        else
-                        {
-                            // Add User to Role
-                            await userManager.AddToRoleAsync(adminUser, WebConstants.AdministratorRole);
-                        }
+                        //else
+                        //{
+                        //    // Add User to Role
+                        //    await userManager.AddToRoleAsync(adminUser, WebConstants.AdministratorRole);
+                        //}
                     })
                     .GetAwaiter()
                     .GetResult();
