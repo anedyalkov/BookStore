@@ -20,7 +20,8 @@ using BookStore.Services.Mapping;
 using System.Reflection;
 using BookStore.Services.Admin.Models.Users;
 using BookStore.Services.Admin;
-
+using CloudinaryDotNet;
+using BookStore.Services;
 
 namespace BookStore
 {
@@ -51,6 +52,15 @@ namespace BookStore
                 .AddEntityFrameworkStores<BookStoreDbContext>()
                 .AddDefaultTokenProviders();
 
+            Account cloudinaryCredentials = new Account(
+          this.Configuration["Cloudinary:CloudName"],
+          this.Configuration["Cloudinary:ApiKey"],
+          this.Configuration["Cloudinary:ApiSecret"]);
+
+            Cloudinary cloudinaryUtility = new Cloudinary(cloudinaryCredentials);
+
+            services.AddSingleton(cloudinaryUtility);
+
             services.Configure<IdentityOptions>(options =>
             {
                 // Password settings.
@@ -64,6 +74,7 @@ namespace BookStore
                 options.User.RequireUniqueEmail = true;
             });
 
+            services.AddTransient<ICloudinaryService, CloudinaryService>();
             services.AddTransient<IAdminUserService, AdminUserService>();
             services.AddTransient<IAdminCategoryService, AdminCategoryService>();
             services.AddTransient<IAdminPublisherService, AdminPublisherService>();

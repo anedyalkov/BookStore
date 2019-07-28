@@ -23,10 +23,10 @@ namespace BookStore.Services.Admin
         public async Task<bool> CreateAsync(
             string title,
             int authorId,
-            //int categoryId,
             int publisherId,
             string language,
             string description,
+            string image,
             DateTime createdOn,
             decimal price)
         {
@@ -37,6 +37,7 @@ namespace BookStore.Services.Admin
                 PublisherId = publisherId,
                 Language = language,
                 Description = description,
+                Image = image,
                 CreatedOn = createdOn,
                 Price = price
             };

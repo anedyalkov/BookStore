@@ -19,7 +19,7 @@ namespace BookStore.Web.Areas.Admin.Models.Books
 
         public int AuthorId { get; set; }
 
-        public int CategoryId { get; set; }
+        //public int CategoryId { get; set; }
 
         public int PublisherId { get; set; }
 
@@ -31,7 +31,7 @@ namespace BookStore.Web.Areas.Admin.Models.Books
         [MaxLength(DataConstants.BookDescriptionMaxLength)]
         public string Description { get; set; }
 
-        //[Required]
+        [Required]
         public IFormFile Image { get; set; }
 
         [Range(0, double.MaxValue, ErrorMessage = "Цената трябва да бъде положително число.")]

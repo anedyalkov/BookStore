@@ -20,6 +20,7 @@ namespace BookStore.Services.Admin
             int publisherId,
             string language,
             string description,
+            string image,
             DateTime createdOn,
             decimal price
             );

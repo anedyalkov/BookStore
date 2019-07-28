@@ -1,4 +1,5 @@
-﻿using BookStore.Services.Admin;
+﻿using BookStore.Services;
+using BookStore.Services.Admin;
 using BookStore.Services.Admin.Models.Authors;
 using BookStore.Services.Admin.Models.Books;
 using BookStore.Services.Admin.Models.Categories;
@@ -21,16 +22,19 @@ namespace BookStore.Web.Areas.Admin.Controllers
         private readonly IAdminAuthorService authorService;
         private readonly IAdminPublisherService publisherService;
         private readonly IAdminCategoryService categoryService;
+        private readonly ICloudinaryService cloudinaryService;
 
         public BooksController(IAdminBookService bookService,
             IAdminAuthorService authorService,
             IAdminPublisherService publisherService,
-            IAdminCategoryService categoryService)
+            IAdminCategoryService categoryService,
+            ICloudinaryService cloudinaryService)
         {
             this.bookService = bookService;
             this.authorService = authorService;
             this.publisherService = publisherService;
             this.categoryService = categoryService;
+            this.cloudinaryService = cloudinaryService;
         }
 
         public async Task<IActionResult> Index()
@@ -45,7 +49,6 @@ namespace BookStore.Web.Areas.Admin.Controllers
             return this.View(new BookInputModel()
             {
                 Authors = await this.GetAuthorsAsync(),
-                //Categories = await this.GetCategoriesAsync(),
                 Publishers = await this.GetPublishersAsync()
             });
         }
@@ -61,6 +64,9 @@ namespace BookStore.Web.Areas.Admin.Controllers
                 bookModel.Publishers = await this.GetPublishersAsync();
                 return this.View(bookModel);
             }
+            string imageUrl = await this.cloudinaryService.UploadPictureAsync(
+               bookModel.Image,
+               bookModel.Title);
 
             await this.bookService.CreateAsync(
                 bookModel.Title,
@@ -68,6 +74,7 @@ namespace BookStore.Web.Areas.Admin.Controllers
                 bookModel.PublisherId,
                 bookModel.Language,
                 bookModel.Description,
+                imageUrl,
                 (DateTime)bookModel.CreatedOn,
                 bookModel.Price
                 );
@@ -79,12 +86,12 @@ namespace BookStore.Web.Areas.Admin.Controllers
             return this.RedirectToAction(nameof(Index));
         }
 
-        public async Task<IActionResult> Categories(int bookId)
+        public async Task<IActionResult> Categories(int id)
         {
             var book = await this.bookService
-               .GetByIdAsync<AdminBookListingServiceModel>(bookId);
+               .GetByIdAsync<AdminBookListingServiceModel>(id);
 
-            return this.View(new CategoryBooksViewModel
+            return this.View(new BookCategoriesViewModel
             {
                 Book = book,
                 BookCategories = book.Categories
