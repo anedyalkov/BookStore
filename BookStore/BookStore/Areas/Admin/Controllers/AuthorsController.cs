@@ -102,7 +102,14 @@ namespace BookStore.Web.Areas.Admin.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            await this.authorService.HideAsync(id);
+            var result  = await this.authorService.HideAsync(id);
+
+            if (result == false)
+            {
+                this.TempData.AddErrorMessage(string.Format(WebAdminConstants.AuthorIncludesBooksMsg,
+                   $"{author.FirstName} {author.LastName}"));
+                return RedirectToAction(nameof(Index));
+            }
 
             this.TempData.AddSuccessMessage(string.Format(
               WebAdminConstants.AuthorHiddenMsg,

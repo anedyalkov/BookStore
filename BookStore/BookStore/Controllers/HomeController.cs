@@ -5,25 +5,29 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using BookStore.Models;
+using BookStore.Services;
+using Microsoft.EntityFrameworkCore;
 
 namespace BookStore.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
+        private readonly IBookService bookService;
 
-        public IActionResult Privacy()
+        public HomeController(IBookService bookService)
         {
-            return View();
+            this.bookService = bookService;
         }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        public async Task<IActionResult> Index()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            if (this.User.Identity.IsAuthenticated)
+            {
+                var books = await this.bookService.GetAllActiveBooks().ToListAsync();
+
+                return this.View(books);
+            }
+
+            return this.View();
         }
     }
 }

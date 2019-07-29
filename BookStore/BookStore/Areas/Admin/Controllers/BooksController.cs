@@ -39,9 +39,9 @@ namespace BookStore.Web.Areas.Admin.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var authors = await this.bookService.GetAllBooks().ToListAsync();
+            var books = await this.bookService.GetAllBooks().ToListAsync();
 
-            return this.View(authors);
+            return this.View(books);
         }
 
         public async Task<IActionResult> Create()
@@ -60,7 +60,6 @@ namespace BookStore.Web.Areas.Admin.Controllers
             if (!this.ModelState.IsValid)
             {
                 bookModel.Authors = await this.GetAuthorsAsync();
-                //bookModel.Categories = await this.GetCategoriesAsync();
                 bookModel.Publishers = await this.GetPublishersAsync();
                 return this.View(bookModel);
             }
@@ -75,7 +74,7 @@ namespace BookStore.Web.Areas.Admin.Controllers
                 bookModel.Language,
                 bookModel.Description,
                 imageUrl,
-                (DateTime)bookModel.CreatedOn,
+                bookModel.CreatedOn,
                 bookModel.Price
                 );
 
@@ -180,13 +179,16 @@ namespace BookStore.Web.Areas.Admin.Controllers
 
         private async Task<IEnumerable<SelectListItem>> GetAuthorsAsync()
         {
-            return await this.authorService.GetAllAvailableAuthors<AdminAuthorBasicServiceModel>()
+            var result = await this.authorService.GetAllAvailableAuthors<AdminAuthorBasicServiceModel>()
             .Select(a => new SelectListItem
             {
                 Text = a.FullName,
                 Value = a.Id.ToString()
             })
+            .OrderBy(a => a.Text)
           .ToListAsync();
+
+            return result;
         }
 
         private async Task<IEnumerable<SelectListItem>> GetCategoriesAsync()

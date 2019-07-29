@@ -95,7 +95,14 @@ namespace BookStore.Web.Areas.Admin.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            await this.publisherService.HideAsync(id);
+            var result = await this.publisherService.HideAsync(id);
+
+            if (result == false)
+            {
+                this.TempData.AddErrorMessage(string.Format(WebAdminConstants.PublisherIncludesBooksMsg,
+                    publisher.Name));
+                return RedirectToAction(nameof(Index));
+            }
 
             this.TempData.AddSuccessMessage(string.Format(
               WebAdminConstants.PublisherHiddenMsg,

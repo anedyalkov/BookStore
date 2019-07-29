@@ -18,6 +18,8 @@ namespace BookStore.Services.Admin.Models.Books
 
         public string AuthorFullName { get; set; }
 
+        public string PublisherName { get; set; }
+
         public bool IsDeleted { get; set; }
 
         public IEnumerable<AdminCategoryBasicServiceModel> Categories { get; set; } = new List<AdminCategoryBasicServiceModel>();

@@ -19,6 +19,7 @@
             <th>Номер</th>
             <th>Заглавие</th>
             <th>Автор</th>
+            <th>Издателство</th>
             <th></th>
         </tr>
     </thead>
@@ -29,6 +30,7 @@
             <td>@book.Id</td>
             <td>@book.Title</td>
             <td>@book.AuthorFullName</td>
+            <td>@book.PublisherName</td>
             <td>
                 @if (book.IsDeleted == false)
                 {

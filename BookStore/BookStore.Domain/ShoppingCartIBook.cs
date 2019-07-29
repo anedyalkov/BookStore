@@ -15,5 +15,9 @@ namespace BookStore.Domain
         public Book Book { get; set; }
 
         public int Quantity { get; set; }
+
+        //public bool IsDeleted { get; set; }
+
+        //public DateTime? DeletedOn { get; set; }
     }
 }

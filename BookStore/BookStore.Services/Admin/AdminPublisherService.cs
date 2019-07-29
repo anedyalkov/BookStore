@@ -74,20 +74,22 @@ namespace BookStore.Services.Admin
 
         public async Task<bool> HideAsync(int id)
         {
-            int result = 0;
-            var publisher = this.db.Publishers.FirstOrDefault(x => x.Id == id);
+            //int result = 0;
+            var publisher = this.db.Publishers
+                .Include(p => p.Books)
+                .FirstOrDefault(x => x.Id == id);
 
-            if (publisher == null)
+            if (publisher == null || publisher.Books.Any())
             {
-                return result > 0;
+                return false;
             }
 
             publisher.IsDeleted = true;
             publisher.DeletedOn = DateTime.UtcNow;
             db.Publishers.Update(publisher);
-            result = await db.SaveChangesAsync();
+            await db.SaveChangesAsync();
 
-            return result > 0;
+            return true;
         }
 
         public async Task<bool> ShowAsync(int id)

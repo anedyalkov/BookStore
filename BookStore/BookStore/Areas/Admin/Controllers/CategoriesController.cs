@@ -98,7 +98,14 @@ namespace BookStore.Web.Areas.Admin.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            await this.categoryService.HideAsync(id);
+           var result = await this.categoryService.HideAsync(id);
+
+            if (result == false)
+            {
+                this.TempData.AddErrorMessage(string.Format(WebAdminConstants.CategoryIncludesBooksMsg,
+                    category.Name));
+                return RedirectToAction(nameof(Index));
+            }
 
             this.TempData.AddSuccessMessage(string.Format(
               WebAdminConstants.CategoryHiddenMsg,

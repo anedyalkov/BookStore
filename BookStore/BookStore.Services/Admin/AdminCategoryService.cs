@@ -75,20 +75,21 @@ namespace BookStore.Services.Admin
 
         public async Task<bool> HideAsync(int id)
         {
-            int result = 0;
-            var category = this.db.Categories.FirstOrDefault(x => x.Id == id);
+            var category = this.db.Categories
+                .Include(c => c.CategoryBooks)
+                .FirstOrDefault(x => x.Id == id);
 
-            if (category == null)
+            if (category == null || category.CategoryBooks.Any())
             {
-                 return result > 0;
+                 return false;
             }
 
             category.IsDeleted = true;
             category.DeletedOn = DateTime.UtcNow;
             db.Categories.Update(category);
-            result = await db.SaveChangesAsync();
+            await db.SaveChangesAsync();
 
-            return result > 0;
+            return true;
         }
 
         public async Task<bool> ShowAsync(int id)

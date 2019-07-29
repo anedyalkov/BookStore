@@ -49,7 +49,10 @@ namespace BookStore.Services.Admin
 
         public IQueryable<AdminBookListingServiceModel> GetAllBooks()
         {
-            return db.Books.To<AdminBookListingServiceModel>();
+            return db.Books
+                .Include(b => b.Author)
+                .OrderBy(b => b.Author.FullName)
+                .To<AdminBookListingServiceModel>();
         }
 
         public async Task<TModel> GetByIdAsync<TModel>(int id) where TModel : class
