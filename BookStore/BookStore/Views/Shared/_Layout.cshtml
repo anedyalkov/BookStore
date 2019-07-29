@@ -55,7 +55,8 @@
                 </div>
             </nav>
         </header>
-        <main class="my-4">
+        <main>
+           
             @if (TempData.ContainsKey(WebConstants.TempDataSuccessMessageKey))
             {
                 <div class="alert alert-success alert-dismissible" role="alert">
@@ -74,15 +75,17 @@
                     @Html.Raw(TempData[WebConstants.TempDataErrorMessageKey])
                 </div>
             }
+                @*<partial name="~/Views/Shared/_MenuCategoriesPartial.cshtml" />*@
+         
             @RenderBody()
         </main>
-            <footer class="w-75 mt-3 mx-auto rounded w-100">
-                <div class="bg-primary rounded">
-                    <div class="text-white p-3 text-center font-weight-bold">
-                        &copy; CopyRight BookStore 2019. Всички права запазени.
-                    </div>
+        <footer class="w-75 mt-3 mx-auto rounded w-100">
+            <div class="bg-primary rounded">
+                <div class="text-white p-3 text-center font-weight-bold">
+                    &copy; CopyRight BookStore 2019. Всички права запазени.
                 </div>
-            </footer>
+            </div>
+        </footer>
     </div>
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
