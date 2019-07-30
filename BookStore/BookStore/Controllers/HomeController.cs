@@ -32,10 +32,10 @@ namespace BookStore.Controllers
 
             if (this.User.Identity.IsAuthenticated)
             {
-                var books = await this.bookService.GetBooksFilter(model.CategoryId).ToListAsync();
+                var books = await this.bookService.GetBooksFilter(model.CategoryId);
                 var categories = await this.categoryService.GetAllActiveCategories().ToListAsync();
 
-                model.Books = books;
+                model.Books = books.ToList();
                 model.Categories = categories;
 
                 return this.View(model);

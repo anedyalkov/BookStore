@@ -11,6 +11,6 @@ namespace BookStore.Services
     public interface ICategoryService
     {
          IQueryable<CategoryListingServiceModel> GetAllActiveCategories();
-        CategoryListingServiceModel GetById(int id);
+         Task<TModel> GetByIdAsync<TModel>(int id);
     }
 }

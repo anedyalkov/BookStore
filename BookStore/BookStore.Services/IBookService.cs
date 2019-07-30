@@ -10,7 +10,7 @@ namespace BookStore.Services
     public interface IBookService
     {
         IQueryable<BookListingServiceModel> GetAllActiveBooks();
-        IQueryable<BookListingServiceModel> GetBooksFilter(int? categoryId);
-        IQueryable<BookListingServiceModel> GetBooksByCategory(int categoryId);
+        Task<IQueryable<BookListingServiceModel>> GetBooksFilter(int? categoryId);
+        Task<IQueryable<BookListingServiceModel>> GetBooksByCategory(int categoryId);
     }
 }

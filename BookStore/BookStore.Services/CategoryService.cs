@@ -25,12 +25,12 @@ namespace BookStore.Services
                .To<CategoryListingServiceModel>();
         }
 
-        public  CategoryListingServiceModel GetById(int id)
+        public async Task<CategoryListingServiceModel> GetByIdAsync<CategoryListingServiceModel>(int id)
         {
-            return this.db.Categories
+            return await this.db.Categories
                   .Where(c => c.Id == id)
                   .To<CategoryListingServiceModel>(new { id })
-                  .FirstOrDefault();
+                  .FirstOrDefaultAsync();
         }
     }
 }

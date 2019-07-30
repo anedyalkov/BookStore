@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using BookStore.Data;
 using BookStore.Services.Mapping;
 using BookStore.Services.Models.Books;
@@ -26,22 +27,22 @@ namespace BookStore.Services
                 .To<BookListingServiceModel>();
         }
 
-        public IQueryable<BookListingServiceModel> GetBooksFilter(int? categoryId)
+        public async Task<IQueryable<BookListingServiceModel>> GetBooksFilter(int? categoryId)
         {
 
             if (categoryId != null)
             {
-                return this.GetBooksByCategory(categoryId.Value);
+                return await this.GetBooksByCategory(categoryId.Value);
             }
 
             return this.GetAllActiveBooks();
         }
 
-        public IQueryable<BookListingServiceModel> GetBooksByCategory(int categoryId)
+        public async Task<IQueryable<BookListingServiceModel>> GetBooksByCategory(int categoryId)
         {
-            var category = categoryService.GetById(categoryId);
+            var category = await categoryService.GetByIdAsync<CategoryListingServiceModel>(categoryId);
 
-            var books = (IQueryable<BookListingServiceModel>)category.Books;
+            var books = (IQueryable<BookListingServiceModel>)category.Books.AsQueryable();
 
             return books;
         }
