@@ -234,6 +234,47 @@ namespace BookStore.Web.Areas.Admin.Controllers
             return this.RedirectToAction(nameof(Index));
         }
 
+        public async Task<IActionResult> Hide(int id)
+        {
+            var book = await this.bookService
+                .GetByIdAsync<AdminBookDetailsServiceModel>(id);
+
+            if (book == null)
+            {
+                this.TempData.AddErrorMessage(WebAdminConstants.BookNotFoundMsg);
+                return RedirectToAction(nameof(Index));
+            }
+
+            await this.bookService.HideAsync(id);
+
+
+            this.TempData.AddSuccessMessage(string.Format(
+              WebAdminConstants.BookHiddenMsg,
+              book.Title));
+
+            return this.RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> Show(int id)
+        {
+            var book = await this.bookService
+             .GetByIdAsync<AdminBookDetailsServiceModel>(id);
+
+            if (book == null)
+            {
+                this.TempData.AddErrorMessage(WebAdminConstants.BookNotFoundMsg);
+                return RedirectToAction(nameof(Index));
+            }
+
+            await this.bookService.ShowAsync(id);
+
+            this.TempData.AddSuccessMessage(string.Format(
+              WebAdminConstants.BookShowedMsg,
+              book.Title));
+
+            return this.RedirectToAction(nameof(Index));
+        }
+
         private async Task<IEnumerable<SelectListItem>> GetAuthorsAsync()
         {
             var result = await this.authorService.GetAllAvailableAuthors<AdminAuthorBasicServiceModel>()

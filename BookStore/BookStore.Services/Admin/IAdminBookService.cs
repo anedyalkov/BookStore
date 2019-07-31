@@ -41,5 +41,8 @@ namespace BookStore.Services.Admin
            decimal price
            );
 
+        Task<bool> HideAsync(int id);
+
+        Task<bool> ShowAsync(int id);
     }
 }

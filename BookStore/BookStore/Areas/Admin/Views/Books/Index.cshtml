@@ -9,7 +9,7 @@
 </h2>
 <div class="row">
     <div class="col-md-4 mb-3">
-        <a asp-action=@nameof(BooksController.Create) class="btn btn-primary pull-right">Добави книга</a>
+        <a asp-action=@nameof(BooksController.Create) class="btn btn-primary">Добави книга</a>
     </div>
 </div>
 
@@ -34,16 +34,17 @@
             <td>
                 @if (book.IsDeleted == false)
                 {
-                    <a asp-action=@nameof(AuthorsController.Edit) asp-route-id=@book.Id class="btn btn-warning">Редактирай</a>
-                    <a asp-action=@nameof(AuthorsController.Hide) asp-route-id=@book.Id class="btn btn-danger">Скрий</a>
-                    <a asp-action=@nameof(AuthorsController.Show) asp-route-id=@book.Id class="btn btn-success disabled">Покажи</a>
+                    <a asp-action=@nameof(BooksController.Edit) asp-route-id=@book.Id class="btn btn-warning">Редактирай</a>
+                    <a asp-action=@nameof(BooksController.Hide) asp-route-id=@book.Id class="btn btn-danger">Скрий</a>
+                    <a asp-action=@nameof(BooksController.Show) asp-route-id=@book.Id class="btn btn-success disabled">Покажи</a>
                     <a asp-action=@nameof(BooksController.Categories) asp-route-id=@book.Id class="btn btn-primary pull-right">Категории</a>
                 }
                 else
                 {
-                    <a asp-action=@nameof(AuthorsController.Edit) asp-route-id=@book.Id class="btn btn-warning disabled">Редактирай</a>
-                    <a asp-action=@nameof(AuthorsController.Hide) asp-route-id=@book.Id class="btn btn-danger disabled">Скрий</a>
-                    <a asp-action=@nameof(AuthorsController.Show) asp-route-id=@book.Id class="btn btn-success">Покажи</a>
+                    <a asp-action=@nameof(BooksController.Edit) asp-route-id=@book.Id class="btn btn-warning">Редактирай</a>
+                    <a asp-action=@nameof(BooksController.Hide) asp-route-id=@book.Id class="btn btn-danger disabled">Скрий</a>
+                    <a asp-action=@nameof(BooksController.Show) asp-route-id=@book.Id class="btn btn-success">Покажи</a>
+                    <a asp-action=@nameof(BooksController.Categories) asp-route-id=@book.Id class="btn btn-primary pull-right">Категории</a>
                 }
             </td>
         </tr>

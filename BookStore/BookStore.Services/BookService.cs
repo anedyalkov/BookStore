@@ -44,7 +44,7 @@ namespace BookStore.Services
 
             var books = (IQueryable<BookListingServiceModel>)category.Books.AsQueryable();
 
-            return books;
+            return books.Where(b => b.IsDeleted == false);
         }
     }
 }

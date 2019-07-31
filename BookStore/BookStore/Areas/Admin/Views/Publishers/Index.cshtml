@@ -9,7 +9,7 @@
 </h2>
 <div class="row">
     <div class="col-md-4 mb-3">
-        <a asp-action=@nameof(CategoriesController.Create) class="btn btn-primary pull-right">Добави издателство</a>
+        <a asp-action=@nameof(PublishersController.Create) class="btn btn-primary">Добави издателство</a>
     </div>
 </div>
 
@@ -36,7 +36,7 @@
                     }
                     else
                     {
-                        <a asp-action=@nameof(PublishersController.Edit) asp-route-id=@publisher.Id class="btn btn-warning disabled">Редактирай</a>
+                        <a asp-action=@nameof(PublishersController.Edit) asp-route-id=@publisher.Id class="btn btn-warning">Редактирай</a>
                         <a asp-action=@nameof(PublishersController.Hide) asp-route-id=@publisher.Id class="btn btn-danger disabled">Скрий</a>
                         <a asp-action=@nameof(PublishersController.Show) asp-route-id=@publisher.Id class="btn btn-success">Покажи</a>
                     }

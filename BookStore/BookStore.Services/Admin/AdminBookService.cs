@@ -131,5 +131,40 @@ namespace BookStore.Services.Admin
 
             return result > 0;
         }
+
+        public async Task<bool> HideAsync(int id)
+        {
+            var book = this.db.Books
+                .FirstOrDefault(x => x.Id == id);
+
+            if (book == null)
+            {
+                return false;
+            }
+
+            book.IsDeleted = true;
+            book.DeletedOn = DateTime.UtcNow;
+            db.Books.Update(book);
+            var result =  await db.SaveChangesAsync();
+
+            return result > 0;
+        }
+
+        public async Task<bool> ShowAsync(int id)
+        {
+            var book = this.db.Books.FirstOrDefault(x => x.Id == id);
+
+            if (book == null)
+            {
+                return false;
+            }
+
+            book.IsDeleted = false;
+            book.DeletedOn = null;
+            db.Books.Update(book);
+            var result = await db.SaveChangesAsync();
+
+            return result > 0;
+        }
     }
 }

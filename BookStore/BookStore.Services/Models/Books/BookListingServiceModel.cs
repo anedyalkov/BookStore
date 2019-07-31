@@ -17,5 +17,7 @@ namespace BookStore.Services.Models.Books
         public string Image { get; set; }
 
         public decimal Price { get; set; }
+
+        public bool IsDeleted { get; set; }
     }
 }
