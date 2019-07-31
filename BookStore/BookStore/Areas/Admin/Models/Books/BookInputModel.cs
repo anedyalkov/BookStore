@@ -19,8 +19,6 @@ namespace BookStore.Web.Areas.Admin.Models.Books
 
         public int AuthorId { get; set; }
 
-        //public int CategoryId { get; set; }
-
         public int PublisherId { get; set; }
 
         [Required]
@@ -42,7 +40,6 @@ namespace BookStore.Web.Areas.Admin.Models.Books
         public DateTime CreatedOn { get; set; }
 
         public IEnumerable<SelectListItem> Authors { get; set; }
-        //public IEnumerable<SelectListItem> Categories { get; set; }
         public IEnumerable<SelectListItem> Publishers { get; set; }
     }
 }

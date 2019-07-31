@@ -177,6 +177,63 @@ namespace BookStore.Web.Areas.Admin.Controllers
             return this.RedirectToAction(nameof(Categories), new { id = model.BookId });
         }
 
+        public async Task<IActionResult> Edit(int id)
+        {
+            var book = await this.bookService
+                .GetByIdAsync<AdminBookDetailsServiceModel>(id);
+
+            if (book == null)
+            {
+                this.TempData.AddErrorMessage(WebAdminConstants.BookNotFoundMsg);
+                return RedirectToAction(nameof(Index));
+            }
+
+            return this.View(new BookInputModel
+            {
+               Title = book.Title,
+               AuthorId = book.AuthorId,
+               Authors = await GetAuthorsAsync(),
+               PublisherId = book.PublisherId,
+               Publishers = await GetPublishersAsync(),
+               Language = book.Language,
+               Description = book.Description,
+               Image = book.Image,
+               CreatedOn = book.CreatedOn,
+               Price = book.Price
+            });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id, BookInputModel bookModel)
+        {
+            // TODO : check if book exists
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(bookModel);
+            }
+            string imageUrl = await this.cloudinaryService.UploadPictureAsync(
+             bookModel.Image,
+             bookModel.Title);
+
+            await this.bookService.EditAsync(
+                id,
+                  bookModel.Title,
+                bookModel.AuthorId,
+                bookModel.PublisherId,
+                bookModel.Language,
+                bookModel.Description,
+                imageUrl,
+                bookModel.CreatedOn,
+                bookModel.Price
+                );
+
+            this.TempData.AddSuccessMessage(string.Format(
+                WebAdminConstants.BookUpdatedMsg,
+                bookModel.Title));
+
+            return this.RedirectToAction(nameof(Index));
+        }
+
         private async Task<IEnumerable<SelectListItem>> GetAuthorsAsync()
         {
             var result = await this.authorService.GetAllAvailableAuthors<AdminAuthorBasicServiceModel>()

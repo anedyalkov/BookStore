@@ -86,17 +86,6 @@ namespace BookStore.Services.Admin
             return true;
         }
 
-        //public Task <AdminBookListingServiceModel> GetBookCategoriesById(int id) 
-        //{
-        //    var result = db.Books
-        //        .Where(b => b.Id == id)
-        //        .To<AdminBookListingServiceModel>(new { id })
-        //        .FirstOrDefaultAsync();
-
-
-        //    return result;
-        //}
-
         public async Task<bool> RemoveCategoryAsync(int bookId, int categoryId)
         {
             var booCategory = this.db.CategoryBooks.Find(categoryId, bookId);
@@ -108,6 +97,39 @@ namespace BookStore.Services.Admin
             this.db.Remove(booCategory);
             await this.db.SaveChangesAsync();
             return true;
+        }
+
+
+        public async Task<bool> EditAsync(int id,
+            string title,
+            int authorId,
+            int publisherId,
+            string language,
+            string description,
+            string image,
+            DateTime createdOn,
+            decimal price)
+        {
+
+            var book = db.Books.Find(id);
+
+            if (book == null)
+            {
+                return false;
+            }
+
+            book.Title = title;
+            book.AuthorId = authorId;
+            book.PublisherId = publisherId;
+            book.Language = language;
+            book.Description = description;
+            book.Image = image;
+            book.CreatedOn = createdOn;
+            book.Price = price;
+            db.Books.Update(book);
+            int result = await db.SaveChangesAsync();
+
+            return result > 0;
         }
     }
 }

@@ -1,0 +1,13 @@
+﻿@model BookInputModel
+@{
+    ViewData["Title"] = "Редактирай книга";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<partial name="_BookForm" model="@Model">
+
+    @section Scripts {
+        @await Html.PartialAsync("_ValidationScriptsPartial")
+    }
+
