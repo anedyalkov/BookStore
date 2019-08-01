@@ -7,6 +7,7 @@ using BookStore.Data;
 using BookStore.Services.Mapping;
 using BookStore.Services.Models.Books;
 using BookStore.Services.Models.Categories;
+using Microsoft.EntityFrameworkCore;
 
 namespace BookStore.Services
 {
@@ -27,6 +28,13 @@ namespace BookStore.Services
                 .To<BookListingServiceModel>();
         }
 
+        public async Task<TModel> GetByIdAsync<TModel>(int id) where TModel : class
+        {
+            return await db.Books
+              .Where(b => b.Id == id)
+              .To<TModel>()
+              .FirstOrDefaultAsync();
+        }
         public async Task<IQueryable<BookListingServiceModel>> GetBooksFilter(int? categoryId)
         {
 
@@ -45,6 +53,14 @@ namespace BookStore.Services
             var books = (IQueryable<BookListingServiceModel>)category.Books.AsQueryable();
 
             return books.Where(b => b.IsDeleted == false);
+        }
+
+        public async Task<TModel> Details<TModel>(int id) where TModel : class
+        {
+            return await db.Books
+               .Where(b => b.Id == id)
+               .To<TModel>()
+               .FirstOrDefaultAsync();
         }
     }
 }

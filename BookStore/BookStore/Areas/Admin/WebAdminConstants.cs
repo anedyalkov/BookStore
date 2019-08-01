@@ -36,7 +36,7 @@ namespace BookStore.Web.Areas.Admin
         public const string AuthorIncludesBooksMsg = "Автор ({0}) не може да бъде скрит,защото притежава книги.";
 
         public const string BookCreatedMsg = "Книга ({0}) беше създадена успешно. Моля добави категория!";
-        public const string BookNotFoundMsg = "Книга ({0} {1}) не беше намерена.";
+        public const string BookNotFoundMsg = "Книга ({0}) не беше намерена.";
         public const string BookUpdatedMsg = "Книга ({0}) беше успешно редактирана.";
         public const string BookHiddenMsg = "Книга ({0}) беше успешнo скрита.";
         public const string BookShowedMsg = "Книга ({0}) беше успешнo разкрита.";

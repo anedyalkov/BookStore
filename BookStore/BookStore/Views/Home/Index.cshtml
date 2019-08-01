@@ -13,40 +13,41 @@
 }
 else
 {
-   
-<div class="row">
-    <div class="col-md-2">
-        <partial name="~/Views/Shared/_MenuCategoriesPartial.cshtml" />
-    </div>
-    <div class="mt-3 col-md-10">
-        @for (int i = 0; i < Model.Books.Count; i += 5)
-        {
-            <div class="products-row row d-flex justify-content-around my-5">
-                @for (int j = i; j < i + 5; j++)
-                {
-                    if (j < Model.Books.Count)
+
+    <div class="row">
+        <div class="col-md-2">
+            <partial name="~/Views/Shared/_MenuCategoriesPartial.cshtml" />
+        </div>
+        <div class="mt-3 col-md-10">
+            @for (int i = 0; i < Model.Books.Count; i += 5)
+            {
+                <div class="products-row row d-flex justify-content-around my-5">
+                    @for (int j = i; j < i + 5; j++)
                     {
-                        <div class="col-md-2">
-                            <div class="d-flex justify-content-center w-75">
-                                <a href="/Book/Details/@Model.Books[j].Id">
-                                    <img class="img-thumbnail" src="@Model.Books[j].Image" alt="...">
-                                </a>
+                        if (j < Model.Books.Count)
+                        {
+                            <div class="col-md-2">
+                                <div class="d-flex justify-content-center w-75">
+                                    <a asp-controller="Books" asp-action=@nameof(BooksController.Details)
+                                       asp-route-id=@Model.Books[j].Id>
+                                        <img class="img-thumbnail" src="@Model.Books[j].Image" alt="...">
+                                    </a>
+                                </div>
+                                <div class="w-75">
+                                    <h5 class="text-primary text-center mt-0">@Model.Books[j].Title</h5>
+                                    <h6 class="text-primary text-center mt-0">@Model.Books[j].AuthorFullName</h6>
+                                    <h5 class="text-primary text-center mt-0">Цена: @Model.Books[j].Price.ToString("F2") лв.</h5>
+                                </div>
                             </div>
-                            <div class="w-75">
-                                <h5 class="text-primary text-center mt-0">@Model.Books[j].Title</h5>
-                                <h6 class="text-primary text-center mt-0">@Model.Books[j].AuthorFullName</h6>
-                                <h5 class="text-primary text-center mt-0">Цена: @Model.Books[j].Price.ToString("F2") лв.</h5>
+                        }
+                        else
+                        {
+                            <div class="product col-md-2 empty">
                             </div>
-                        </div>
+                        }
                     }
-                    else
-                    {
-                        <div class="product col-md-2 empty">
-                        </div>
-                    }
-                }
-            </div>
-        }
+                </div>
+            }
+        </div>
     </div>
-</div>
 }
