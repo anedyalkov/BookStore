@@ -82,6 +82,7 @@ namespace BookStore
             services.AddTransient<IAdminBookService, AdminBookService>();
             services.AddTransient<IBookService, BookService>();
             services.AddTransient<ICategoryService, CategoryService>();
+            services.AddTransient<IReviewService, ReviewService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
