@@ -1,4 +1,5 @@
-﻿using BookStore.Services.Admin.Models.Publishers;
+﻿using BookStore.Domain;
+using BookStore.Services.Admin.Models.Publishers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,7 @@ namespace BookStore.Services.Admin
     public interface IAdminPublisherService
     {
         IQueryable<AdminPublisherListingServiceModel> GetAllPublishers();
+       
         IQueryable<AdminPublisherBasicServiceModel> GetAllAvailablePublishers();
 
         Task<bool> CreateAsync(string name);

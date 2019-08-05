@@ -40,7 +40,7 @@ namespace BookStore.Services
 
         public async Task<IQueryable<ReviewListingServiceModel>> GetReviewsByBook(int bookId)
         {
-            var book = await bookService.GetByIdAsync<BookListingServiceModel>(bookId);
+            var book = await bookService.GetById<BookListingServiceModel>(bookId);
 
             var reviews = book.Reviews.AsQueryable();
 

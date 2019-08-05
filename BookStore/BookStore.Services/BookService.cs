@@ -4,9 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BookStore.Data;
+using BookStore.Domain;
+using BookStore.Services.Admin;
 using BookStore.Services.Mapping;
 using BookStore.Services.Models.Books;
 using BookStore.Services.Models.Categories;
+using BookStore.Services.Models.Publishers;
 using Microsoft.EntityFrameworkCore;
 
 namespace BookStore.Services
@@ -15,11 +18,15 @@ namespace BookStore.Services
     {
         private readonly BookStoreDbContext db;
         private readonly ICategoryService categoryService;
+        private readonly IPublisherService publisherService;
 
-        public BookService(BookStoreDbContext db, ICategoryService categoryService)
+        public BookService(BookStoreDbContext db,
+            ICategoryService categoryService,
+            IPublisherService publisherService)
         {
             this.db = db;
             this.categoryService = categoryService;
+            this.publisherService = publisherService;
         }
         public IQueryable<BookListingServiceModel> GetAllActiveBooks()
         {
@@ -28,7 +35,7 @@ namespace BookStore.Services
                 .To<BookListingServiceModel>();
         }
 
-        public async Task<TModel> GetByIdAsync<TModel>(int id) where TModel : class
+        public async Task<TModel> GetById<TModel>(int id) where TModel : class
         {
             return await db.Books
               .Where(b => b.Id == id)
@@ -61,6 +68,29 @@ namespace BookStore.Services
                .Where(b => b.Id == id)
                .To<TModel>()
                .FirstOrDefaultAsync();
+        }
+
+        public IQueryable<BookListingServiceModel> FindBooks(string searchText)
+        {
+            searchText = searchText ?? string.Empty;
+            //List<BookListingServiceModel> books = new List<BookListingServiceModel>();
+            //List<BookListingServiceModel> pBooks = new List<BookListingServiceModel>();
+            //var publisher = await publisherService.GetPublisherBySerchText<PublisherBasicServiceModel>(searchText);
+            //var publisherBooks = publisher.Books.AsQueryable();
+            //pBooks = publisherBooks.ToList();
+
+
+
+            //return await this.db.Books
+            //.Where(b => b.Title.ToLower().Contains((searchText).ToLower()))
+            //.To<BookListingServiceModel>();
+
+            return this.db
+            .Books
+            .Where(b => b.Title.ToLower().Contains((searchText).ToLower()))
+            .To<BookListingServiceModel>();
+
+            //return booksFromDb.AsQueryable();
         }
     }
 }

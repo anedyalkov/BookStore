@@ -7,10 +7,15 @@ using System.Threading.Tasks;
 
 namespace BookStore.Web.Models.Home
 {
-    public class IndexViewModel : SearchInputModel
+    public class SearchViewModel
     {
-        public int? CategoryId { get; set; }
+        public string SearchText { get; set; }
+
         public IList<BookListingServiceModel> Books { get; set; }
+           = new List<BookListingServiceModel>();
+
         public IList<CategoryListingServiceModel> Categories { get; set; }
+        = new List<CategoryListingServiceModel>();
+
     }
 }

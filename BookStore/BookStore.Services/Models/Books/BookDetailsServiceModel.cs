@@ -1,5 +1,6 @@
 ﻿using BookStore.Domain;
 using BookStore.Services.Mapping;
+using BookStore.Services.Models.Reviews;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -24,6 +25,6 @@ namespace BookStore.Services.Models.Books
 
         public decimal Price { get; set; }
 
-        //public IEnumerable<ReviewViewModel> Reviews { get; set; }
+        public IEnumerable<ReviewListingServiceModel> Reviews { get; set; }
     }
 }

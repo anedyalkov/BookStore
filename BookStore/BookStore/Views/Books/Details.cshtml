@@ -1,4 +1,4 @@
-﻿@model BookDetailsViewModel
+﻿@model BookDetailsServiceModel
 
 @{
     ViewData["Title"] = "Детайли за книгата";
@@ -70,7 +70,7 @@
                 </ul>
                 <div class="mt-5 col-md-8">
                     <form asp-controller="Books" asp-action="Review" method="post">
-                        <table class="table-v2-border" style="position: relative; width: 100%;" cellspacing="1" cellpadding="4" border="0">
+                        <table style="position: relative; width: 100%;" cellspacing="1" cellpadding="4" border="0">
                             <tbody>
                                 <tr>
                                     <td class="" align="right"><b>Мнение:</b></td>

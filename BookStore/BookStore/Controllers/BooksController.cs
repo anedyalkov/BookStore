@@ -25,7 +25,7 @@ namespace BookStore.Web.Controllers
         }
         public async Task<IActionResult> Details(int id)
         {
-            var book = await this.bookService.GetByIdAsync<BookDetailsViewModel>(id);
+            var book = await this.bookService.GetById<BookDetailsServiceModel>(id);
 
             if (book == null)
             {
@@ -35,7 +35,7 @@ namespace BookStore.Web.Controllers
 
             var reviews = await reviewService.GetReviewsByBook(id);
             book.Reviews = reviews.ToList();
-            var bookDetails = await this.bookService.Details<BookDetailsViewModel>(id);
+            var bookDetails = await this.bookService.Details<BookDetailsServiceModel>(id);
 
             return this.View(bookDetails);
         }

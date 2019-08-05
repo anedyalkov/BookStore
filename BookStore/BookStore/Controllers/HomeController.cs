@@ -43,5 +43,21 @@ namespace BookStore.Controllers
 
             return this.View();
         }
+
+        public async Task<IActionResult> Search(SearchInputModel searchModel)
+        {
+            var categories = await this.categoryService.GetAllActiveCategories().ToListAsync();
+            var viewModel = new SearchViewModel
+            {
+                SearchText = searchModel.SearchText
+            };
+           
+                var books = await this.bookService.FindBooks(searchModel.SearchText).ToListAsync();
+                viewModel.Books = books;
+                viewModel.Categories = categories;
+          
+
+            return View(viewModel);
+        }
     }
 }

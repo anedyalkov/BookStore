@@ -109,7 +109,5 @@ namespace BookStore.Services.Admin
 
             return result > 0;
         }
-
-      
     }
 }
