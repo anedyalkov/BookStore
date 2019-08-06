@@ -8,6 +8,7 @@ using BookStore.Models;
 using BookStore.Services;
 using Microsoft.EntityFrameworkCore;
 using BookStore.Web.Models.Home;
+using BookStore.Services.Models.Publishers;
 
 namespace BookStore.Controllers
 {
@@ -15,11 +16,13 @@ namespace BookStore.Controllers
     {
         private readonly IBookService bookService;
         private readonly ICategoryService categoryService;
+        private readonly IPublisherService publisherService;
 
-        public HomeController(IBookService bookService,ICategoryService categoryService)
+        public HomeController(IBookService bookService, ICategoryService categoryService, IPublisherService publisherService)
         {
             this.bookService = bookService;
             this.categoryService = categoryService;
+            this.publisherService = publisherService;
         }
         public async Task<IActionResult> Index(IndexViewModel model)
         {
@@ -44,18 +47,25 @@ namespace BookStore.Controllers
             return this.View();
         }
 
-        public async Task<IActionResult> Search(SearchInputModel searchModel)
+        public async Task<IActionResult> Search(string searchText)
         {
             var categories = await this.categoryService.GetAllActiveCategories().ToListAsync();
             var viewModel = new SearchViewModel
             {
-                SearchText = searchModel.SearchText
+                SearchText = /*searchModel.SearchText*/searchText
             };
-           
-                var books = await this.bookService.FindBooks(searchModel.SearchText).ToListAsync();
-                viewModel.Books = books;
-                viewModel.Categories = categories;
-          
+
+            var books = await this.bookService.FindBooks(/*searchModel.SearchText*/searchText).ToListAsync();
+            //viewModel.Books = viewModel.Books.Concat(books).ToList();
+            //var publisher = await publisherService.GetPublisherBySerchText<PublisherBasicServiceModel>(searchModel.SearchText);
+            //if (publisher != null)
+            //{
+            //    var publisherBooks = publisher.Books;
+            //    viewModel.Books = viewModel.Books.Concat(publisherBooks).ToList();
+            //}
+            viewModel.Books = books;
+            viewModel.Categories = categories;
+
 
             return View(viewModel);
         }

@@ -73,24 +73,13 @@ namespace BookStore.Services
         public IQueryable<BookListingServiceModel> FindBooks(string searchText)
         {
             searchText = searchText ?? string.Empty;
-            //List<BookListingServiceModel> books = new List<BookListingServiceModel>();
-            //List<BookListingServiceModel> pBooks = new List<BookListingServiceModel>();
-            //var publisher = await publisherService.GetPublisherBySerchText<PublisherBasicServiceModel>(searchText);
-            //var publisherBooks = publisher.Books.AsQueryable();
-            //pBooks = publisherBooks.ToList();
-
-
-
-            //return await this.db.Books
-            //.Where(b => b.Title.ToLower().Contains((searchText).ToLower()))
-            //.To<BookListingServiceModel>();
 
             return this.db
             .Books
-            .Where(b => b.Title.ToLower().Contains((searchText).ToLower()))
+            .Where(b => b.Title.ToLower().Contains((searchText).ToLower()) 
+            || b.Publisher.Name.ToLower().Contains((searchText).ToLower()) 
+            || b.Author.FullName.ToLower().Contains((searchText).ToLower()))
             .To<BookListingServiceModel>();
-
-            //return booksFromDb.AsQueryable();
         }
     }
 }

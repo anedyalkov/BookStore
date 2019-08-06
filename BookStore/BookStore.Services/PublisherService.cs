@@ -19,6 +19,7 @@ namespace BookStore.Services
         }
         public async Task<PublisherBasicServiceModel> GetPublisherBySerchText<PublisherBasicServiceModel>(string searchText)
         {
+            searchText = searchText ?? string.Empty;
             return await db.Publishers
                 .Where(p => p.IsDeleted == false)
                 .Where(p => p.Name.ToLower().Contains((searchText).ToLower()))
