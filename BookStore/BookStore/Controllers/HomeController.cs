@@ -47,7 +47,7 @@ namespace BookStore.Controllers
             return this.View();
         }
 
-        public async Task<IActionResult> Search(string searchText)
+        public async Task<IActionResult> Search(string searchText = null)
         {
             var categories = await this.categoryService.GetAllActiveCategories().ToListAsync();
             var viewModel = new SearchViewModel
@@ -56,13 +56,6 @@ namespace BookStore.Controllers
             };
 
             var books = await this.bookService.FindBooks(/*searchModel.SearchText*/searchText).ToListAsync();
-            //viewModel.Books = viewModel.Books.Concat(books).ToList();
-            //var publisher = await publisherService.GetPublisherBySerchText<PublisherBasicServiceModel>(searchModel.SearchText);
-            //if (publisher != null)
-            //{
-            //    var publisherBooks = publisher.Books;
-            //    viewModel.Books = viewModel.Books.Concat(publisherBooks).ToList();
-            //}
             viewModel.Books = books;
             viewModel.Categories = categories;
 

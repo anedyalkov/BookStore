@@ -37,7 +37,7 @@ namespace BookStore.Web.Areas.Admin.Models.Books
 
         [Required]
         [DataType(DataType.Date)]
-        public DateTime CreatedOn { get; set; }
+        public DateTime? CreatedOn { get; set; }
 
         public IEnumerable<SelectListItem> Authors { get; set; }
         public IEnumerable<SelectListItem> Publishers { get; set; }

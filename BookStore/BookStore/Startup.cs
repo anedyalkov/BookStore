@@ -76,6 +76,7 @@ namespace BookStore
 
             services.AddTransient<ICloudinaryService, CloudinaryService>();
             services.AddTransient<IAdminUserService, AdminUserService>();
+            services.AddTransient<IUserService, UserService>();
             services.AddTransient<IAdminCategoryService, AdminCategoryService>();
             services.AddTransient<IAdminPublisherService, AdminPublisherService>();
             services.AddTransient<IAdminAuthorService, AdminAuthorService>();
@@ -84,13 +85,14 @@ namespace BookStore
             services.AddTransient<ICategoryService, CategoryService>();
             services.AddTransient<IReviewService, ReviewService>();
             services.AddTransient<IPublisherService, PublisherService>();
+            services.AddTransient<IShoppingCartService, ShoppingCartService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            //services.AddMvc(options =>
-            //{
-            //    options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
-            //});
+            services.AddMvc(options =>
+            {
+                options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

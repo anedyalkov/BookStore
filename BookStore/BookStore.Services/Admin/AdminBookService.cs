@@ -82,19 +82,19 @@ namespace BookStore.Services.Admin
                 CategoryId = categoryId
             });
 
-            await this.db.SaveChangesAsync();
-            return true;
+           int result =  await this.db.SaveChangesAsync();
+           return result > 0;
         }
 
         public async Task<bool> RemoveCategoryAsync(int bookId, int categoryId)
         {
-            var booCategory = this.db.CategoryBooks.Find(categoryId, bookId);
-            if (booCategory == null)
+            var bookCategory = this.db.CategoryBooks.Find(categoryId, bookId);
+            if (bookCategory == null)
             {
                 return false;
             }
 
-            this.db.Remove(booCategory);
+            this.db.Remove(bookCategory);
             await this.db.SaveChangesAsync();
             return true;
         }

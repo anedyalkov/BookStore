@@ -53,7 +53,6 @@ namespace BookStore.Web.Areas.Admin.Controllers
             });
         }
 
-
         [HttpPost]
         public async Task<IActionResult> Create(BookInputModel bookModel)
         {
@@ -74,7 +73,7 @@ namespace BookStore.Web.Areas.Admin.Controllers
                 bookModel.Language,
                 bookModel.Description,
                 imageUrl,
-                bookModel.CreatedOn,
+                bookModel.CreatedOn.Value,
                 bookModel.Price
                 );
 
@@ -223,7 +222,7 @@ namespace BookStore.Web.Areas.Admin.Controllers
                 bookModel.Language,
                 bookModel.Description,
                 imageUrl,
-                bookModel.CreatedOn,
+                bookModel.CreatedOn.Value,
                 bookModel.Price
                 );
 

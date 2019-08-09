@@ -23,7 +23,7 @@ namespace BookStore.Domain
         [Required]
         public string Description { get; set; }
 
-        //[Required]
+        [Required]
         public string Image { get; set; }
 
         public decimal Price { get; set; }
@@ -42,7 +42,7 @@ namespace BookStore.Domain
 
         public ICollection<ShoppingCartBook> ShoppingCartBooks { get; set; } = new List<ShoppingCartBook>();
 
-        public virtual ICollection<OrderBook> OrderBooks { get; set; } = new List<OrderBook>();
+        public ICollection<OrderBook> OrderBooks { get; set; } = new List<OrderBook>();
 
         public ICollection<Review> Reviews { get; set; } = new List<Review>();
     }
