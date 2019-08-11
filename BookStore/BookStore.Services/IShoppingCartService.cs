@@ -10,6 +10,10 @@ namespace BookStore.Services
     public interface IShoppingCartService
     {
         Task<bool> AddBookToShoppingCart(int id, string username);
+        Task<bool> RemoveBookFromShoppingCart(int id, string username);
         Task<IEnumerable<ShoppingCartServiceModel>> GetUserCartBooks(string username);
+
+        Task<bool> IncreaseQuantity(int id, string username);
+        Task<bool> DecreaseQuantity(int id, string username);
     }
 }

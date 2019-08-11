@@ -8,11 +8,11 @@
     <div class="col-md-8 mt-3">
         <form class="form-inline" asp-action="Search" method="get">
             <input @*asp-for="SearchText"*@ name="searchText"class="form-control mr-sm-2 w-50" type="search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Търсене</button>
+            <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Търсене</button>
         </form>
     </div>
 </div>
-<h4 class="mt-2">@ViewData["Title"]</h4>
+<h4 class="mt-4">@ViewData["Title"]</h4>
 
 @if (Model.Books.Any())
 {

@@ -1,12 +1,12 @@
 ﻿@model SearchViewModel
-<div class="mt-5">
+<div class="mt-4">
     <aside class="category-filters margin-bottom-20">
         @*<div class="category-filters-section hidden-xs hidden-sm">*@
         <h4>Книги</h4>
         <ul class="cateogry-filters-list">
             @foreach (var category in Model.Categories)
             {
-                <li> <a asp-controller="Home" asp-action="Index" asp-route-CategoryId="@category.Id" class="">@category.Name</a></li>
+                <li> <a asp-controller="Home" asp-action="Index" asp-route-CategoryId="@category.Id" class="text-info">@category.Name</a></li>
             }
         </ul>
         @*</div>*@

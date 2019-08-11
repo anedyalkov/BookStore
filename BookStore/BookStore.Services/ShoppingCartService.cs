@@ -50,27 +50,98 @@ namespace BookStore.Services
             return result > 0;
         }
 
+        public async Task<bool> RemoveBookFromShoppingCart(int id, string username)
+        {
+            var user = await this.userService.GetByUsername(username);
+
+            var shoppingCartBook = GetShoppingCartBook(id, user.ShoppingCartId);
+
+            if (shoppingCartBook == null)
+            {
+                return false;
+            }
+
+            db.ShoppingCartBooks.Remove(shoppingCartBook);
+            var result = await db.SaveChangesAsync();
+
+            return result > 0;
+        }
+
         public async Task<IEnumerable<ShoppingCartServiceModel>> GetUserCartBooks(string username)
         {
             return await db.ShoppingCartBooks
-                .Include(shb => shb.Book)
-                .ThenInclude(b => b.Image)
-                .Include(shb => shb.ShoppingCart)
                 .Where(shb => shb.ShoppingCart.User.UserName == username)
                 .Select(shb => new ShoppingCartServiceModel
                 {
                     Id = shb.BookId,
                     ImageUrl = shb.Book.Image,
                     Title = shb.Book.Title,
+                    Author = shb.Book.Author.FullName,
                     Price = shb.Book.Price,
                     Quantity = shb.Quantity,
                     TotalPrice = shb.Book.Price
                 }).ToListAsync();
         }
 
+        public async Task<bool> IncreaseQuantity(int id, string username)
+        {
+            var book = db.Books.Find(id);
+            var user = await this.userService.GetByUsername(username);
+
+            if (book == null || user == null)
+            {
+                return false;
+            }
+
+            var shoppingCartBook = GetShoppingCartBook(id, user.ShoppingCartId);
+
+            if (shoppingCartBook == null)
+            {
+                return false;
+            }
+
+            shoppingCartBook.Quantity += 1;
+
+            int result = await this.db.SaveChangesAsync();
+            return result > 0;
+
+        }
+
+        public async Task<bool> DecreaseQuantity(int id, string username)
+        {
+            var book = db.Books.Find(id);
+            var user = await this.userService.GetByUsername(username);
+
+            if (book == null || user == null)
+            {
+                return false;
+            }
+
+            var shoppingCartBook = GetShoppingCartBook(id, user.ShoppingCartId);
+
+            if (shoppingCartBook == null)
+            {
+                return false;
+            }
+
+            var quantity = shoppingCartBook.Quantity;
+
+            if (quantity == 1)
+            {
+                return false;
+            }
+
+            shoppingCartBook.Quantity -= 1;
+
+            int result = await this.db.SaveChangesAsync();
+            return result > 0;
+        }
+
         private ShoppingCartBook GetShoppingCartBook(int bookId, int shoppingCartId)
         {
             return this.db.ShoppingCartBooks.FirstOrDefault(shb => shb.ShoppingCartId == shoppingCartId && shb.BookId == bookId);
         }
+
+    
     }
 }

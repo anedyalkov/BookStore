@@ -7,7 +7,7 @@
             @foreach (var category in Model.Categories)
             {
 
-                <li> <a asp-controller="Home" asp-action="Index" asp-route-CategoryId="@category.Id" class="">@category.Name</a></li>
+                <li> <a asp-controller="Home" asp-action="Index" asp-route-CategoryId="@category.Id" class="text-info font-weight-bold">@category.Name</a></li>
                 @*<li><a href="/books/2-Енциклопедии-и-справочници/">Енциклопедии и справочници</a></li>
                     <li><a href="/books/11-Литература-за-деца-и-юноши/">Литература за деца и юноши</a></li>
                     <li><a href="/books/17-Медицина/">Медицина</a></li>
