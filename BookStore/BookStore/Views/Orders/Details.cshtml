@@ -1,0 +1,78 @@
+﻿@model IEnumerable<OrderBookListingServiceModel>
+
+@{
+    ViewData["Title"] = "Детайли за поръчката";
+    decimal deliveryPrice = 4;
+}
+
+<h3 class="mt-3">@ViewData["Title"]</h3>
+
+@if (Model.Count() == 0)
+{
+    <h4 class="text-center mb-3">Няма добавени книги във Вашата количка. </h4>
+    <div class="justify-content-center d-flex mt-4 mb-4">
+        <a class="btn btn-outline-info text-center" asp-area="" asp-controller="Home" asp-action="Index"> Започнете с пазаруването </a>
+    </div>
+}
+else
+{
+<div class="row mt-3">
+    <div class="col-md-9">
+        @foreach (var book in Model)
+        {
+            <div class="row mt-2">
+                <div class="col-md-3 justify-content-center d-flex">
+                    <div class="table-shopping-cart-img" style="margin:0 auto;">
+                        <a asp-area="" asp-controller="Books" asp-action="Details" asp-route-id="@book.Id">
+                            <img src="@book.ImageUrl" width="70" height="100">
+                        </a>
+                    </div>
+                </div>
+                <div class=" col-md-7">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="table-shopping-cart-title">
+                                <div class="">
+                                    <a asp-area="" asp-controller="Books" asp-action="Details" asp-route-id="@book.Id" style="color: #222; font-size: 18px; font-weight: 600;">@book.Title</a>
+                                </div>
+                                <div class="custom_fields">
+                                    <span>Автор: <a href="/author/118653-Елмар-Невелинг.html">@book.Author</a></span><br>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <h6>Брой: @book.Quantity</h6>
+
+                        </div>
+                        <div class="col-md-3">
+                            <h6>Ед.цена @book.Price.ToString("F2") лв.</h6>
+                        </div>
+                    </div>
+                    <hr class="mt-5">
+                </div>
+            </div>
+        }
+    </div>
+    <div class="col-md-2">
+        <div class="panel-body">
+            <ul class="shopping-cart-total-list">
+                <li><h4>Обща сума на поръчката</h4></li>
+                <li class="">
+                    <span>Всички книги:</span>
+                    <span class=""> @Model.Sum(b => b.TotalPrice).ToString("F2") лв.</span>
+                </li>
+                <li class="">
+                    <span>Цена на доставка:</span>
+                    <span class="">@deliveryPrice лв.</span>
+                </li>
+                <li>
+                    <span><strong>Общо:</strong></span>
+                    <span class=""><strong> @(Model.Sum(b => b.TotalPrice) + deliveryPrice) лв.</strong></span>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+}
+

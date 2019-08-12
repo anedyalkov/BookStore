@@ -1,0 +1,37 @@
+﻿@model IEnumerable<OrderListingServiceModel>
+
+@{
+    ViewData["Title"] = "Моите поръчки";
+}
+
+<h2>
+    @ViewData["Title"]
+</h2>
+
+<div class="container justify-content-center mt-3">
+    <table class="table table-hover">
+        <thead>
+            <tr class="">
+                <th scope="col">Номер</th>
+                <th scope="col">Статус</th>
+                <th scope="col">Цена</th>
+                <th scope="col">Дата</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var order in Model)
+            {
+                <tr class="">
+                    <th scope="row">@order.Id</th>
+                    <td>@order.Status</td>
+                    <td>@order.TotalPrice лв.</td>
+                    <td>@order.CompletionDate</td>
+                    <td><a asp-action=@nameof(OrdersController.Details) asp-route-id=@order.Id class="btn btn-success">Детайли</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+

@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Моята количка";
+    decimal deliveryPrice = 4;
 }
 
 <h3 class="mt-3">@ViewData["Title"]</h3>
@@ -15,54 +16,80 @@
 }
 else
 {
-    @foreach (var book in Model)
-    {
-        <div class="row mt-3">
-            <div class="col-md-2 justify-content-center d-flex">
-                <div class="table-shopping-cart-img" style="margin:0 auto;">
-                    <a asp-area="" asp-controller="Books" asp-action="Details" asp-route-id="@book.Id">
-                        <img src="@book.ImageUrl" width="70" height="100">
-                    </a>
-                </div>
-            </div>
-            <div class=" col-md-5">
-                <div class="row">
-                    <div class="col-sm-6">
-                        <div class="table-shopping-cart-title">
-                            <div class="">
-                                <a asp-area="" asp-controller="Books" asp-action="Details" asp-route-id="@book.Id" style="color: #222; font-size: 18px; font-weight: 600;">@book.Title</a>
-                            </div>
-                            <div class="custom_fields">
-                                <span>Автор: <a href="/author/118653-Елмар-Невелинг.html">@book.Author</a></span><br>
-                            </div>
+<div class="row mt-3">
+    <div class="col-md-9">
+        @foreach (var book in Model)
+        {
+                <div class="row mt-2">
+                    <div class="col-md-3 justify-content-center d-flex">
+                        <div class="table-shopping-cart-img" style="margin:0 auto;">
+                            <a asp-area="" asp-controller="Books" asp-action="Details" asp-route-id="@book.Id">
+                                <img src="@book.ImageUrl" width="70" height="100">
+                            </a>
                         </div>
                     </div>
-                    <div class="input-group col-md-3">
-                        <span class="input-group-btn">
-                            <span>
-                                <a class="btn btn-danger" asp-controller="ShoppingCart"
-                                   asp-action=@nameof(ShoppingCartController.DecreaseQuantity)
-                                   asp-route-id=@book.Id>&minus;</a>
-                            </span>
-                        </span>
-                        <input type="text" name="quant[2]" class="form-control input-number text-center" value="@book.Quantity" min="1" max="100">
-                        <span class="input-group-btn">
-                            <span>
-                                <a class="btn btn-success" asp-controller="ShoppingCart"
-                                   asp-action=@nameof(ShoppingCartController.IncreaseQuantity)
-                                   asp-route-id=@book.Id>+</a>
-                            </span>
-                        </span>
+                    <div class=" col-md-7">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="table-shopping-cart-title">
+                                    <div class="">
+                                        <a asp-area="" asp-controller="Books" asp-action="Details" asp-route-id="@book.Id" style="color: #222; font-size: 18px; font-weight: 600;">@book.Title</a>
+                                    </div>
+                                    <div class="custom_fields">
+                                        <span>Автор: <a href="/author/118653-Елмар-Невелинг.html">@book.Author</a></span><br>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="input-group col-md-3">
+                                <span class="input-group-btn">
+                                    <span>
+                                        <a class="btn btn-danger" asp-controller="ShoppingCart"
+                                           asp-action=@nameof(ShoppingCartController.DecreaseQuantity)
+                                           asp-route-id=@book.Id>&minus;</a>
+                                    </span>
+                                </span>
+                                <input type="text" name="quant[2]" class="form-control input-number text-center" value="@book.Quantity" min="1" max="100">
+                                <span class="input-group-btn">
+                                    <span>
+                                        <a class="btn btn-success" asp-controller="ShoppingCart"
+                                           asp-action=@nameof(ShoppingCartController.IncreaseQuantity)
+                                           asp-route-id=@book.Id>+</a>
+                                    </span>
+                                </span>
+                            </div>
+                            <div class="col-md-3">
+                                <h6>Ед.цена @book.Price.ToString("F2") лв.</h6>
+                                <a asp-controller="ShoppingCart" asp-action="RemoveFromShoppingCart" asp-route-id="@book.Id" class="text-orange delete-from-cart-btn"> изтрий</a>
+                            </div>
+                        </div>
+                        <hr class="mt-5">
                     </div>
-                    <div class="col-sm-3 text-right">
-                        <h6>Ед.цена @book.Price.ToString("F2") лв.</h6>
-                        <a asp-controller="ShoppingCart" asp-action="RemoveFromShoppingCart" asp-route-id="@book.Id" class="text-orange delete-from-cart-btn"> изтрий</a>
-                    </div>
-                </div>
-                <hr class="mt-5">
+            </div>
+        }
+    </div>
+    <div class="col-md-2">
+        <div class="panel-body">
+            <ul class="shopping-cart-total-list">
+                <li><h4>Информация за поръчката</h4></li>
+                <li class="">
+                    <span>Всички книги:</span>
+                    <span class="">@Model.Sum(b => b.TotalPrice).ToString("F2") лв.</span>
+                </li>
+                <li class="">
+                    <span>Цена на доставка:</span>
+                    <span class="">@deliveryPrice лв.</span>
+                </li>
+                <li>
+                    <span><strong>За плащане:</strong></span>
+                    <span class=""><strong>@(Model.Sum(b => b.TotalPrice) + deliveryPrice). лв.</strong></span>
+                </li>
+            </ul>
+            <div class="">
+                <a asp-area="" asp-controller="Orders" asp-action="Create" class="btn btn-danger btn-sm"> Завърши поръчката</a>
             </div>
         </div>
-    }
+    </div>
+</div>
 }
 
 @section Scripts {

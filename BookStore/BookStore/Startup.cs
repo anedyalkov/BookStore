@@ -86,6 +86,7 @@ namespace BookStore
             services.AddTransient<IReviewService, ReviewService>();
             services.AddTransient<IPublisherService, PublisherService>();
             services.AddTransient<IShoppingCartService, ShoppingCartService>();
+            services.AddTransient<IOrderService, OrderService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 

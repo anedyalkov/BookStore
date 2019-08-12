@@ -79,7 +79,7 @@ namespace BookStore.Services
                     Author = shb.Book.Author.FullName,
                     Price = shb.Book.Price,
                     Quantity = shb.Quantity,
-                    TotalPrice = shb.Book.Price
+                    TotalPrice = shb.Quantity * shb.Book.Price
                 }).ToListAsync();
         }
 
@@ -142,6 +142,20 @@ namespace BookStore.Services
             return this.db.ShoppingCartBooks.FirstOrDefault(shb => shb.ShoppingCartId == shoppingCartId && shb.BookId == bookId);
         }
 
-    
+        public async Task<bool> RemoveBooksFromShoppingCart(string username)
+        {
+            var user = await this.userService.GetByUsername(username);
+
+            //if (user == null)
+            //{
+            //    return;
+            //}
+
+            var shoppingCartBooks = this.db.ShoppingCartBooks.Where(shb => shb.ShoppingCartId == user.ShoppingCartId);
+
+            this.db.ShoppingCartBooks.RemoveRange(shoppingCartBooks);
+            int result = this.db.SaveChanges();
+            return result > 0;
+        }
     }
 }
