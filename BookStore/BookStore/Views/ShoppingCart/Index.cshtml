@@ -36,7 +36,7 @@ else
                                         <a asp-area="" asp-controller="Books" asp-action="Details" asp-route-id="@book.Id" style="color: #222; font-size: 18px; font-weight: 600;">@book.Title</a>
                                     </div>
                                     <div class="custom_fields">
-                                        <span>Автор: <a href="/author/118653-Елмар-Невелинг.html">@book.Author</a></span><br>
+                                        <span>Автор: <a asp-controller="Home" asp-action="Index" asp-route-author ="@book.Author" class="text-info">@book.Author</a></span><br>
                                     </div>
                                 </div>
                             </div>

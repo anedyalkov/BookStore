@@ -24,7 +24,7 @@ namespace BookStore.Controllers
             this.categoryService = categoryService;
             this.publisherService = publisherService;
         }
-        public async Task<IActionResult> Index(IndexViewModel model)
+        public async Task<IActionResult> Index(IndexViewModel model, string author, string publisher)
         {
             //if (this.User.Identity.IsAuthenticated)
             //{
@@ -35,11 +35,29 @@ namespace BookStore.Controllers
 
             if (this.User.Identity.IsAuthenticated)
             {
-                var books = await this.bookService.GetBooksFilter(model.CategoryId);
-                var categories = await this.categoryService.GetAllActiveCategories().ToListAsync();
+                if (author != null)
+                {
+                    var authorBooks = await this.bookService.FindBooksByAuthor(author).ToListAsync();
+                    var categories = await this.categoryService.GetAllActiveCategories().ToListAsync();
+                    model.Books = authorBooks.ToList();
+                    model.Categories = categories;
+                }
+                else if (publisher != null)
+                {
+                    var publisherBooks = await this.bookService.FindBooksByPublisher(publisher).ToListAsync();
+                    var categories = await this.categoryService.GetAllActiveCategories().ToListAsync();
+                    model.Books = publisherBooks.ToList();
+                    model.Categories = categories;
+                }
+                else
+                {
+                    var books = await this.bookService.GetBooksFilter(model.CategoryId);
+                    var categories = await this.categoryService.GetAllActiveCategories().ToListAsync();
 
-                model.Books = books.ToList();
-                model.Categories = categories;
+                    model.Books = books.ToList();
+                    model.Categories = categories;
+                }
+               
 
                 return this.View(model);
             }

@@ -81,5 +81,21 @@ namespace BookStore.Services
             || b.Author.FullName.ToLower().Contains((searchText).ToLower()))
             .To<BookListingServiceModel>();
         }
+
+        public IQueryable<BookListingServiceModel> FindBooksByAuthor(string author)
+        {
+           return this.db
+           .Books
+           .Where(b => b.Author.FullName == author)
+           .To<BookListingServiceModel>();
+        }
+
+        public IQueryable<BookListingServiceModel> FindBooksByPublisher(string publisher)
+        {
+          return this.db
+          .Books
+          .Where(b => b.Publisher.Name == publisher)
+          .To<BookListingServiceModel>();
+        }
     }
 }

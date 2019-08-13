@@ -19,11 +19,11 @@
                 <tbody>
                     <tr>
                         <td>Автор</td>
-                        <td><a href="/publisher/579-Анхира.html">@Model.AuthorFullName</a></td>
+                        <td><a asp-controller="Home" asp-action="Index" asp-route-author=@Model.AuthorFullName class="text-info">@Model.AuthorFullName</a></td>
                     </tr>
                     <tr>
                         <td>Издателство</td>
-                        <td><a href="/publisher/579-Анхира.html">@Model.PublisherName</a></td>
+                        <td><a asp-controller="Home" asp-action="Index" asp-route-publisher="@Model.PublisherName" class="text-info">@Model.PublisherName</a></td>
                     </tr>
                     <tr>
                         <td>Език</td>

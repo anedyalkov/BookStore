@@ -20,5 +20,7 @@ namespace BookStore.Services
         Task<IQueryable<BookListingServiceModel>> GetBooksByCategory(int categoryId);
 
         IQueryable<BookListingServiceModel> FindBooks(string searchText);
+        IQueryable<BookListingServiceModel> FindBooksByAuthor(string author);
+        IQueryable<BookListingServiceModel> FindBooksByPublisher(string publisher);
     }
 }
