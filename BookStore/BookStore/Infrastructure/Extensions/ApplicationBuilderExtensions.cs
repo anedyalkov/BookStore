@@ -13,9 +13,6 @@ namespace BookStore.Web.Infrastructure.Extensions
 {
     public static class ApplicationBuilderExtensions
     {
-        private const string AdminUsername = "admin";
-        private const string AdminEmail = "admin@mysite.com";
-        private const string AdminPassword = "123456";
         public static IApplicationBuilder UseDatabaseMigration(this IApplicationBuilder app)
         {
             using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
@@ -28,55 +25,41 @@ namespace BookStore.Web.Infrastructure.Extensions
                 Task
                     .Run(async () =>
                     {
-                        // Seed Roles TODO
-                        var roles = new[]
-                        {
-                            WebConstants.AdministratorRole,
-                        };
+                        var adminName = WebConstants.AdministratorRole; 
 
-                        foreach (var role in roles)
-                        {
-                            var roleExists = await roleManager.RoleExistsAsync(role);
+                        var roleExists = await roleManager.RoleExistsAsync(adminName);
 
-                            if (!roleExists)
+                        if (!roleExists)
+                        {
+                            await roleManager.CreateAsync(new IdentityRole
                             {
-                                await roleManager.CreateAsync(new IdentityRole
-                                {
-                                    Name = role
-                                });
-                            }
+                                Name = adminName
+                            });
                         }
 
-                        var adminUser = await userManager.FindByEmailAsync(AdminEmail);
+
+                        var adminUser = await userManager.FindByNameAsync(adminName);
 
                         if (adminUser == null)
                         {
-                            // Create Admin User
                             adminUser = new BookStoreUser
                             {
-                                UserName = AdminUsername, // change Register action as well
-                                Email = AdminEmail,
+                                UserName = "admin",
+                                Email = "admin@gmail.com",
                                 ShoppingCart = new ShoppingCart()
                             };
 
-                            var result = await userManager.CreateAsync(adminUser, AdminPassword);
+                            var result = await userManager.CreateAsync(adminUser, "123456");
 
-                            // Add User to Role
                             if (result.Succeeded)
                             {
                                 await userManager.AddToRoleAsync(adminUser, WebConstants.AdministratorRole);
                             }
                         }
-                        //else
-                        //{
-                        //    // Add User to Role
-                        //    await userManager.AddToRoleAsync(adminUser, WebConstants.AdministratorRole);
-                        //}
                     })
                     .GetAwaiter()
                     .GetResult();
             }
-
             return app;
         }
     }

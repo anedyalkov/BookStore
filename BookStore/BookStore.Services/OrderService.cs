@@ -27,28 +27,30 @@ namespace BookStore.Services
 
        
 
-        public async Task<Order> CreateAsync(string username)
+        public async Task<bool> CreateAsync(string username)
         {
-            var user = await userService.GetByUsername(username);
+            var user = await userService.GetByUsernameAsync(username);
 
+            if (user == null)
+            {
+                return false;
+            }
+
+            var shoppingCartBooks = db.ShoppingCartBooks
+                .Include(shb => shb.Book)
+                .Where(shb => shb.ShoppingCart.User.UserName == username && shb.Book.IsDeleted == false).ToList();
+
+            if (shoppingCartBooks.Count() == 0)
+            {
+                return false;
+            }
 
             var order = new Order
             {
                 Status = OrderStatus.Completed,
                 User = user,
                 CompletionDate = DateTime.UtcNow
-            };
-
-            this.db.Orders.Add(order);
-            this.db.SaveChanges();
-            return order;
-        }
-
-        public async Task<bool> AddBooksToOrder(Order order, string username)
-        {
-            var shoppingCartBooks = db.ShoppingCartBooks
-                .Include(shb => shb.Book)
-                .Where(shb => shb.ShoppingCart.User.UserName == username).ToList();
+            };         
 
             List<OrderBook> orderBooks = new List<OrderBook>();
 
@@ -59,18 +61,21 @@ namespace BookStore.Services
                     Order = order,
                     Book = shoppingCartBook.Book,
                     Quantity = shoppingCartBook.Quantity,
-                    Price =  shoppingCartBook.Book.Price
+                    Price = shoppingCartBook.Book.Price
                 };
 
                 orderBooks.Add(orderBook);
             }
-
-            await this.shoppingCartService.RemoveBooksFromShoppingCart(username);
+   
             order.OrderBooks = orderBooks;
             order.TotalPrice = orderBooks.Sum(o => o.Price * o.Quantity);
+            
+            await this.shoppingCartService.RemoveBooksFromShoppingCartAsync(username);
 
+            this.db.Orders.Add(order);
             int result = db.SaveChanges();
             return result > 0;
+            
         }
 
         public IQueryable<OrderListingServiceModel> GetUserOrders(string username)
@@ -80,7 +85,7 @@ namespace BookStore.Services
                 .To<OrderListingServiceModel>();
         }
 
-        public async Task<IEnumerable<OrderBookListingServiceModel>> GetOrderBooks(int id)
+        public async Task<IEnumerable<OrderBookListingServiceModel>> GetOrderBooksAsync(int id)
         {
             return await db.OrderBooks
                .Where(ob => ob.OrderId == id)

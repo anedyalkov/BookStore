@@ -12,11 +12,11 @@ namespace BookStore.Services.Admin
     {
         IQueryable<AdminPublisherListingServiceModel> GetAllPublishers();
        
-        IQueryable<AdminPublisherBasicServiceModel> GetAllAvailablePublishers();
+        IQueryable<AdminPublisherListingServiceModel> GetAllAvailablePublishers();
 
         Task<bool> CreateAsync(string name);
 
-        Task<TModel> GetByIdAsync<TModel>(int id);
+        Task<AdminPublisherListingServiceModel> GetByIdAsync(int id);
 
         Task<bool> EditAsync(int id, string name);
 

@@ -9,12 +9,14 @@ namespace BookStore.Web.Areas.Admin.Models.Authors
 {
     public class AuthorInputModel
     {
-        [Required]
+        [Required(ErrorMessage = (WebAdminConstants.ErrorMsg))]
         [MaxLength(DataConstants.AuthorNameMaxLength)]
+        [Display(Name = "Име")]
         public string FirstName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = (WebAdminConstants.ErrorMsg))]
         [MaxLength(DataConstants.AuthorNameMaxLength)]
+        [Display(Name = "Фамилия")]
         public string LastName { get; set; }
     }
 }

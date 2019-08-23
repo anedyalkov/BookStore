@@ -10,7 +10,7 @@
             Здравей, @User.Identity.Name!
         </a>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-            <a asp-area="" asp-controller="Orders" asp-action="MyOrders" class="dropdown-item "> Моите поръчки</a>
+            <a asp-area="" asp-controller="Orders" asp-action="MyOrders" class="dropdown-item "> История на поръчките</a>
             <a asp-area="Identity" asp-page="/Account/Logout" class="dropdown-item "> Изход</a>
         </div>
     </li>
@@ -21,8 +21,6 @@
 else
 {
     <li class="nav-item">
-        <a asp-area="Identity" asp-page="/Account/Login" class="nav-link text-white"><i class="fas fa-user"></i> Вход</a>
+        <a asp-area="Identity" asp-page="/Account/Login" class="nav-link text-white"> Вход</a>
     </li>
 }
-
-@*@await Component.InvokeAsync(typeof(ShoppingCartBasketComponent))*@

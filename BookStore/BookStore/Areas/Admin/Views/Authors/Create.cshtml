@@ -6,9 +6,9 @@
 
 <h2>@ViewData["Title"]</h2>
 
-<partial name="_AuthorForm" model ="@Model">
+<partial name="_AuthorForm" model="@Model">
 
     @section Scripts {
-        @await Html.PartialAsync("_ValidationScriptsPartial")
+        <partial name="~/Views/Shared/_ValidationScriptsPartial.cshtml" />
     }
 

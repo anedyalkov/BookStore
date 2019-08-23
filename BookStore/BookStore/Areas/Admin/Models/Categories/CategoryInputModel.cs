@@ -9,8 +9,9 @@ namespace BookStore.Web.Areas.Admin.Models.Categories
 {
     public class CategoryInputModel
     {
-        [Required]
+        [Required(ErrorMessage = (WebAdminConstants.ErrorMsg))]
         [MaxLength(DataConstants.CategoryNameMaxLength)]
+        [Display(Name = "Име")]
         public string Name { get; set; }
     }
 }

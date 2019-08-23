@@ -1,5 +1,6 @@
 ﻿using BookStore.Data;
 using BookStore.Services.Mapping;
+using BookStore.Services.Models.Publishers;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,7 @@ namespace BookStore.Services
         {
             this.db = db;
         }
-        public async Task<PublisherBasicServiceModel> GetPublisherBySerchText<PublisherBasicServiceModel>(string searchText)
+        public async Task<PublisherBasicServiceModel> GetPublisherBySearchTextAsync(string searchText)
         {
             searchText = searchText ?? string.Empty;
             return await db.Publishers

@@ -35,11 +35,10 @@ namespace BookStore.Web.Areas.Admin.Controllers
 
             var roles = await this.roleManager
                 .Roles
-                .OrderBy(r => r.Name)
                 .Select(r => new SelectListItem
                 {
                     Text = r.Name,
-                    Value = r.Name // roleName => RoleExistsAsync
+                    Value = r.Name 
                 })
                 .ToListAsync();
 
@@ -49,15 +48,43 @@ namespace BookStore.Web.Areas.Admin.Controllers
                 Roles = roles
             });
         }
+        public async Task<IActionResult> Roles(string id)
+        {
 
+            var user = await this.userManager.FindByIdAsync(id);
+
+            if (user == null)
+            {
+                this.ModelState.AddModelError(string.Empty, WebAdminConstants.UserInvalidIdentityDetailsMsg);
+            }
+            var roles = await this.userManager.GetRolesAsync(user);
+
+            return this.View(new UserRolesViewModel
+            {
+                User = user,
+                UserRoles = roles
+                .Select(role => new SelectListItem
+                {
+                    Text = role,
+                    Value = role
+                })
+                .ToList(),
+                Roles = await roleManager.Roles
+                .Select(r => new SelectListItem
+                {
+                    Text = r.Name,
+                    Value = r.Name
+                })
+                .ToListAsync()
+        }); 
+        }
         [HttpPost]
-        public async Task<IActionResult> AddToRole(AddRemoveUserRoleInputModel model)
+        public async Task<IActionResult> AddToRole(UserRoleInputModel model)
         {
             var roleExists = await this.roleManager.RoleExistsAsync(model.Role);
             var user = await this.userManager.FindByIdAsync(model.UserId);
-            var userExists = user != null;
 
-            if (!roleExists || !userExists)
+            if (!roleExists || user == null)
             {
                 this.ModelState.AddModelError(string.Empty, WebAdminConstants.UserInvalidIdentityDetailsMsg);
             }
@@ -78,13 +105,12 @@ namespace BookStore.Web.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> RemoveFromRole(AddRemoveUserRoleInputModel model)
+        public async Task<IActionResult> RemoveFromRole(UserRoleInputModel model)
         {
             var roleExists = await this.roleManager.RoleExistsAsync(model.Role);
             var user = await this.userManager.FindByIdAsync(model.UserId);
-            var userExists = user != null;
 
-            if (!roleExists || !userExists)
+            if (!roleExists || user == null)
             {
                 this.ModelState.AddModelError(string.Empty, WebAdminConstants.UserInvalidIdentityDetailsMsg);
             }

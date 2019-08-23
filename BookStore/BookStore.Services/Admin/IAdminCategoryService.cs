@@ -10,11 +10,11 @@ namespace BookStore.Services.Admin
     public interface IAdminCategoryService
     {
         IQueryable<AdminCategoryListingServiceModel> GetAllCategories();
-        IQueryable<AdminCategoryBasicServiceModel> GetAllAvailableCategories();
+        IQueryable<AdminCategoryListingServiceModel> GetAllAvailableCategories();
 
         Task<bool> CreateAsync(string name);
 
-        Task<TModel> GetByIdAsync<TModel>(int id);
+        Task<AdminCategoryListingServiceModel> GetByIdAsync(int id);
 
         Task <bool>EditAsync(int id, string name);
 

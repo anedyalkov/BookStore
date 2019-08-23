@@ -43,9 +43,9 @@ namespace BookStore.Web.Areas.Admin.Controllers
 
             await this.categoryService.CreateAsync(categoryModel.Name);
 
-            this.TempData.AddSuccessMessage(string.Format(
-               WebAdminConstants.CategoryCreatedMsg,
-               categoryModel.Name));
+            //this.TempData.AddSuccessMessage(string.Format(
+            //   WebAdminConstants.CategoryCreatedMsg,
+            //   categoryModel.Name));
 
             return this.RedirectToAction(nameof(Index));
         }
@@ -53,7 +53,7 @@ namespace BookStore.Web.Areas.Admin.Controllers
         public async Task<IActionResult> Edit(int id)
         {
             var category = await this.categoryService
-                .GetByIdAsync<AdminCategoryDetailsServiceModel>(id);
+                .GetByIdAsync(id);
 
             if (category == null)
             {
@@ -80,9 +80,9 @@ namespace BookStore.Web.Areas.Admin.Controllers
                 id,
                 categoryModel.Name);
 
-            this.TempData.AddSuccessMessage(string.Format(
-                WebAdminConstants.CategoryUpdatedMsg,
-                categoryModel.Name));
+            //this.TempData.AddSuccessMessage(string.Format(
+            //    WebAdminConstants.CategoryUpdatedMsg,
+            //    categoryModel.Name));
 
             return this.RedirectToAction(nameof(Index));
         }
@@ -90,7 +90,7 @@ namespace BookStore.Web.Areas.Admin.Controllers
         public async Task<IActionResult> Hide(int id)
         {
             var category = await this.categoryService
-                .GetByIdAsync<AdminCategoryDetailsServiceModel>(id);
+                .GetByIdAsync(id);
 
             if (category == null)
             {
@@ -107,9 +107,9 @@ namespace BookStore.Web.Areas.Admin.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            this.TempData.AddSuccessMessage(string.Format(
-              WebAdminConstants.CategoryHiddenMsg,
-              category.Name));
+            //this.TempData.AddSuccessMessage(string.Format(
+            //  WebAdminConstants.CategoryHiddenMsg,
+            //  category.Name));
 
             return this.RedirectToAction(nameof(Index));
         }
@@ -117,7 +117,7 @@ namespace BookStore.Web.Areas.Admin.Controllers
         public async Task<IActionResult> Show(int id)
         {
             var category = await this.categoryService
-                .GetByIdAsync<AdminCategoryDetailsServiceModel>(id);
+                .GetByIdAsync(id);
 
             if (category == null)
             {

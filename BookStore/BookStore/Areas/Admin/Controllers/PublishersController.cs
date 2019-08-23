@@ -41,16 +41,16 @@ namespace BookStore.Web.Areas.Admin.Controllers
 
             await this.publisherService.CreateAsync(publisherModel.Name);
 
-            this.TempData.AddSuccessMessage(string.Format(
-               WebAdminConstants.PublisherCreatedMsg,
-               publisherModel.Name));
+            //this.TempData.AddSuccessMessage(string.Format(
+            //   WebAdminConstants.PublisherCreatedMsg,
+            //   publisherModel.Name));
 
             return this.RedirectToAction(nameof(Index));
         }
         public async Task<IActionResult> Edit(int id)
         {
             var publisher = await this.publisherService
-                .GetByIdAsync<AdminPublisherDetailsServiceModel>(id);
+                .GetByIdAsync(id);
 
             if (publisher == null)
             {
@@ -77,9 +77,9 @@ namespace BookStore.Web.Areas.Admin.Controllers
                 id,
                 publisherModel.Name);
 
-            this.TempData.AddSuccessMessage(string.Format(
-                WebAdminConstants.PublisherUpdatedMsg,
-                publisherModel.Name));
+            //this.TempData.AddSuccessMessage(string.Format(
+            //    WebAdminConstants.PublisherUpdatedMsg,
+            //    publisherModel.Name));
 
             return this.RedirectToAction(nameof(Index));
         }
@@ -87,7 +87,7 @@ namespace BookStore.Web.Areas.Admin.Controllers
         public async Task<IActionResult> Hide(int id)
         {
             var publisher = await this.publisherService
-                .GetByIdAsync<AdminPublisherDetailsServiceModel>(id);
+                .GetByIdAsync(id);
 
             if (publisher == null)
             {
@@ -104,9 +104,9 @@ namespace BookStore.Web.Areas.Admin.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            this.TempData.AddSuccessMessage(string.Format(
-              WebAdminConstants.PublisherHiddenMsg,
-              publisher.Name));
+            //this.TempData.AddSuccessMessage(string.Format(
+            //  WebAdminConstants.PublisherHiddenMsg,
+            //  publisher.Name));
 
             return this.RedirectToAction(nameof(Index));
         }
@@ -114,7 +114,7 @@ namespace BookStore.Web.Areas.Admin.Controllers
         public async Task<IActionResult> Show(int id)
         {
             var publisher = await this.publisherService
-                .GetByIdAsync<AdminPublisherDetailsServiceModel>(id);
+                .GetByIdAsync(id);
 
             if (publisher == null)
             {
@@ -123,9 +123,9 @@ namespace BookStore.Web.Areas.Admin.Controllers
             }
             await this.publisherService.ShowAsync(id);
 
-            this.TempData.AddSuccessMessage(string.Format(
-              WebAdminConstants.PublisherShowedMsg,
-              publisher.Name));
+            //this.TempData.AddSuccessMessage(string.Format(
+            //  WebAdminConstants.PublisherShowedMsg,
+            //  publisher.Name));
 
             return this.RedirectToAction(nameof(Index));
         }

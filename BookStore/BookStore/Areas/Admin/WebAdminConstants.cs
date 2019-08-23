@@ -12,7 +12,7 @@ namespace BookStore.Web.Areas.Admin
         public const string UserRemovedFromRoleMsg = "Потребител ({0}) беше премахнат от роля {1}.";
 
         public const string CategoryCreatedMsg = "Категория ({0}) беше създадена успешно.";
-        public const string CategoryNotFoundMsg = "Категория ({0}) не беше намерена.";
+        public const string CategoryNotFoundMsg = "Не сте избрали категория.";
         public const string CategoryUpdatedMsg = "Категория ({0}) беше успешно редактирана.";
         public const string CategoryHiddenMsg = "Категория ({0}) беше успешнo скрита.";
         public const string CategoryShowedMsg = "Категория ({0}) беше успешнo разкрита.";
@@ -20,6 +20,7 @@ namespace BookStore.Web.Areas.Admin
         public const string CategoryAlreadyAddedToBookMsg = "Категория ({0}) вече е добавена към книга ({1})";
         public const string CategoryRemovedFromBookMsg = "Категория ({0}) беше успешно премахната от книга ({1})";
         public const string CategoryIncludesBooksMsg = "Категория ({0}) не може да бъде скрита,защото притежава книги.";
+        
 
         public const string PublisherCreatedMsg = "Издателство ({0}) беше създадена успешно.";
         public const string PublisherNotFoundMsg = "Издателство ({0}) не беше намеренo.";
@@ -41,6 +42,13 @@ namespace BookStore.Web.Areas.Admin
         public const string BookHiddenMsg = "Книга ({0}) беше успешнo скрита.";
         public const string BookShowedMsg = "Книга ({0}) беше успешнo разкрита.";
 
-       
+        public const string ErrorMsg = "Полето ({0}) e задължително.";
+
+
+        public const string ReviewDeletedMsg = "Мнението беше изтрито успешно.";
+
+
+
+
     }
 }

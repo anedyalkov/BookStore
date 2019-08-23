@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BookStore.Services;
+using BookStore.Web.Infrastructure.Extensions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace BookStore.Web.Controllers
 {
+    [Authorize]
     public class OrdersController : Controller
     {
         private readonly IOrderService orderService;
@@ -23,8 +26,12 @@ namespace BookStore.Web.Controllers
 
         public async Task<IActionResult> Create()
         {
-            var order =  await this.orderService.CreateAsync(this.User.Identity.Name);
-            await this.orderService.AddBooksToOrder(order, this.User.Identity.Name);
+            var result =  await this.orderService.CreateAsync(this.User.Identity.Name);
+
+            if (result == false)
+            {
+                this.TempData.AddErrorMessage(WebConstants.OrderErrorMsg);
+            }
 
             return this.RedirectToAction(nameof(ShoppingCartController.Index),
                 "ShoppingCart");
@@ -39,7 +46,7 @@ namespace BookStore.Web.Controllers
 
         public async Task<IActionResult> Details(int id)
         {
-            var orderBooks = await this.orderService.GetOrderBooks(id);
+            var orderBooks = await this.orderService.GetOrderBooksAsync(id);
 
             return View(orderBooks);
         }

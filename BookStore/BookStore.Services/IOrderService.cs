@@ -10,12 +10,10 @@ namespace BookStore.Services
 {
     public interface IOrderService
     {
-        Task<Order> CreateAsync(string username);
-
-        Task<bool> AddBooksToOrder(Order order, string username);
+        Task<bool> CreateAsync(string username);
 
         IQueryable<OrderListingServiceModel> GetUserOrders(string username);
 
-        Task<IEnumerable<OrderBookListingServiceModel>> GetOrderBooks(int id);
+        Task<IEnumerable<OrderBookListingServiceModel>> GetOrderBooksAsync(int id);
     }
 }

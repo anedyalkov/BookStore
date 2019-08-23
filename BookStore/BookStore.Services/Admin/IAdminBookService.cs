@@ -23,7 +23,7 @@ namespace BookStore.Services.Admin
             DateTime createdOn,
             decimal price
             );
-        Task<TModel> GetByIdAsync<TModel>(int id) where TModel : class;
+        Task<TModel> GetByIdAsync<TModel>(int id);
 
         Task<bool> AddCategoryAsync(int id, int categoryId);
 

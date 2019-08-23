@@ -11,13 +11,11 @@ namespace BookStore.Services
     {
         IQueryable<BookListingServiceModel> GetAllActiveBooks();
 
-        Task<TModel> GetById<TModel>(int id) where TModel : class;
+        Task<BookDetailsServiceModel> GetByIdAsync(int id);
 
-        Task<TModel> Details<TModel>(int id) where TModel : class;
+        IQueryable<BookListingServiceModel> GetBooksFilter(int? categoryId);
 
-        Task<IQueryable<BookListingServiceModel>> GetBooksFilter(int? categoryId);
-
-        Task<IQueryable<BookListingServiceModel>> GetBooksByCategory(int categoryId);
+        IQueryable<BookListingServiceModel> GetBooksByCategory(int categoryId);
 
         IQueryable<BookListingServiceModel> FindBooks(string searchText);
         IQueryable<BookListingServiceModel> FindBooksByAuthor(string author);

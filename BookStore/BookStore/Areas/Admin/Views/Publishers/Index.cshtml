@@ -12,37 +12,47 @@
         <a asp-action=@nameof(PublishersController.Create) class="btn btn-primary">Добави издателство</a>
     </div>
 </div>
+@if (Model.Count() == 0)
+{
+    <h3 class="text-center mb-3">Няма добавени издателства. </h3>
+}
+else
+{
+    <div class="container justify-content-center">
+        <table class="table table-hover table-bordered table-striped ">
+            <thead>
+                <tr>
+                    <th>Номер</th>
+                    <th>Име</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var publisher in Model)
+                {
+                    <tr>
+                        <td>@publisher.Id</td>
+                        <td>@publisher.Name</td>
+                        <td class="justify-content-center d-flex">
+                            @if (publisher.IsDeleted == false)
+                            {
+                                <a asp-action=@nameof(PublishersController.Edit) asp-route-id=@publisher.Id class="btn btn-warning m-1">Редактирай</a>
+                                <a asp-action=@nameof(PublishersController.Hide) asp-route-id=@publisher.Id class="btn btn-danger m-1">Скрий</a>
+                                <a asp-action=@nameof(PublishersController.Show) asp-route-id=@publisher.Id class="btn btn-success m-1 disabled">Покажи</a>
+                            }
+                            else
+                            {
+                                <a asp-action=@nameof(PublishersController.Edit) asp-route-id=@publisher.Id class="btn btn-warning m-1">Редактирай</a>
+                                <a asp-action=@nameof(PublishersController.Hide) asp-route-id=@publisher.Id class="btn btn-danger m-1 disabled">Скрий</a>
+                                <a asp-action=@nameof(PublishersController.Show) asp-route-id=@publisher.Id class="btn btn-success m-1">Покажи</a>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
 
-<table class="table table-hover table-bordered table-striped table-responsive">
-    <thead>
-        <tr>
-            <th>Номер</th>
-            <th>Име</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var publisher in Model)
-        {
-            <tr>
-                <td>@publisher.Id</td>
-                <td>@publisher.Name</td>
-                <td>
-                    @if (publisher.IsDeleted == false)
-                    {
-                        <a asp-action=@nameof(PublishersController.Edit) asp-route-id=@publisher.Id class="btn btn-warning">Редактирай</a>
-                        <a asp-action=@nameof(PublishersController.Hide) asp-route-id=@publisher.Id class="btn btn-danger">Скрий</a>
-                        <a asp-action=@nameof(PublishersController.Show) asp-route-id=@publisher.Id class="btn btn-success disabled">Покажи</a>
-                    }
-                    else
-                    {
-                        <a asp-action=@nameof(PublishersController.Edit) asp-route-id=@publisher.Id class="btn btn-warning">Редактирай</a>
-                        <a asp-action=@nameof(PublishersController.Hide) asp-route-id=@publisher.Id class="btn btn-danger disabled">Скрий</a>
-                        <a asp-action=@nameof(PublishersController.Show) asp-route-id=@publisher.Id class="btn btn-success">Покажи</a>
-                    }
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+
 

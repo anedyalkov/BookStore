@@ -26,12 +26,6 @@ namespace BookStore.Controllers
         }
         public async Task<IActionResult> Index(IndexViewModel model, string author, string publisher)
         {
-            //if (this.User.Identity.IsAuthenticated)
-            //{
-            //    var books = await this.bookService.GetAllActiveBooks().ToListAsync();
-
-            //    return this.View(books);
-            //}
 
             if (this.User.Identity.IsAuthenticated)
             {
@@ -39,44 +33,42 @@ namespace BookStore.Controllers
                 {
                     var authorBooks = await this.bookService.FindBooksByAuthor(author).ToListAsync();
                     var categories = await this.categoryService.GetAllActiveCategories().ToListAsync();
-                    model.Books = authorBooks.ToList();
+                    model.Books = authorBooks;
                     model.Categories = categories;
                 }
                 else if (publisher != null)
                 {
                     var publisherBooks = await this.bookService.FindBooksByPublisher(publisher).ToListAsync();
                     var categories = await this.categoryService.GetAllActiveCategories().ToListAsync();
-                    model.Books = publisherBooks.ToList();
+                    model.Books = publisherBooks;
                     model.Categories = categories;
                 }
                 else
                 {
-                    var books = await this.bookService.GetBooksFilter(model.CategoryId);
+                    var books = await this.bookService.GetBooksFilter(model.CategoryId).ToListAsync();
                     var categories = await this.categoryService.GetAllActiveCategories().ToListAsync();
 
-                    model.Books = books.ToList();
+                    model.Books = books;
                     model.Categories = categories;
                 }
                
-
                 return this.View(model);
             }
 
             return this.View();
         }
 
-        public async Task<IActionResult> Search(string searchText = null)
+        public async Task<IActionResult> Search(string searchText)
         {
             var categories = await this.categoryService.GetAllActiveCategories().ToListAsync();
             var viewModel = new SearchViewModel
             {
-                SearchText = /*searchModel.SearchText*/searchText
+                SearchText = searchText
             };
 
-            var books = await this.bookService.FindBooks(/*searchModel.SearchText*/searchText).ToListAsync();
+            var books = await this.bookService.FindBooks(searchText).ToListAsync();
             viewModel.Books = books;
             viewModel.Categories = categories;
-
 
             return View(viewModel);
         }

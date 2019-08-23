@@ -22,10 +22,10 @@ namespace BookStore.Services
             this.bookService = bookService;
             this.userService = userService;
         }
-        public async Task<bool> AddBookToShoppingCart(int id, string username)
+        public async Task<bool> AddBookToShoppingCartAsync(int id, string username)
         {
             var book = this.db.Books.Find(id);
-            var user = await this.userService.GetByUsername(username);
+            var user = await this.userService.GetByUsernameAsync(username);
             var shoppingCart = this.db.ShoppingCarts.Find(user.ShoppingCartId);
 
             if (book == null || user == null)
@@ -50,9 +50,9 @@ namespace BookStore.Services
             return result > 0;
         }
 
-        public async Task<bool> RemoveBookFromShoppingCart(int id, string username)
+        public async Task<bool> RemoveBookFromShoppingCartAsync(int id, string username)
         {
-            var user = await this.userService.GetByUsername(username);
+            var user = await this.userService.GetByUsernameAsync(username);
 
             var shoppingCartBook = GetShoppingCartBook(id, user.ShoppingCartId);
 
@@ -67,10 +67,10 @@ namespace BookStore.Services
             return result > 0;
         }
 
-        public async Task<IEnumerable<ShoppingCartServiceModel>> GetUserCartBooks(string username)
+        public async Task<IEnumerable<ShoppingCartServiceModel>> GetUserCartBooksAsync(string username)
         {
             return await db.ShoppingCartBooks
-                .Where(shb => shb.ShoppingCart.User.UserName == username)
+                .Where(shb => shb.ShoppingCart.User.UserName == username && shb.Book.IsDeleted == false)
                 .Select(shb => new ShoppingCartServiceModel
                 {
                     Id = shb.BookId,
@@ -83,10 +83,10 @@ namespace BookStore.Services
                 }).ToListAsync();
         }
 
-        public async Task<bool> IncreaseQuantity(int id, string username)
+        public async Task<bool> IncreaseQuantityAsync(int id, string username)
         {
             var book = db.Books.Find(id);
-            var user = await this.userService.GetByUsername(username);
+            var user = await this.userService.GetByUsernameAsync(username);
 
             if (book == null || user == null)
             {
@@ -107,10 +107,10 @@ namespace BookStore.Services
 
         }
 
-        public async Task<bool> DecreaseQuantity(int id, string username)
+        public async Task<bool> DecreaseQuantityAsync(int id, string username)
         {
             var book = db.Books.Find(id);
-            var user = await this.userService.GetByUsername(username);
+            var user = await this.userService.GetByUsernameAsync(username);
 
             if (book == null || user == null)
             {
@@ -142,9 +142,9 @@ namespace BookStore.Services
             return this.db.ShoppingCartBooks.FirstOrDefault(shb => shb.ShoppingCartId == shoppingCartId && shb.BookId == bookId);
         }
 
-        public async Task<bool> RemoveBooksFromShoppingCart(string username)
+        public async Task<bool> RemoveBooksFromShoppingCartAsync(string username)
         {
-            var user = await this.userService.GetByUsername(username);
+            var user = await this.userService.GetByUsernameAsync(username);
 
             //if (user == null)
             //{

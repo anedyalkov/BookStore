@@ -12,38 +12,45 @@
         <a asp-action=@nameof(CategoriesController.Create) class="btn btn-primary">Добави категория</a>
     </div>
 </div>
-
-<table class="table table-hover table-bordered table-striped table-responsive">
-    <thead>
-        <tr>
-            <th>Номер</th>
-            <th>Име</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var category in Model)
-        {
-            <tr>
-                <td>@category.Id</td>
-                <td>@category.Name</td>
-                <td>
-                    @if (category.IsDeleted == false)
-                    {
-                        <a asp-action=@nameof(CategoriesController.Edit) asp-route-id=@category.Id class="btn btn-warning">Редактирай</a>
-                        <a asp-action=@nameof(CategoriesController.Hide) asp-route-id=@category.Id class="btn btn-danger">Скрий</a>
-                        <a asp-action=@nameof(CategoriesController.Show) asp-route-id=@category.Id class="btn btn-success disabled">Покажи</a>
-                    }
-                    else
-                    {
-                        <a asp-action=@nameof(CategoriesController.Edit) asp-route-id=@category.Id class="btn btn-warning">Редактирай</a>
-                        <a asp-action=@nameof(CategoriesController.Hide) asp-route-id=@category.Id class="btn btn-danger disabled">Скрий</a>
-                        <a asp-action=@nameof(CategoriesController.Show) asp-route-id=@category.Id class="btn btn-success">Покажи</a>
-                    }
-                    @*<a asp-action=@nameof(CategoriesController.Delete) class="btn btn-danger">Delete</a>*@
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+@if (Model.Count() == 0)
+{
+    <h3 class="text-center mb-3">Няма добавени категории. </h3>
+}
+else
+{
+    <div class="container justify-content-center">
+        <table class="table table-hover table-bordered table-striped ">
+            <thead>
+                <tr>
+                    <th>Номер</th>
+                    <th>Име</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var category in Model)
+                {
+                    <tr>
+                        <td>@category.Id</td>
+                        <td>@category.Name</td>
+                        <td class="justify-content-center d-flex">
+                            @if (category.IsDeleted == false)
+                            {
+                                <a asp-action=@nameof(CategoriesController.Edit) asp-route-id=@category.Id class="btn btn-warning m-1">Редактирай</a>
+                                <a asp-action=@nameof(CategoriesController.Hide) asp-route-id=@category.Id class="btn btn-danger m-1">Скрий</a>
+                                <a asp-action=@nameof(CategoriesController.Show) asp-route-id=@category.Id class="btn btn-success m-1 disabled">Покажи</a>
+                            }
+                            else
+                            {
+                                <a asp-action=@nameof(CategoriesController.Edit) asp-route-id=@category.Id class="btn btn-warning m-1">Редактирай</a>
+                                <a asp-action=@nameof(CategoriesController.Hide) asp-route-id=@category.Id class="btn btn-danger m-1 disabled">Скрий</a>
+                                <a asp-action=@nameof(CategoriesController.Show) asp-route-id=@category.Id class="btn btn-success m-1">Покажи</a>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
 

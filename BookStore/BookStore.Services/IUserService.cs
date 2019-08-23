@@ -8,6 +8,6 @@ namespace BookStore.Services
 {
     public interface IUserService
     {
-        Task<BookStoreUser> GetByUsername(string username);
+        Task<BookStoreUser> GetByUsernameAsync(string username);
     }
 }

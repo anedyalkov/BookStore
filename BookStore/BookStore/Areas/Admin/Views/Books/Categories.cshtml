@@ -3,7 +3,7 @@
     ViewData["Title"] = "Категории";
 }
 
-<h3>"@Model.Book.Title"</h3>
+<h3>Книга"@Model.Book.Title"</h3>
 @if (Model.BookCategories.Any())
 {
     <div class="row mb-3">
@@ -11,25 +11,21 @@
             <form method="post" asp-action=@nameof(BooksController.RemoveCategoryFromBook)>
                 <input hidden name="BookId" asp-for=@Model.Book.Id />
                 <select name="CategoryId" asp-items=Model.BookCategories class="form-control"></select>
-                <div>
-                    <button type="submit" class="btn btn-danger">Премахни категория</button>
-                </div>
+                <input type="submit" class="btn btn-block btn-danger" value="Премахни категория" />
             </form>
         </div>
     </div>
 }
 else
 {
-<h4 class="mb-3">Книгата няма налични категории.</h4>
+    <h4 class="mb-3">Книгата няма налични категории.</h4>
 }
 <div class="row">
     <div class="col-md-3">
         <form method="post" asp-action=@nameof(BooksController.AddCategoryToBook)>
             <input hidden name="BookId" asp-for=@Model.Book.Id />
             <select name="CategoryId" asp-items=Model.AllCategories class="form-control"></select>
-            <div>
-                <button type="submit" class="btn btn-success">Добави категория</button>
-            </div>
+            <input type="submit" class="btn btn-block btn-success" value="Добави категория" />
         </form>
     </div>
 </div>

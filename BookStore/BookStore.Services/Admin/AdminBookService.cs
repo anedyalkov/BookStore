@@ -55,7 +55,7 @@ namespace BookStore.Services.Admin
                 .To<AdminBookListingServiceModel>();
         }
 
-        public async Task<TModel> GetByIdAsync<TModel>(int id) where TModel : class
+        public async Task<TModel> GetByIdAsync<TModel>(int id)
         {
             return await db.Books
                  .Where(b => b.Id == id)

@@ -1,0 +1,18 @@
+﻿@model IndexViewModel
+<div class="mt-5">
+    <aside class="category-filters margin-bottom-20">
+        <h4>Книги</h4>
+        <ul class="cateogry-filters-list">
+            @foreach (var category in Model.Categories)
+            {
+                @if (category.Books.Any())
+                {
+                    <li> <a asp-controller="Home" asp-action="Index" asp-route-CategoryId="@category.Id" class="text-info font-weight-bold">@category.Name</a></li>
+                }
+            }
+        </ul>
+    </aside>
+</div>
+
+
+

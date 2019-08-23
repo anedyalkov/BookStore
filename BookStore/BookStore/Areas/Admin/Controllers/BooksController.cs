@@ -77,9 +77,9 @@ namespace BookStore.Web.Areas.Admin.Controllers
                 bookModel.Price
                 );
 
-            this.TempData.AddSuccessMessage(string.Format(
-               WebAdminConstants.BookCreatedMsg,
-               bookModel.Title));
+            //this.TempData.AddSuccessMessage(string.Format(
+            //   WebAdminConstants.BookCreatedMsg,
+            //   bookModel.Title));
 
             return this.RedirectToAction(nameof(Index));
         }
@@ -88,6 +88,12 @@ namespace BookStore.Web.Areas.Admin.Controllers
         {
             var book = await this.bookService
                .GetByIdAsync<AdminBookListingServiceModel>(id);
+
+            if (book == null)
+            {
+                this.TempData.AddErrorMessage(WebAdminConstants.BookNotFoundMsg);
+                return this.RedirectToAction(nameof(Index));
+            }
 
             return this.View(new BookCategoriesViewModel
             {
@@ -113,7 +119,7 @@ namespace BookStore.Web.Areas.Admin.Controllers
                 return this.RedirectToAction(nameof(Index));
             }
 
-            var category = await this.categoryService.GetByIdAsync<AdminCategoryListingServiceModel>(model.CategoryId);
+            var category = await this.categoryService.GetByIdAsync(model.CategoryId);
 
             if (category == null)
             {
@@ -121,12 +127,12 @@ namespace BookStore.Web.Areas.Admin.Controllers
                 return this.RedirectToAction(nameof(Index));
             }
 
-            var success =  await this.bookService.AddCategoryAsync(
+            var result =  await this.bookService.AddCategoryAsync(
                 model.BookId,
                 model.CategoryId);
 
 
-            if (!success)
+            if (result == false)
             {
                 this.TempData.AddErrorMessage(string.Format(
                     WebAdminConstants.CategoryAlreadyAddedToBookMsg,
@@ -136,10 +142,10 @@ namespace BookStore.Web.Areas.Admin.Controllers
                 return this.RedirectToAction(nameof(Categories), new { id = model.BookId });
             }
 
-            this.TempData.AddSuccessMessage(string.Format(
-                WebAdminConstants.CategoryAddedToBookMsg,
-                category.Name,
-                book.Title));
+            //this.TempData.AddSuccessMessage(string.Format(
+            //    WebAdminConstants.CategoryAddedToBookMsg,
+            //    category.Name,
+            //    book.Title));
 
             return this.RedirectToAction(nameof(Categories), new { id = model.BookId });
         }
@@ -154,7 +160,7 @@ namespace BookStore.Web.Areas.Admin.Controllers
                 return this.RedirectToAction(nameof(Index));
             }
 
-            var category = await this.categoryService.GetByIdAsync<AdminCategoryListingServiceModel>(model.CategoryId);
+            var category = await this.categoryService.GetByIdAsync(model.CategoryId);
 
             if (category == null)
             {
@@ -168,10 +174,10 @@ namespace BookStore.Web.Areas.Admin.Controllers
                 model.CategoryId);
 
 
-            this.TempData.AddSuccessMessage(string.Format(
-                WebAdminConstants.CategoryRemovedFromBookMsg,
-                category.Name,
-                book.Title));
+            //this.TempData.AddSuccessMessage(string.Format(
+            //    WebAdminConstants.CategoryRemovedFromBookMsg,
+            //    category.Name,
+            //    book.Title));
 
             return this.RedirectToAction(nameof(Categories), new { id = model.BookId });
         }
@@ -205,7 +211,6 @@ namespace BookStore.Web.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(int id, BookInputModel bookModel)
         {
-            // TODO : check if book exists
             if (!this.ModelState.IsValid)
             {
                 return this.View(bookModel);
@@ -226,9 +231,9 @@ namespace BookStore.Web.Areas.Admin.Controllers
                 bookModel.Price
                 );
 
-            this.TempData.AddSuccessMessage(string.Format(
-                WebAdminConstants.BookUpdatedMsg,
-                bookModel.Title));
+            //this.TempData.AddSuccessMessage(string.Format(
+            //    WebAdminConstants.BookUpdatedMsg,
+            //    bookModel.Title));
 
             return this.RedirectToAction(nameof(Index));
         }
@@ -247,9 +252,9 @@ namespace BookStore.Web.Areas.Admin.Controllers
             await this.bookService.HideAsync(id);
 
 
-            this.TempData.AddSuccessMessage(string.Format(
-              WebAdminConstants.BookHiddenMsg,
-              book.Title));
+            //this.TempData.AddSuccessMessage(string.Format(
+            //  WebAdminConstants.BookHiddenMsg,
+            //  book.Title));
 
             return this.RedirectToAction(nameof(Index));
         }
@@ -267,19 +272,19 @@ namespace BookStore.Web.Areas.Admin.Controllers
 
             await this.bookService.ShowAsync(id);
 
-            this.TempData.AddSuccessMessage(string.Format(
-              WebAdminConstants.BookShowedMsg,
-              book.Title));
+            //this.TempData.AddSuccessMessage(string.Format(
+            //  WebAdminConstants.BookShowedMsg,
+            //  book.Title));
 
             return this.RedirectToAction(nameof(Index));
         }
 
         private async Task<IEnumerable<SelectListItem>> GetAuthorsAsync()
         {
-            var result = await this.authorService.GetAllAvailableAuthors<AdminAuthorBasicServiceModel>()
+            var result = await this.authorService.GetAllAvailableAuthors()
             .Select(a => new SelectListItem
             {
-                Text = a.FullName,
+                Text = $"{a.FirstName} {a.LastName}",
                 Value = a.Id.ToString()
             })
             .OrderBy(a => a.Text)

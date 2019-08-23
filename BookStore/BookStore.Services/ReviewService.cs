@@ -38,11 +38,9 @@ namespace BookStore.Services
 
         }
 
-        public async Task<IQueryable<ReviewListingServiceModel>> GetReviewsByBook(int bookId)
+        public IQueryable<ReviewListingServiceModel> GetReviewsByBook(int bookId)
         {
-            var book = await bookService.GetById<BookListingServiceModel>(bookId);
-
-            var reviews = book.Reviews.AsQueryable();
+            var reviews = db.Reviews.Where(r => r.BookId == bookId).To<ReviewListingServiceModel>();
 
             return reviews
                 .Where(r => r.IsDeleted == false)

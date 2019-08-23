@@ -9,7 +9,7 @@ using System.Text;
 
 namespace BookStore.Services.Models.Books
 {
-    public class BookListingServiceModel : IMapFrom<Book>/*, IHaveCustomMappings*/
+    public class BookListingServiceModel : IMapFrom<Book>
     {
         public int Id { get; set; }
 
@@ -23,14 +23,7 @@ namespace BookStore.Services.Models.Books
 
         public bool IsDeleted { get; set; }
 
-        public IEnumerable<ReviewListingServiceModel> Reviews { get; set; } = new List<ReviewListingServiceModel>();
+        public IEnumerable<ReviewListingServiceModel> Reviews { get; set; } /*= new List<ReviewListingServiceModel>();*/
 
-        //public void CreateMappings(IProfileExpression configuration)
-        //{
-        //    configuration
-        //        .CreateMap<Book, BookListingServiceModel>()
-        //        .ForMember(dest => dest.Reviews, opts => opts.MapFrom(src => src.Reviews));
-
-        //}
     }
 }

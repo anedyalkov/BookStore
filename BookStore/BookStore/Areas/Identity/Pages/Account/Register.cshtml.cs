@@ -34,24 +34,24 @@ namespace BookStore.Web.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required]
-            [Display(Name = "Username")]
+            [Required(ErrorMessage = "Полето {0} е задължително.")]
+            [Display(Name = "Потребителско име")]
             public string Username { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = "Полето {0} е задължително.")]
             [EmailAddress]
-            [Display(Name = "Email")]
+            [Display(Name = "Имейл")]
             public string Email { get; set; }
 
             [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 3)]
+            [StringLength(50, ErrorMessage = "Полето {0} трябва да бъде мимимум {2} и максимум {1} символи дълга.", MinimumLength = 3)]
             [DataType(DataType.Password)]
-            [Display(Name = "Password")]
+            [Display(Name = "Парола")]
             public string Password { get; set; }
 
             [DataType(DataType.Password)]
-            [Display(Name = "Confirm password")]
-            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+            [Display(Name = "Потвърди парола")]
+            [Compare("Password", ErrorMessage = "Паролата и потвърждението на паролата трябва да съвпадат.")]
             public string ConfirmPassword { get; set; }
         }
 

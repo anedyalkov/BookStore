@@ -25,12 +25,12 @@ namespace BookStore.Services.Admin
             return db.Publishers.To<AdminPublisherListingServiceModel>();
         }
 
-        public IQueryable<AdminPublisherBasicServiceModel> GetAllAvailablePublishers()
+        public IQueryable<AdminPublisherListingServiceModel> GetAllAvailablePublishers()
         {
             return db.Publishers
                 .Where(p => p.IsDeleted == false)
                 .OrderBy(p => p.Name)
-                .To<AdminPublisherBasicServiceModel>();
+                .To<AdminPublisherListingServiceModel>();
         }
 
         public async Task<bool> CreateAsync(string name)
@@ -46,40 +46,38 @@ namespace BookStore.Services.Admin
 
         }
 
-        public async Task<AdminPublisherDetailsServiceModel> GetByIdAsync<AdminPublisherDetailsServiceModel>(int id)
+        public async Task<AdminPublisherListingServiceModel> GetByIdAsync(int id)
         {
             return await this.db.Publishers
                   .Where(c => c.Id == id)
-                  .To<AdminPublisherDetailsServiceModel>()
+                  .To<AdminPublisherListingServiceModel>()
                   .FirstOrDefaultAsync();
         }
 
 
         public async Task<bool> EditAsync(int id, string name)
         {
-            int result = 0;
             var publisher = db.Publishers.Find(id);
 
             if (publisher == null)
             {
-                return result > 0;
+                return false;
             }
 
             publisher.Name = name;
             db.Publishers.Update(publisher);
-            result = await db.SaveChangesAsync();
+            int result = await db.SaveChangesAsync();
 
             return result > 0;
         }
 
         public async Task<bool> HideAsync(int id)
         {
-            //int result = 0;
             var publisher = this.db.Publishers
                 .Include(p => p.Books)
                 .FirstOrDefault(x => x.Id == id);
 
-            if (publisher == null || publisher.Books.Any())
+            if (publisher == null || publisher.Books.Any(b => b.IsDeleted == false))
             {
                 return false;
             }
@@ -87,25 +85,24 @@ namespace BookStore.Services.Admin
             publisher.IsDeleted = true;
             publisher.DeletedOn = DateTime.UtcNow;
             db.Publishers.Update(publisher);
-            await db.SaveChangesAsync();
+            int result = await db.SaveChangesAsync();
 
-            return true;
+            return result > 0;
         }
 
         public async Task<bool> ShowAsync(int id)
         {
-            int result = 0;
             var publisher = this.db.Publishers.FirstOrDefault(x => x.Id == id);
 
             if (publisher == null)
             {
-                return result > 0;
+                return false;
             }
 
             publisher.IsDeleted = false;
             publisher.DeletedOn = null;
             db.Publishers.Update(publisher);
-            result = await db.SaveChangesAsync();
+            int result = await db.SaveChangesAsync();
 
             return result > 0;
         }

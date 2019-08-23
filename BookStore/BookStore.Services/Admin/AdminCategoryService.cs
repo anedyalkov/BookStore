@@ -27,12 +27,12 @@ namespace BookStore.Services.Admin
         }
 
 
-        public IQueryable<AdminCategoryBasicServiceModel> GetAllAvailableCategories()
+        public IQueryable<AdminCategoryListingServiceModel> GetAllAvailableCategories()
         {
             return db.Categories
                  .Where(c => c.IsDeleted == false)
                  .OrderBy(c => c.Name)
-                 .To<AdminCategoryBasicServiceModel>();
+                 .To<AdminCategoryListingServiceModel>();
         }
 
         public async Task<bool> CreateAsync(string name)
@@ -48,11 +48,11 @@ namespace BookStore.Services.Admin
 
         }
 
-        public async Task<AdminCategoryDetailsServiceModel> GetByIdAsync<AdminCategoryDetailsServiceModel>(int id)
+        public async Task<AdminCategoryListingServiceModel> GetByIdAsync(int id)
         {
             return await this.db.Categories
                   .Where(c => c.Id == id)
-                  .To<AdminCategoryDetailsServiceModel>()
+                  .To<AdminCategoryListingServiceModel>()
                   .FirstOrDefaultAsync();
         }
 
@@ -87,25 +87,24 @@ namespace BookStore.Services.Admin
             category.IsDeleted = true;
             category.DeletedOn = DateTime.UtcNow;
             db.Categories.Update(category);
-            await db.SaveChangesAsync();
+            int result = await db.SaveChangesAsync();
 
-            return true;
+            return result > 0;
         }
 
         public async Task<bool> ShowAsync(int id)
         {
-            int result = 0;
             var category = this.db.Categories.FirstOrDefault(x => x.Id == id);
 
             if (category == null)
             {
-                return result > 0;
+                return false;
             }
 
             category.IsDeleted = false;
             category.DeletedOn = null;
             db.Categories.Update(category);
-            result = await db.SaveChangesAsync();
+            int result = await db.SaveChangesAsync();
 
             return result > 0;
         }

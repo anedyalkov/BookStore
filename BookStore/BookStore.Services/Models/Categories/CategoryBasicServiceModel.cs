@@ -4,9 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace BookStore.Services.Admin.Models.Categories
+namespace BookStore.Services.Models.Categories
 {
-    public class AdminCategoryBasicServiceModel : IMapFrom<Category>
+    public class CategoryBasicServiceModel : IMapFrom<Category>
     {
         public int Id { get; set; }
 

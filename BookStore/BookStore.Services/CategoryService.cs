@@ -21,11 +21,11 @@ namespace BookStore.Services
         public IQueryable<CategoryListingServiceModel> GetAllActiveCategories()
         {
             return db.Categories
-               .Where(c => c.IsDeleted == false)
+               //.Where(c => c.IsDeleted == false)
                .To<CategoryListingServiceModel>();
         }
 
-        public async Task<CategoryListingServiceModel> GetByIdAsync<CategoryListingServiceModel>(int id)
+        public async Task<CategoryListingServiceModel> GetByIdAsync(int id)
         {
             return await this.db.Categories
                   .Where(c => c.Id == id)

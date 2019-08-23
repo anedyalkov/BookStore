@@ -14,6 +14,6 @@ namespace BookStore.Services
             string creatorId
             );
 
-        Task<IQueryable<ReviewListingServiceModel>> GetReviewsByBook(int bookId);
+        IQueryable<ReviewListingServiceModel> GetReviewsByBook(int bookId);
     }
 }

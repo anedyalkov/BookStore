@@ -9,13 +9,16 @@ namespace BookStore.Services
 {
     public interface IShoppingCartService
     {
-        Task<bool> AddBookToShoppingCart(int id, string username);
-        Task<bool> RemoveBookFromShoppingCart(int id, string username);
-        Task<IEnumerable<ShoppingCartServiceModel>> GetUserCartBooks(string username);
-        //IEnumerable<ShoppingCartBook> GetUserCartBooks(string username);
+        Task<bool> AddBookToShoppingCartAsync(int id, string username);
 
-        Task<bool> IncreaseQuantity(int id, string username);
-        Task<bool> DecreaseQuantity(int id, string username);
-        Task<bool> RemoveBooksFromShoppingCart(string username);
+        Task<bool> RemoveBookFromShoppingCartAsync(int id, string username);
+
+        Task<IEnumerable<ShoppingCartServiceModel>> GetUserCartBooksAsync(string username);
+
+        Task<bool> IncreaseQuantityAsync(int id, string username);
+
+        Task<bool> DecreaseQuantityAsync(int id, string username);
+
+        Task<bool> RemoveBooksFromShoppingCartAsync(string username);
     }
 }

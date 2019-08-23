@@ -4,10 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using BookStore.Data;
 using BookStore.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookStore.Web.Controllers
 {
+    [Authorize]
     public class ShoppingCartController : Controller
     {
 
@@ -19,33 +21,33 @@ namespace BookStore.Web.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            var userCartBooks = await this.shoppingCartservice.GetUserCartBooks(this.User.Identity.Name);
+            var userCartBooks = await this.shoppingCartservice.GetUserCartBooksAsync(this.User.Identity.Name);
             return View(userCartBooks);
         }
 
         public async Task<IActionResult> AddToShoppingCart(int id)
         {
-            await this.shoppingCartservice.AddBookToShoppingCart(id, User.Identity.Name);
+            await this.shoppingCartservice.AddBookToShoppingCartAsync(id, User.Identity.Name);
             return this.RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> IncreaseQuantity(int id)
         {
-            await this.shoppingCartservice.IncreaseQuantity(id, User.Identity.Name);
+            await this.shoppingCartservice.IncreaseQuantityAsync(id, User.Identity.Name);
 
             return this.RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> DecreaseQuantity(int id)
         {
-            await this.shoppingCartservice.DecreaseQuantity(id, User.Identity.Name);
+            await this.shoppingCartservice.DecreaseQuantityAsync(id, User.Identity.Name);
 
             return this.RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> RemoveFromShoppingCart(int id)
         {
-            await this.shoppingCartservice.RemoveBookFromShoppingCart(id, User.Identity.Name);
+            await this.shoppingCartservice.RemoveBookFromShoppingCartAsync(id, User.Identity.Name);
 
             return this.RedirectToAction(nameof(Index));
         }

@@ -20,17 +20,17 @@ namespace BookStore.Services.Admin
             this.db = db;
         }
 
-        public IQueryable<TModel> GetAllAuthors<TModel>() where TModel : class
+        public IQueryable<AdminAuthorListingServiceModel> GetAllAuthors()
         {
-            return db.Authors.To<TModel>();
+            return db.Authors.To<AdminAuthorListingServiceModel>();
         }
 
-        public IQueryable<TModel> GetAllAvailableAuthors<TModel>() where TModel : class
+        public IQueryable<AdminAuthorListingServiceModel> GetAllAvailableAuthors()
         {
             return db.Authors
                 .Where(a => a.IsDeleted == false)
                 .OrderBy(a => a.FullName)
-                .To<TModel>();
+                .To<AdminAuthorListingServiceModel>();
         }
 
         public async Task<bool> CreateAsync(string firstName, string lastName)
@@ -46,28 +46,27 @@ namespace BookStore.Services.Admin
             return result > 0;
         }
 
-        public async Task<TModel> GetByIdAsync<TModel>(int id) where TModel : class
+        public async Task<AdminAuthorListingServiceModel> GetByIdAsync(int id)
         {
             return await this.db.Authors
                  .Where(c => c.Id == id)
-                 .To<TModel>()
+                 .To<AdminAuthorListingServiceModel>()
                  .FirstOrDefaultAsync();
         }
 
         public async Task<bool> EditAsync(int id, string firstName, string lastName)
         {
-            int result = 0;
             var author = db.Authors.Find(id);
 
             if (author == null)
             {
-                return result > 0;
+                return false;
             }
 
             author.FirstName = firstName;
             author.LastName = lastName;
             db.Authors.Update(author);
-            result = await db.SaveChangesAsync();
+            int result = await db.SaveChangesAsync();
 
             return result > 0;
         }
@@ -78,7 +77,7 @@ namespace BookStore.Services.Admin
                 .Include(a => a.Books)
                 .FirstOrDefault(x => x.Id == id);
 
-            if (author == null || author.Books.Any())
+            if (author == null || author.Books.Any(b => b.IsDeleted == false))
             {
                 return false;
             }
@@ -93,18 +92,17 @@ namespace BookStore.Services.Admin
 
         public async Task<bool> ShowAsync(int id)
         {
-            int result = 0;
             var author = this.db.Authors.FirstOrDefault(x => x.Id == id);
 
             if (author == null)
             {
-                return result > 0;
+                return false;
             }
 
             author.IsDeleted = false;
             author.DeletedOn = null;
             db.Authors.Update(author);
-            result = await db.SaveChangesAsync();
+            int result = await db.SaveChangesAsync();
 
             return result > 0;
         }

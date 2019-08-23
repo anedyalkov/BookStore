@@ -9,8 +9,9 @@ namespace BookStore.Web.Areas.Admin.Models.Publishers
 {
     public class PublisherInputModel
     {
-        [Required]
+        [Required(ErrorMessage = (WebAdminConstants.ErrorMsg))]
         [MaxLength(DataConstants.PublisherNameMaxLength)]
+        [Display(Name = "Име")]
         public string Name { get; set; }
     }
 }

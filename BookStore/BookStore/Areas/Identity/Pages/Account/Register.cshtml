@@ -8,10 +8,10 @@
     <div class="modal-content">
         <div class="modal-heading mt-3">
             <div class="row d-flex justify-content-around">
-                <div class="col-sm-7 col-xs-7">
-                    <a asp-page="./Login" asp-route-returnUrl="@Model.ReturnUrl"><h4>Вход за потребители</h4></a>
+                <div class="col-sm-7">
+                    <a asp-page="./Login" asp-route-returnUrl="@Model.ReturnUrl"><h4 class="text-info">Вход за потребители</h4></a>
                 </div>
-                <div class="col-sm-5 col-xs-5">
+                <div class="col-sm-5">
                     <h4>Регистрация</h4>
                 </div>
             </div>
@@ -21,7 +21,7 @@
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
                     <input asp-for="Input.Username" class="form-control" placeholder="Потребителско име" />
-                    <span asp-validation-for="Input.Username" class="text-"></span>
+                    <span asp-validation-for="Input.Username" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <input asp-for="Input.Email" class="form-control" placeholder="E-mail адрес" />

@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Детайли за книгата";
+    List<CategoryBasicServiceModel> categories = Model.Categories.ToList();
 }
 
 <div class="row">
@@ -18,6 +19,10 @@
             <table class="table">
                 <tbody>
                     <tr>
+                        <td>Мнения: </td>
+                        <td>@Model.ReviewsCount</td>
+                    </tr>
+                    <tr>
                         <td>Автор</td>
                         <td><a asp-controller="Home" asp-action="Index" asp-route-author=@Model.AuthorFullName class="text-info">@Model.AuthorFullName</a></td>
                     </tr>
@@ -31,12 +36,24 @@
                     </tr>
                     <tr>
                         <td>Категории</td>
-                        <td><a href="/books/95-Технология-и-психология-на-бизнеса/">Технология и психология на бизнеса</a>, <a href="/books/220-Икономика/">Икономика</a>, <a href="/books/373-Книги/">Книги</a></td>
+                        <td>
+                            @for (int i = 0; i < categories.Count(); i++)
+                            {
+                                @if (i == categories.Count() - 1)
+                                {
+                                    <a asp-controller="Home" asp-action="Index" asp-route-CategoryId="@categories[i].Id" class="text-info">@categories[i].Name</a>
+                                }
+                                else
+                                {
+                                    <a asp-controller="Home" asp-action="Index" asp-route-CategoryId="@categories[i].Id" class="text-info">@categories[i].Name,</a>
+                                }
+                            }
+                        </td>
                     </tr>
                     <tr>
+                        <td></td>
                         <td><a asp-controller="ShoppingCart" asp-action="AddToShoppingCart" asp-route-id="@Model.Id" class="btn btn-primary btn-md"> Купи</a></td>
                     </tr>
-                   
                 </tbody>
             </table>
         </div>
@@ -47,10 +64,10 @@
     <div class=" col-md-7">
         <ul class="nav nav-tabs bg" id="myTab" role="tablist">
             <li class="nav-item">
-                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Описание</a>
+                <a class="nav-link active text-dark" id="description-tab" data-toggle="tab" href="#home" role="tab" aria-controls="description" aria-selected="true">Описание</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Мнения</a>
+                <a class="nav-link text-dark" id="review-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="review" aria-selected="false">Мнения</a>
             </li>
         </ul>
         <div class="tab-content" id="myTabContent">
@@ -59,16 +76,15 @@
 
                 @if (Model.Reviews.Count() == 0)
                 {
-                <p class="mt-3">Все още няма мнения за тази книга.</p>
+                    <p class="mt-3">Все още няма мнения за тази книга.</p>
                 }
-                <ul class="list-group mt-3 col-md-12 ">
+                <ul class="list-group mt-3 col-md-12">
                     @foreach (var review in Model.Reviews)
                     {
                         <li class="list-group-item mb-2">
                             <p class="font-italic"> от @review.CreatorUserName / дата: @review.CreatedOn.ToShortDateString()</p>
                             @review.Text
                         </li>
-
                     }
                 </ul>
                 <div class="mt-5 col-md-8">

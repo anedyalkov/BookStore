@@ -20,18 +20,17 @@ namespace BookStore.Services.Admin.Models.Books
 
         public string PublisherName { get; set; }
 
+        public DateTime CreatedOn { get; set; }
+
         public bool IsDeleted { get; set; }
 
-        public IEnumerable<AdminCategoryBasicServiceModel> Categories { get; set; } = new List<AdminCategoryBasicServiceModel>();
+        public IEnumerable<AdminCategoryListingServiceModel> Categories { get; set; } /*= new List<AdminCategoryListingServiceModel>();*/
 
         public void CreateMappings(IProfileExpression configuration)
         {
-            //var id = default(int);
-
             configuration
                 .CreateMap<Book, AdminBookListingServiceModel>()
                 .ForMember(dest => dest.Categories, opts => opts.MapFrom(src => src.CategoryBooks
-                //.Where(c => c.BookId == id)
                 .Select(c => c.Category)));
         }
     }

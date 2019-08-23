@@ -22,7 +22,7 @@ namespace BookStore.Web.Areas.Admin.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var authors = await this.authorService.GetAllAuthors<AdminAuthorListingServiceModel>().ToListAsync();
+            var authors = await this.authorService.GetAllAuthors().ToListAsync();
 
             return this.View(authors);
         }
@@ -43,10 +43,10 @@ namespace BookStore.Web.Areas.Admin.Controllers
 
             await this.authorService.CreateAsync(authorModel.FirstName, authorModel.LastName);
 
-            this.TempData.AddSuccessMessage(string.Format(
-               WebAdminConstants.AuthorCreatedMsg,
-               authorModel.FirstName,
-               authorModel.LastName));
+            //this.TempData.AddSuccessMessage(string.Format(
+            //   WebAdminConstants.AuthorCreatedMsg,
+            //   authorModel.FirstName,
+            //   authorModel.LastName));
 
             return this.RedirectToAction(nameof(Index));
         }
@@ -54,7 +54,7 @@ namespace BookStore.Web.Areas.Admin.Controllers
         public async Task<IActionResult> Edit(int id)
         {
             var author = await this.authorService
-                .GetByIdAsync<AdminAuthorDetailsServiceModel>(id);
+                .GetByIdAsync(id);
 
             if (author == null)
             {
@@ -72,7 +72,7 @@ namespace BookStore.Web.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(int id, AuthorInputModel authorModel)
         {
-            // TODO : check if uthor exists
+
             if (!this.ModelState.IsValid)
             {
                 return this.View(authorModel);
@@ -83,10 +83,10 @@ namespace BookStore.Web.Areas.Admin.Controllers
                 authorModel.FirstName,
                 authorModel.LastName);
 
-            this.TempData.AddSuccessMessage(string.Format(
-                WebAdminConstants.AuthorUpdatedMsg,
-                authorModel.FirstName,
-                authorModel.LastName));
+            //this.TempData.AddSuccessMessage(string.Format(
+            //    WebAdminConstants.AuthorUpdatedMsg,
+            //    authorModel.FirstName,
+            //    authorModel.LastName));
 
             return this.RedirectToAction(nameof(Index));
         }
@@ -94,7 +94,7 @@ namespace BookStore.Web.Areas.Admin.Controllers
         public async Task<IActionResult> Hide(int id)
         {
             var author = await this.authorService
-                .GetByIdAsync<AdminAuthorDetailsServiceModel>(id);
+                .GetByIdAsync(id);
 
             if (author == null)
             {
@@ -111,10 +111,10 @@ namespace BookStore.Web.Areas.Admin.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            this.TempData.AddSuccessMessage(string.Format(
-              WebAdminConstants.AuthorHiddenMsg,
-              author.FirstName,
-              author.LastName));
+            //this.TempData.AddSuccessMessage(string.Format(
+            //  WebAdminConstants.AuthorHiddenMsg,
+            //  author.FirstName,
+            //  author.LastName));
 
             return this.RedirectToAction(nameof(Index));
         }
@@ -122,7 +122,7 @@ namespace BookStore.Web.Areas.Admin.Controllers
         public async Task<IActionResult> Show(int id)
         {
             var author = await this.authorService
-             .GetByIdAsync<AdminAuthorDetailsServiceModel>(id);
+             .GetByIdAsync(id);
 
             if (author == null)
             {
@@ -132,10 +132,10 @@ namespace BookStore.Web.Areas.Admin.Controllers
 
             await this.authorService.ShowAsync(id);
 
-            this.TempData.AddSuccessMessage(string.Format(
-              WebAdminConstants.AuthorShowedMsg,
-              author.FirstName,
-              author.LastName));
+            //this.TempData.AddSuccessMessage(string.Format(
+            //  WebAdminConstants.AuthorShowedMsg,
+            //  author.FirstName,
+            //  author.LastName));
 
             return this.RedirectToAction(nameof(Index));
         }

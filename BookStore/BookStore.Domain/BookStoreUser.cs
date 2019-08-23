@@ -12,6 +12,6 @@ namespace BookStore.Domain
         public ShoppingCart ShoppingCart { get; set; }
 
         public ICollection<Order> Orders { get; set; } = new List<Order>();
-        public virtual ICollection<Review> Reviews { get; set; } = new List<Review>();
+        public ICollection<Review> Reviews { get; set; } = new List<Review>();
     }
 }

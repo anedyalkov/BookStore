@@ -35,39 +35,29 @@ namespace BookStore.Services
                 .To<BookListingServiceModel>();
         }
 
-        public async Task<TModel> GetById<TModel>(int id) where TModel : class
+        public async Task<BookDetailsServiceModel> GetByIdAsync(int id)
         {
             return await db.Books
               .Where(b => b.Id == id)
-              .To<TModel>()
+              .To<BookDetailsServiceModel>()
               .FirstOrDefaultAsync();
         }
-        public async Task<IQueryable<BookListingServiceModel>> GetBooksFilter(int? categoryId)
+        public IQueryable<BookListingServiceModel> GetBooksFilter(int? categoryId)
         {
 
             if (categoryId != null)
             {
-                return await this.GetBooksByCategory(categoryId.Value);
+                return this.GetBooksByCategory(categoryId.Value);
             }
 
             return this.GetAllActiveBooks();
         }
 
-        public async Task<IQueryable<BookListingServiceModel>> GetBooksByCategory(int categoryId)
+        public IQueryable<BookListingServiceModel> GetBooksByCategory(int categoryId)
         {
-            var category = await categoryService.GetByIdAsync<CategoryListingServiceModel>(categoryId);
-
-            var books = (IQueryable<BookListingServiceModel>)category.Books.AsQueryable();
+            var books = db.Books.Where(b => b.CategoryBooks.Any(cb => cb.CategoryId == categoryId)).To<BookListingServiceModel>();
 
             return books.Where(b => b.IsDeleted == false);
-        }
-
-        public async Task<TModel> Details<TModel>(int id) where TModel : class
-        {
-            return await db.Books
-               .Where(b => b.Id == id)
-               .To<TModel>()
-               .FirstOrDefaultAsync();
         }
 
         public IQueryable<BookListingServiceModel> FindBooks(string searchText)
@@ -76,6 +66,7 @@ namespace BookStore.Services
 
             return this.db
             .Books
+            .Where(b => b.IsDeleted == false)
             .Where(b => b.Title.ToLower().Contains((searchText).ToLower()) 
             || b.Publisher.Name.ToLower().Contains((searchText).ToLower()) 
             || b.Author.FullName.ToLower().Contains((searchText).ToLower()))

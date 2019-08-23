@@ -10,6 +10,7 @@ using BookStore.Web.Infrastructure.Extensions;
 using BookStore.Web.Models.Books;
 using BookStore.Web.Models.Reviews;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace BookStore.Web.Controllers
 {
@@ -17,15 +18,17 @@ namespace BookStore.Web.Controllers
     {
         private readonly IBookService bookService;
         private readonly IReviewService reviewService;
+        private readonly ICategoryService categoryService;
 
-        public BooksController(IBookService bookService,IReviewService reviewService)
+        public BooksController(IBookService bookService,IReviewService reviewService,ICategoryService categoryService)
         {
             this.bookService = bookService;
             this.reviewService = reviewService;
+            this.categoryService = categoryService;
         }
         public async Task<IActionResult> Details(int id)
         {
-            var book = await this.bookService.GetById<BookDetailsServiceModel>(id);
+            var book = await this.bookService.GetByIdAsync(id);
 
             if (book == null)
             {
@@ -33,11 +36,10 @@ namespace BookStore.Web.Controllers
                 return this.RedirectToAction(nameof(HomeController.Index), "Home");
             }
 
-            var reviews = await reviewService.GetReviewsByBook(id);
-            book.Reviews = reviews.ToList();
-            var bookDetails = await this.bookService.Details<BookDetailsServiceModel>(id);
+            var reviews = await reviewService.GetReviewsByBook(id).ToListAsync();
+            book.Reviews = reviews;
 
-            return this.View(bookDetails);
+            return this.View(book);
         }
 
         [HttpPost]

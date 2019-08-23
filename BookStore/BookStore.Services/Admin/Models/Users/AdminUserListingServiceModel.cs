@@ -14,5 +14,6 @@ namespace BookStore.Services.Admin.Models.Users
 
         public string Email { get; set; }
 
+        public IEnumerable<string> Roles { get; set; }
     }
 }

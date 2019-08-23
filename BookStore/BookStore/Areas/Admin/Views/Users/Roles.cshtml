@@ -1,0 +1,50 @@
+﻿@model UserRolesViewModel
+@{
+    ViewData["Title"] = "Роли";
+}
+
+<h3>Потребител "@Model.User.UserName"</h3>
+@if (Model.UserRoles.Any())
+{
+    @if (Model.User.UserName == "admin")
+    {
+        <div class="row mb-3">
+            <div class="col-md-3">
+                <form method="post" asp-controller="Users" asp-action=@nameof(UsersController.RemoveFromRole)>
+                    <input hidden name="UserId" asp-for=@Model.User.Id />
+                    <select name="Role" asp-items="Model.Roles" class="form-control"></select>
+                    <input type="submit" class="btn btn-block btn-danger" disabled value="Премахни от роля" />
+                </form>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="row mb-3">
+            <div class="col-md-3">
+                <form method="post" asp-controller="Users" asp-action=@nameof(UsersController.RemoveFromRole)>
+                    <input hidden name="UserId" asp-for=@Model.User.Id />
+                    <select name="Role" asp-items="Model.Roles" class="form-control"></select>
+                    <input type="submit" class="btn btn-block btn-danger" value="Премахни от роля" />
+                </form>
+            </div>
+        </div>
+    }
+
+}
+else
+{
+    <h4 class="mb-3">Потребителят няма налични роли.</h4>
+}
+<div class="row">
+    <div class="col-md-3">
+        <form method="post" asp-controller="Users" asp-action=@nameof(UsersController.AddToRole)>
+            <input hidden name="UserId" asp-for=@Model.User.Id />
+            <select name="Role" asp-items="Model.Roles" class="form-control"></select>
+            <input type="submit" class="btn btn-block btn-primary" value="Добави към роля" />
+        </form>
+    </div>
+</div>
+
+
+

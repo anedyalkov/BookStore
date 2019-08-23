@@ -15,16 +15,13 @@ namespace BookStore.Services.Models.Categories
 
         public string Name { get; set; }
 
-        public IEnumerable<BookListingServiceModel> Books { get; set; } = new List<BookListingServiceModel>();
+        public IEnumerable<BookListingServiceModel> Books { get; set; }/* = new List<BookListingServiceModel>();*/
 
         public void CreateMappings(IProfileExpression configuration)
         {
-            //var id = default(int);
-
             configuration
                 .CreateMap<Category, CategoryListingServiceModel>()
                 .ForMember(dest => dest.Books, opts => opts.MapFrom(src => src.CategoryBooks
-                //.Where(c => c.BookId == id)
                 .Select(cb => cb.Book)));
         }
     }

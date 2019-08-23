@@ -9,16 +9,16 @@ namespace BookStore.Services.Infrastructure.Extensions
 {
     public static class EnumExtensions
     {
-        public static string GetDisplayName(this Enum enu)
+        public static string GetDisplayName(this Enum en)
         {
-            var attr = GetDisplayAttribute(enu);
-            return attr != null ? attr.Name : enu.ToString();
+            var attr = GetDisplayAttribute(en);
+            return attr != null ? attr.Name : en.ToString();
         }
 
-        public static string GetDescription(this Enum enu)
+        public static string GetDescription(this Enum en)
         {
-            var attr = GetDisplayAttribute(enu);
-            return attr != null ? attr.Description : enu.ToString();
+            var attr = GetDisplayAttribute(en);
+            return attr != null ? attr.Description : en.ToString();
         }
 
         private static DisplayAttribute GetDisplayAttribute(object value)

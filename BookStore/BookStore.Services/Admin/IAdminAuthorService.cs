@@ -9,12 +9,12 @@ namespace BookStore.Services.Admin
 {
     public interface IAdminAuthorService
     {
-        IQueryable<TModel> GetAllAuthors<TModel>() where TModel : class;
-        IQueryable<TModel> GetAllAvailableAuthors<TModel>() where TModel : class;
+        IQueryable<AdminAuthorListingServiceModel> GetAllAuthors();
+        IQueryable<AdminAuthorListingServiceModel> GetAllAvailableAuthors();
 
         Task<bool> CreateAsync(string firstName, string lastName);
 
-        Task<TModel> GetByIdAsync<TModel>(int id) where TModel : class;
+        Task<AdminAuthorListingServiceModel> GetByIdAsync(int id);
 
         Task<bool> EditAsync(int id, string firstName, string lastName);
 

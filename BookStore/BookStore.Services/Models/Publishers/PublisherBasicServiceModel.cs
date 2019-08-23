@@ -9,6 +9,6 @@ namespace BookStore.Services.Models.Publishers
 {
     public class PublisherBasicServiceModel : IMapFrom<Publisher>
     {
-        public IEnumerable<BookListingServiceModel> Books { get; set; } = new List<BookListingServiceModel>();
+        public IEnumerable<BookListingServiceModel> Books { get; set; } /*= new List<BookListingServiceModel>();*/
     }
 }

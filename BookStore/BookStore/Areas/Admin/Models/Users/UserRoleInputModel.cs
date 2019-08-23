@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BookStore.Web.Areas.Admin.Models.Users
 {
-    public class AddRemoveUserRoleInputModel
+    public class UserRoleInputModel
     {
         [Required]
         public string UserId { get; set; }

@@ -12,34 +12,43 @@ namespace BookStore.Web.Areas.Admin.Models.Books
     public class BookInputModel
     {
 
-        [Required]
-        [Display(Name = "Заглавие")]
+        [Required(ErrorMessage = (WebAdminConstants.ErrorMsg))]
         [MaxLength(DataConstants.BookTitleMaxLength)]
+        [Display(Name = "Заглавие")]
         public string Title { get; set; }
 
+        [Required(ErrorMessage = (WebAdminConstants.ErrorMsg))]
+        [Display(Name = "Автор")]
         public int AuthorId { get; set; }
 
+        [Required(ErrorMessage = (WebAdminConstants.ErrorMsg))]
+        [Display(Name = "Издателство")]
         public int PublisherId { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = (WebAdminConstants.ErrorMsg))]
         [MaxLength(DataConstants.BookLanguageMaxLength)]
+        [Display(Name = "Език")]
         public string Language { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = (WebAdminConstants.ErrorMsg))]
         [MaxLength(DataConstants.BookDescriptionMaxLength)]
+        [Display(Name = "Описание")]
         public string Description { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = (WebAdminConstants.ErrorMsg))]
+        [Display(Name = "Снимка")]
         public IFormFile Image { get; set; }
 
-        [Range(0, double.MaxValue, ErrorMessage = "Цената трябва да бъде положително число.")]
+        [Required(ErrorMessage = (WebAdminConstants.ErrorMsg))]
+        [Range(0.1, double.MaxValue, ErrorMessage = "Цената трябва да бъде положително число.")]
+        [Display(Name = "Цена")]
         public decimal Price { get; set; }
 
-        [Required]
         [DataType(DataType.Date)]
+        [Display(Name = "Дата на създаване")]
         public DateTime? CreatedOn { get; set; }
 
-        public IEnumerable<SelectListItem> Authors { get; set; }
-        public IEnumerable<SelectListItem> Publishers { get; set; }
+        public IEnumerable<SelectListItem> Authors { get; set; } = new List<SelectListItem>();
+        public IEnumerable<SelectListItem> Publishers { get; set; } = new List<SelectListItem>();
     }
 }

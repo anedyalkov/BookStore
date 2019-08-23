@@ -19,7 +19,7 @@ namespace BookStore.Services
             this.db = db;
             this.userManager = userManager;
         }
-        public async Task<BookStoreUser> GetByUsername(string username) 
+        public async Task<BookStoreUser> GetByUsernameAsync(string username) 
         {
             return await this.userManager.FindByNameAsync(username);
         }

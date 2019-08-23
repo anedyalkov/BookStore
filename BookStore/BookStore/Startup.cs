@@ -81,6 +81,7 @@ namespace BookStore
             services.AddTransient<IAdminPublisherService, AdminPublisherService>();
             services.AddTransient<IAdminAuthorService, AdminAuthorService>();
             services.AddTransient<IAdminBookService, AdminBookService>();
+            services.AddTransient<IAdminReviewService, AdminReviewService>();
             services.AddTransient<IBookService, BookService>();
             services.AddTransient<ICategoryService, CategoryService>();
             services.AddTransient<IReviewService, ReviewService>();
@@ -88,12 +89,12 @@ namespace BookStore
             services.AddTransient<IShoppingCartService, ShoppingCartService>();
             services.AddTransient<IOrderService, OrderService>();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            //services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddMvc(options =>
             {
                 options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
-            });
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
