@@ -21,7 +21,7 @@ namespace BookStore.Services
         public IQueryable<CategoryListingServiceModel> GetAllActiveCategories()
         {
             return db.Categories
-               //.Where(c => c.IsDeleted == false)
+               .Where(c => c.IsDeleted == false)
                .To<CategoryListingServiceModel>();
         }
 

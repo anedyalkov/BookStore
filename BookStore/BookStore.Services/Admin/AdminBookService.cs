@@ -68,7 +68,7 @@ namespace BookStore.Services.Admin
           
             var category = this.db.Categories.Find(categoryId);
             var book = this.db.Books.Find(bookId);
-            var categoryBooks = this.db.CategoryBooks.Find(categoryId,bookId);
+            var categoryBooks = this.db.CategoryBooks.Find(categoryId, bookId);
 
             if (book == null
                 || category == null
@@ -95,8 +95,8 @@ namespace BookStore.Services.Admin
             }
 
             this.db.Remove(bookCategory);
-            await this.db.SaveChangesAsync();
-            return true;
+            int result = await this.db.SaveChangesAsync();
+            return result > 0;         
         }
 
 

@@ -41,7 +41,12 @@ namespace BookStore.Web.Areas.Admin.Controllers
                 return this.View(authorModel);
             }
 
-            await this.authorService.CreateAsync(authorModel.FirstName, authorModel.LastName);
+            var result = await this.authorService.CreateAsync(authorModel.FirstName, authorModel.LastName);
+
+            if (result == false)
+            {
+                // TODO errormessage
+            }
 
             //this.TempData.AddSuccessMessage(string.Format(
             //   WebAdminConstants.AuthorCreatedMsg,
@@ -78,10 +83,15 @@ namespace BookStore.Web.Areas.Admin.Controllers
                 return this.View(authorModel);
             }
 
-            await this.authorService.EditAsync(
+            var result = await this.authorService.EditAsync(
                 id,
                 authorModel.FirstName,
                 authorModel.LastName);
+
+            if (result == false)
+            {
+                // TODO errormessage
+            }
 
             //this.TempData.AddSuccessMessage(string.Format(
             //    WebAdminConstants.AuthorUpdatedMsg,

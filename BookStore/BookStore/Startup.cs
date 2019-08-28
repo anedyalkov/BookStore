@@ -85,7 +85,6 @@ namespace BookStore
             services.AddTransient<IBookService, BookService>();
             services.AddTransient<ICategoryService, CategoryService>();
             services.AddTransient<IReviewService, ReviewService>();
-            services.AddTransient<IPublisherService, PublisherService>();
             services.AddTransient<IShoppingCartService, ShoppingCartService>();
             services.AddTransient<IOrderService, OrderService>();
 

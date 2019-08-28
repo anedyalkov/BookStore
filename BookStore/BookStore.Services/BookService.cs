@@ -9,7 +9,6 @@ using BookStore.Services.Admin;
 using BookStore.Services.Mapping;
 using BookStore.Services.Models.Books;
 using BookStore.Services.Models.Categories;
-using BookStore.Services.Models.Publishers;
 using Microsoft.EntityFrameworkCore;
 
 namespace BookStore.Services
@@ -17,16 +16,10 @@ namespace BookStore.Services
     public class BookService : IBookService
     {
         private readonly BookStoreDbContext db;
-        private readonly ICategoryService categoryService;
-        private readonly IPublisherService publisherService;
 
-        public BookService(BookStoreDbContext db,
-            ICategoryService categoryService,
-            IPublisherService publisherService)
+        public BookService(BookStoreDbContext db)
         {
             this.db = db;
-            this.categoryService = categoryService;
-            this.publisherService = publisherService;
         }
         public IQueryable<BookListingServiceModel> GetAllActiveBooks()
         {
@@ -42,9 +35,9 @@ namespace BookStore.Services
               .To<BookDetailsServiceModel>()
               .FirstOrDefaultAsync();
         }
+
         public IQueryable<BookListingServiceModel> GetBooksFilter(int? categoryId)
         {
-
             if (categoryId != null)
             {
                 return this.GetBooksByCategory(categoryId.Value);

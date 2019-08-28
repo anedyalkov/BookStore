@@ -23,11 +23,13 @@ namespace BookStore.Services.Admin
 
         public IQueryable<AdminCategoryListingServiceModel> GetAllCategories()
         {
-            return db.Categories.To<AdminCategoryListingServiceModel>();
+            return db.Categories
+                .OrderBy(c => c.Name)
+                .To<AdminCategoryListingServiceModel>();
         }
 
 
-        public IQueryable<AdminCategoryListingServiceModel> GetAllAvailableCategories()
+        public IQueryable<AdminCategoryListingServiceModel> GetAllActiveCategories()
         {
             return db.Categories
                  .Where(c => c.IsDeleted == false)
@@ -64,7 +66,7 @@ namespace BookStore.Services.Admin
 
             if (category == null)
             {
-                return result > 0;
+                return false;
             }
 
             category.Name = name;

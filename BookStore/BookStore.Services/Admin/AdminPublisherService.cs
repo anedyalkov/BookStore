@@ -22,10 +22,12 @@ namespace BookStore.Services.Admin
 
         public IQueryable<AdminPublisherListingServiceModel> GetAllPublishers()
         {
-            return db.Publishers.To<AdminPublisherListingServiceModel>();
+            return db.Publishers
+                .OrderBy(c => c.Name)
+                .To<AdminPublisherListingServiceModel>();
         }
 
-        public IQueryable<AdminPublisherListingServiceModel> GetAllAvailablePublishers()
+        public IQueryable<AdminPublisherListingServiceModel> GetAllActivePublishers()
         {
             return db.Publishers
                 .Where(p => p.IsDeleted == false)

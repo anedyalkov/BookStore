@@ -22,6 +22,8 @@ namespace BookStore.Services.Admin.Models.Books
 
         public DateTime CreatedOn { get; set; }
 
+        public decimal Price { get; set; }
+
         public bool IsDeleted { get; set; }
 
         public IEnumerable<AdminCategoryListingServiceModel> Categories { get; set; } /*= new List<AdminCategoryListingServiceModel>();*/

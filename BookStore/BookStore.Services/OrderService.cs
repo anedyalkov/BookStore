@@ -25,8 +25,6 @@ namespace BookStore.Services
             this.shoppingCartService = shoppingCartService;
         }
 
-       
-
         public async Task<bool> CreateAsync(string username)
         {
             var user = await userService.GetByUsernameAsync(username);

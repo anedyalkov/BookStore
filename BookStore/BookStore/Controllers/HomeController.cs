@@ -8,7 +8,6 @@ using BookStore.Models;
 using BookStore.Services;
 using Microsoft.EntityFrameworkCore;
 using BookStore.Web.Models.Home;
-using BookStore.Services.Models.Publishers;
 
 namespace BookStore.Controllers
 {
@@ -16,13 +15,11 @@ namespace BookStore.Controllers
     {
         private readonly IBookService bookService;
         private readonly ICategoryService categoryService;
-        private readonly IPublisherService publisherService;
 
-        public HomeController(IBookService bookService, ICategoryService categoryService, IPublisherService publisherService)
+        public HomeController(IBookService bookService, ICategoryService categoryService)
         {
             this.bookService = bookService;
             this.categoryService = categoryService;
-            this.publisherService = publisherService;
         }
         public async Task<IActionResult> Index(IndexViewModel model, string author, string publisher)
         {

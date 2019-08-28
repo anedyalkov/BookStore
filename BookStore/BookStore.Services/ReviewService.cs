@@ -14,12 +14,10 @@ namespace BookStore.Services
     public class ReviewService : IReviewService
     {
         private readonly BookStoreDbContext db;
-        private readonly IBookService bookService;
 
-        public ReviewService(BookStoreDbContext db, IBookService bookService)
+        public ReviewService(BookStoreDbContext db)
         {
             this.db = db;
-            this.bookService = bookService;
         }
         public async Task<bool> CreateAsync(int bookId, string text, string creatorId)
         {

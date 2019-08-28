@@ -12,8 +12,6 @@ namespace BookStore.Services.Admin.Models.Categories
 
         public string Name { get; set; }
 
-        public bool IsDeleted { get; set; }
-
-        
+        public bool IsDeleted { get; set; }        
     }
 }

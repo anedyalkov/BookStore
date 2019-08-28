@@ -281,7 +281,7 @@ namespace BookStore.Web.Areas.Admin.Controllers
 
         private async Task<IEnumerable<SelectListItem>> GetAuthorsAsync()
         {
-            var result = await this.authorService.GetAllAvailableAuthors()
+            var result = await this.authorService.GetAllActiveAuthors()
             .Select(a => new SelectListItem
             {
                 Text = $"{a.FirstName} {a.LastName}",
@@ -295,7 +295,7 @@ namespace BookStore.Web.Areas.Admin.Controllers
 
         private async Task<IEnumerable<SelectListItem>> GetCategoriesAsync()
         {
-            return await this.categoryService.GetAllAvailableCategories()
+            return await this.categoryService.GetAllActiveCategories()
             .Select(c => new SelectListItem
             {
                 Text = c.Name,
@@ -306,7 +306,7 @@ namespace BookStore.Web.Areas.Admin.Controllers
 
         private async Task<IEnumerable<SelectListItem>> GetPublishersAsync()
         {
-            return await this.publisherService.GetAllAvailablePublishers()
+            return await this.publisherService.GetAllActivePublishers()
             .Select(p => new SelectListItem
             {
                 Text = p.Name,

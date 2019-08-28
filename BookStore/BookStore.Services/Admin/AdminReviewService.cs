@@ -28,7 +28,7 @@ namespace BookStore.Services.Admin
                  .FirstOrDefaultAsync();
         }
 
-        public IQueryable<AdminReviewListingServiceModel> GetReviews()
+        public IQueryable<AdminReviewListingServiceModel> GetAllReviews()
         {
             return db.Reviews
                 .To<AdminReviewListingServiceModel>();

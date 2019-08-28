@@ -9,9 +9,8 @@ namespace BookStore.Services.Admin
 {
     public interface IAdminReviewService
     {
-         IQueryable<AdminReviewListingServiceModel> GetReviews();
-         Task<bool> RemoveAsync(int id);
-         Task<AdminReviewListingServiceModel> GetByIdAsync(int id);
-
+        Task<AdminReviewListingServiceModel> GetByIdAsync(int id);
+        IQueryable<AdminReviewListingServiceModel> GetAllReviews();
+        Task<bool> RemoveAsync(int id);
     }
 }

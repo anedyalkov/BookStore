@@ -39,7 +39,12 @@ namespace BookStore.Web.Areas.Admin.Controllers
                 return this.View(publisherModel);
             }
 
-            await this.publisherService.CreateAsync(publisherModel.Name);
+            var result = await this.publisherService.CreateAsync(publisherModel.Name);
+
+            if (result == false)
+            {
+                // TODO errormessage
+            }
 
             //this.TempData.AddSuccessMessage(string.Format(
             //   WebAdminConstants.PublisherCreatedMsg,
@@ -73,9 +78,14 @@ namespace BookStore.Web.Areas.Admin.Controllers
                 return this.View(publisherModel);
             }
 
-            await this.publisherService.EditAsync(
+            var result = await this.publisherService.EditAsync(
                 id,
                 publisherModel.Name);
+
+            if (result == false)
+            {
+                // TODO errormessage
+            }
 
             //this.TempData.AddSuccessMessage(string.Format(
             //    WebAdminConstants.PublisherUpdatedMsg,

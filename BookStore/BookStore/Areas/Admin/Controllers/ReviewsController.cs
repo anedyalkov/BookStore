@@ -20,7 +20,7 @@ namespace BookStore.Web.Areas.Admin.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            var reviews = await this.reviewService.GetReviews().ToListAsync();
+            var reviews = await this.reviewService.GetAllReviews().ToListAsync();
 
             return this.View(reviews);
         }

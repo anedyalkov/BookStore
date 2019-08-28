@@ -12,7 +12,7 @@ namespace BookStore.Services.Admin
     {
         IQueryable<AdminPublisherListingServiceModel> GetAllPublishers();
        
-        IQueryable<AdminPublisherListingServiceModel> GetAllAvailablePublishers();
+        IQueryable<AdminPublisherListingServiceModel> GetAllActivePublishers();
 
         Task<bool> CreateAsync(string name);
 

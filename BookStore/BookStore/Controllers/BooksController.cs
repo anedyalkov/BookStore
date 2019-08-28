@@ -9,11 +9,13 @@ using BookStore.Services.Models.Books;
 using BookStore.Web.Infrastructure.Extensions;
 using BookStore.Web.Models.Books;
 using BookStore.Web.Models.Reviews;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace BookStore.Web.Controllers
 {
+    [Authorize]
     public class BooksController : Controller
     {
         private readonly IBookService bookService;
