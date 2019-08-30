@@ -1,11 +1,4 @@
-﻿using AutoMapper;
-using BookStore.Domain;
-using BookStore.Services.Infrastructure.Extensions;
-using BookStore.Services.Mapping;
-using System;
-
-
-namespace BookStore.Services.Models.Orders
+﻿namespace BookStore.Services.Models.Orders
 {
     public class OrderBookListingServiceModel 
     {

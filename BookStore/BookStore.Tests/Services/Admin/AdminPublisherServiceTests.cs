@@ -5,10 +5,8 @@ using BookStore.Services.Admin.Models.Publishers;
 using BookStore.Services.Mapping;
 using BookStore.Tests.Common;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -17,6 +15,7 @@ namespace BookStore.Tests.Services.Admin
     public class AdminPublisherServiceTests
     {
         private IAdminPublisherService publisherService;
+
         public AdminPublisherServiceTests()
         {
             MapperInitializer.InitializeMapper();
@@ -54,7 +53,6 @@ namespace BookStore.Tests.Services.Admin
 
 
             List<AdminPublisherListingServiceModel> expectedData = GetTestData()
-                .OrderBy(c => c.Name)
                 .To<AdminPublisherListingServiceModel>().ToList();
 
             List<AdminPublisherListingServiceModel> actualData = await this.publisherService.GetAllPublishers().ToListAsync();
@@ -92,13 +90,11 @@ namespace BookStore.Tests.Services.Admin
 
             List<AdminPublisherListingServiceModel> expectedData = GetTestData()
                 .Where(c => c.IsDeleted == false)
-                .OrderBy(c => c.Name)
                 .To<AdminPublisherListingServiceModel>().ToList();
 
             List<AdminPublisherListingServiceModel> actualData = await this.publisherService.GetAllActivePublishers().ToListAsync();
 
             Assert.Equal(expectedData.Count, actualData.Count);
-
 
             for (int i = 0; i < expectedData.Count; i++)
             {
@@ -161,21 +157,7 @@ namespace BookStore.Tests.Services.Admin
         }
 
         [Fact]
-        public async Task EditAsync_ShouldPassSuccessfully()
-        {
-            var context = BookStoreDbContextInMemoryFactory.InitializeContext();
-            await SeedData(context);
-            this.publisherService = new AdminPublisherService(context);
-
-            AdminPublisherListingServiceModel expectedData = context.Publishers.First().To<AdminPublisherListingServiceModel>();
-
-            bool actualData = await this.publisherService.EditAsync(expectedData.Id, expectedData.Name);
-
-            Assert.True(actualData);
-        }
-
-        [Fact]
-        public async Task EditAsync_ShouldEditCategoryCorrectly()
+        public async Task EditAsync_ShouldEditCategory()
         {
 
             var context = BookStoreDbContextInMemoryFactory.InitializeContext();
@@ -194,22 +176,7 @@ namespace BookStore.Tests.Services.Admin
         }
 
         [Fact]
-        public async Task HideAsync_WithCorrectData_ShouldPassSuccessfully()
-        {
-            var context = BookStoreDbContextInMemoryFactory.InitializeContext();
-            await SeedData(context);
-            this.publisherService = new AdminPublisherService(context);
-
-            int id = context.Publishers.First().Id;
-
-            bool actualResult = await this.publisherService.HideAsync(id);
-
-            Assert.True(actualResult);
-        }
-
-
-        [Fact]
-        public async Task HideAsync_WithCorrectData_ShouldHidePublisherSuccessfully()
+        public async Task HideAsync_ShouldHidePublisher()
         {
             var context = BookStoreDbContextInMemoryFactory.InitializeContext();
             await SeedData(context);
@@ -234,7 +201,7 @@ namespace BookStore.Tests.Services.Admin
             await SeedData(context);
             this.publisherService = new AdminPublisherService(context);
 
-            bool actualResult = await this.publisherService.HideAsync(int.MinValue);
+            bool actualResult = await this.publisherService.HideAsync(-1);
 
 
             int expectedCount = 2;
@@ -245,26 +212,7 @@ namespace BookStore.Tests.Services.Admin
         }
 
         [Fact]
-        public async Task ShowAsync_WithCorrectData_ShouldPassSuccessfully()
-        {
-            var context = BookStoreDbContextInMemoryFactory.InitializeContext();
-            await SeedData(context);
-            this.publisherService = new AdminPublisherService(context);
-
-            int id = context.Publishers.First().Id;
-            var publisher = context.Publishers.First();
-            publisher.IsDeleted = true;
-            context.Publishers.Update(publisher);
-            await context.SaveChangesAsync();
-
-            bool actualResult = await this.publisherService.ShowAsync(id);
-
-            Assert.True(actualResult);
-        }
-
-
-        [Fact]
-        public async Task ShowAsync_WithCorrectData_ShouldShowCategorySuccessfully()
+        public async Task ShowAsync_ShouldShowCategoryy()
         {
             var context = BookStoreDbContextInMemoryFactory.InitializeContext();
             await SeedData(context);

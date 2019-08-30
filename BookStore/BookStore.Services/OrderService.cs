@@ -1,14 +1,13 @@
-﻿using BookStore.Domain;
+﻿using BookStore.Data;
+using BookStore.Domain;
+using BookStore.Domain.Enums;
+using BookStore.Services.Mapping;
+using BookStore.Services.Models.Orders;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Text;
-using BookStore.Domain.Enums;
-using System.Threading.Tasks;
-using BookStore.Data;
 using System.Linq;
-using Microsoft.EntityFrameworkCore;
-using BookStore.Services.Models.Orders;
-using BookStore.Services.Mapping;
+using System.Threading.Tasks;
 
 namespace BookStore.Services
 {

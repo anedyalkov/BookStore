@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using BookStore.Data;
-using BookStore.Services;
+﻿using BookStore.Services;
+using BookStore.Web.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace BookStore.Web.Controllers
 {
@@ -27,7 +24,14 @@ namespace BookStore.Web.Controllers
 
         public async Task<IActionResult> AddToShoppingCart(int id)
         {
-            await this.shoppingCartservice.AddBookToShoppingCartAsync(id, User.Identity.Name);
+            var result = await this.shoppingCartservice.AddBookToShoppingCartAsync(id, User.Identity.Name);
+       
+            if (result == false)
+            {
+                this.TempData.AddErrorMessage(WebConstants.BookNotAddedToCart);
+                return RedirectToAction(nameof(Index));
+            }
+
             return this.RedirectToAction(nameof(Index));
         }
 
@@ -47,7 +51,13 @@ namespace BookStore.Web.Controllers
 
         public async Task<IActionResult> RemoveFromShoppingCart(int id)
         {
-            await this.shoppingCartservice.RemoveBookFromShoppingCartAsync(id, User.Identity.Name);
+            var result  = await this.shoppingCartservice.RemoveBookFromShoppingCartAsync(id, User.Identity.Name);
+
+            if (result == false)
+            {
+                this.TempData.AddErrorMessage(WebConstants.BookNotRemovedFromCart);
+                return RedirectToAction(nameof(Index));
+            }
 
             return this.RedirectToAction(nameof(Index));
         }

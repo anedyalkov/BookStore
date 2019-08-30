@@ -5,10 +5,8 @@ using BookStore.Services.Admin.Models.Authors;
 using BookStore.Services.Mapping;
 using BookStore.Tests.Common;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -17,6 +15,7 @@ namespace BookStore.Tests.Services.Admin
     public class AdminAuthorServiceTests
     {
         private IAdminAuthorService authorService;
+
         public AdminAuthorServiceTests()
         {
             MapperInitializer.InitializeMapper();
@@ -163,21 +162,7 @@ namespace BookStore.Tests.Services.Admin
         }
 
         [Fact]
-        public async Task EditAsync_ShouldPassSuccessfully()
-        {
-            var context = BookStoreDbContextInMemoryFactory.InitializeContext();
-            await SeedData(context);
-            this.authorService = new AdminAuthorService(context);
-
-            AdminAuthorListingServiceModel expectedData = context.Authors.First().To<AdminAuthorListingServiceModel>();
-
-            bool actualData = await this.authorService.EditAsync(expectedData.Id, expectedData.FirstName, expectedData.LastName);
-
-            Assert.True(actualData);
-        }
-
-        [Fact]
-        public async Task EditAsync_ShouldEditCategoryCorrectly()
+        public async Task EditAsync_ShouldEditCategory()
         {
 
             var context = BookStoreDbContextInMemoryFactory.InitializeContext();
@@ -196,21 +181,7 @@ namespace BookStore.Tests.Services.Admin
         }
 
         [Fact]
-        public async Task HideAsync_WithCorrectData_ShouldPassSuccessfully()
-        {
-            var context = BookStoreDbContextInMemoryFactory.InitializeContext();
-            await SeedData(context);
-            this.authorService = new AdminAuthorService(context);
-
-            int id = context.Authors.First().Id;
-
-            bool actualResult = await this.authorService.HideAsync(id);
-
-            Assert.True(actualResult);
-        }
-
-        [Fact]
-        public async Task HideAsync_WithCorrectData_ShouldHideAuthorSuccessfully()
+        public async Task HideAsync_ShouldHideAuthor()
         {
             var context = BookStoreDbContextInMemoryFactory.InitializeContext();
             await SeedData(context);
@@ -245,25 +216,7 @@ namespace BookStore.Tests.Services.Admin
         }
 
         [Fact]
-        public async Task ShowAsync_WithCorrectData_ShouldPassSuccessfully()
-        {
-            var context = BookStoreDbContextInMemoryFactory.InitializeContext();
-            await SeedData(context);
-            this.authorService = new AdminAuthorService(context);
-
-            int id = context.Authors.First().Id;
-            var author = context.Authors.First();
-            author.IsDeleted = true;
-            context.Authors.Update(author);
-            await context.SaveChangesAsync();
-
-            bool actualResult = await this.authorService.ShowAsync(id);
-
-            Assert.True(actualResult);
-        }
-
-        [Fact]
-        public async Task ShowAsync_WithCorrectData_ShouldShowAuthorSuccessfully()
+        public async Task ShowAsync_WithCorrectData_ShouldShowAuthor()
         {
             var context = BookStoreDbContextInMemoryFactory.InitializeContext();
             await SeedData(context);

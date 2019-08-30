@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace BookStore.Domain
+﻿namespace BookStore.Domain
 {
     public class ShoppingCartBook
     {
@@ -15,6 +11,5 @@ namespace BookStore.Domain
         public Book Book { get; set; }
 
         public int Quantity { get; set; }
-
     }
 }

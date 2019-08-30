@@ -27,6 +27,7 @@ else
                     <th>Автор</th>
                     <th>Издателство</th>
                     <th>Дата на създаване</th>
+                    <th>Цена</th>
                     <th></th>
                 </tr>
             </thead>
@@ -39,6 +40,7 @@ else
                     <td>@book.AuthorFullName</td>
                     <td>@book.PublisherName</td>
                     <td>@book.CreatedOn.ToShortDateString()</td>
+                    <td>@book.Price.ToString("F2") лв.</td>
                     <td class="justify-content-center d-flex">
                         @if (book.IsDeleted == false)
                         {

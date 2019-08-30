@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using BookStore.Services;
+﻿using BookStore.Services;
 using BookStore.Web.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace BookStore.Web.Controllers
 {
@@ -30,7 +27,7 @@ namespace BookStore.Web.Controllers
 
             if (result == false)
             {
-                this.TempData.AddErrorMessage(WebConstants.OrderErrorMsg);
+                this.TempData.AddErrorMessage(WebConstants.OrderError);
             }
 
             return this.RedirectToAction(nameof(ShoppingCartController.Index),

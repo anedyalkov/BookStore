@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BookStore.Data;
+﻿using BookStore.Data;
 using BookStore.Domain;
 using BookStore.Services.Admin.Models.Categories;
 using BookStore.Services.Mapping;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace BookStore.Services.Admin
 {
@@ -24,16 +22,13 @@ namespace BookStore.Services.Admin
         public IQueryable<AdminCategoryListingServiceModel> GetAllCategories()
         {
             return db.Categories
-                .OrderBy(c => c.Name)
                 .To<AdminCategoryListingServiceModel>();
         }
-
 
         public IQueryable<AdminCategoryListingServiceModel> GetAllActiveCategories()
         {
             return db.Categories
                  .Where(c => c.IsDeleted == false)
-                 .OrderBy(c => c.Name)
                  .To<AdminCategoryListingServiceModel>();
         }
 
@@ -61,7 +56,6 @@ namespace BookStore.Services.Admin
 
         public async Task<bool> EditAsync(int id, string name)
         {
-            int result = 0;
             var category = db.Categories.Find(id);
 
             if (category == null)
@@ -71,7 +65,7 @@ namespace BookStore.Services.Admin
 
             category.Name = name;
             db.Categories.Update(category);
-            result = await db.SaveChangesAsync();
+            int result = await db.SaveChangesAsync();
             return result > 0;
         }
 

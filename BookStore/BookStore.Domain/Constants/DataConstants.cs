@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace BookStore.Domain.Constants
+﻿namespace BookStore.Domain.Constants
 {
     public static class DataConstants
     {

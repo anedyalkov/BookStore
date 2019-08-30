@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using BookStore.Services.Admin;
-using BookStore.Services.Admin.Models.Reviews;
+﻿using BookStore.Services.Admin;
 using BookStore.Web.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace BookStore.Web.Areas.Admin.Controllers
 {
@@ -39,7 +35,7 @@ namespace BookStore.Web.Areas.Admin.Controllers
             }
 
             this.TempData.AddSuccessMessage(string.Format(
-               WebAdminConstants.ReviewDeletedMsg));
+               WebAdminConstants.ReviewDeleted));
 
             return this.RedirectToAction(nameof(Web.Controllers.BooksController.Details), "Books", new { id = review.BookId });
         }

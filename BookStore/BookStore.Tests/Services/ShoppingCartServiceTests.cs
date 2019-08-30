@@ -8,7 +8,6 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -17,10 +16,12 @@ namespace BookStore.Tests.Services
     public class ShoppingCartServiceTests
     {
         private IShoppingCartService shoppingCartService;
+
         public ShoppingCartServiceTests()
         {
             MapperInitializer.InitializeMapper();
         }
+
         private List<BookStoreUser> GetTestUsers()
         {
             return new List<BookStoreUser>()
@@ -93,9 +94,8 @@ namespace BookStore.Tests.Services
         }
 
         [Fact]
-        public async Task AddBookToShoppingCartAsync_ShouldAddBookSuccessfully()
-        {
-      
+        public async Task AddBookToShoppingCartAsync_ShouldAddBookToCart()
+        {     
             var context = BookStoreDbContextInMemoryFactory.InitializeContext();
             await SeedData(context);
 
@@ -114,7 +114,7 @@ namespace BookStore.Tests.Services
         }
 
         [Fact]
-        public async Task AddBookToShoppingCartAsync_WithNonExistingUser_ShouldNotAddBook()
+        public async Task AddBookToShoppingCartAsync_WithNonExistingUser_ShouldNotAddBookToCart()
         {
             var context = BookStoreDbContextInMemoryFactory.InitializeContext();
             await SeedData(context);
@@ -137,9 +137,8 @@ namespace BookStore.Tests.Services
             Assert.False(actualResult);
         }
 
-
         [Fact]
-        public async Task AddBookToShoppingCartAsync_WithNonExistingBook_ShouldNotAddBook()
+        public async Task AddBookToShoppingCartAsync_WithNonExistingBook_ShouldNotAddBookToCart()
         {
             var context = BookStoreDbContextInMemoryFactory.InitializeContext();
             await SeedData(context);
@@ -161,7 +160,7 @@ namespace BookStore.Tests.Services
         }
 
         [Fact]
-        public async Task AddBookToShoppingCartAsync_WithExistingBook_ShouldNotAddBook()
+        public async Task AddBookToShoppingCartAsync_WithExistingBookInCart_ShouldNotAddBookToCart()
         {
             var context = BookStoreDbContextInMemoryFactory.InitializeContext();
             await SeedData(context);
@@ -187,7 +186,7 @@ namespace BookStore.Tests.Services
         }
 
         [Fact]
-        public async Task RemoveBookFromShoppingCartAsync_ShouldRemoveBookSuccessfully()
+        public async Task RemoveBookFromShoppingCartAsync_ShouldRemoveBook()
         {
 
             var context = BookStoreDbContextInMemoryFactory.InitializeContext();
@@ -212,7 +211,6 @@ namespace BookStore.Tests.Services
         [Fact]
         public async Task GetUserCartBooksAsync_ShouldReturnUserCartBooks()
         {
-
             var context = BookStoreDbContextInMemoryFactory.InitializeContext();
             await SeedData(context);
 
@@ -237,9 +235,8 @@ namespace BookStore.Tests.Services
         }
 
         [Fact]
-        public async Task IncreaseQuantityAsync_ShouldIncreaseBookQuantitySuccessfully()
+        public async Task IncreaseQuantityAsync_ShouldIncreaseBookQuantity()
         {
-
             var context = BookStoreDbContextInMemoryFactory.InitializeContext();
             await SeedData(context);
 
@@ -266,9 +263,8 @@ namespace BookStore.Tests.Services
         }
 
         [Fact]
-        public async Task IncreaseQuantityAsync_WithNonExistingUser_ShouldNotIncreaseBookQuantitySuccessfully()
+        public async Task IncreaseQuantityAsync_WithNonExistingUser_ShouldNotIncreaseBookQuantity()
         {
-
             var context = BookStoreDbContextInMemoryFactory.InitializeContext();
             await SeedData(context);
 
@@ -296,9 +292,8 @@ namespace BookStore.Tests.Services
         }
 
         [Fact]
-        public async Task IncreaseQuantityAsync_WithNonExistingBook_ShouldNotIncreaseBookQuantitySuccessfully()
+        public async Task IncreaseQuantityAsync_WithNonExistingBook_ShouldNotIncreaseBookQuantity()
         {
-
             var context = BookStoreDbContextInMemoryFactory.InitializeContext();
             await SeedData(context);
 
@@ -326,9 +321,8 @@ namespace BookStore.Tests.Services
         }
 
         [Fact]
-        public async Task DecreaseQuantityAsync_ShouldDecreaseBookQuantitySuccessfully()
+        public async Task DecreaseQuantityAsync_ShouldDecreaseBookQuantity()
         {
-
             var context = BookStoreDbContextInMemoryFactory.InitializeContext();
             await SeedData(context);
 
@@ -356,9 +350,36 @@ namespace BookStore.Tests.Services
         }
 
         [Fact]
-        public async Task DecreaseQuantityAsync_WithNonExistingUser_ShouldNotDecreaseBookQuantitySuccessfully()
+        public async Task DecreaseQuantityAsync_WithtQuantityOne_ShouldNotDecreaseBookQuantity()
         {
+            var context = BookStoreDbContextInMemoryFactory.InitializeContext();
+            await SeedData(context);
 
+            var userService = new Mock<IUserService>();
+            var username = "user1";
+            userService.Setup(u => u.GetByUsernameAsync(username))
+                       .Returns(context.Users.FirstOrDefaultAsync(x => x.UserName == username));
+
+            this.shoppingCartService = new ShoppingCartService(context, userService.Object);
+
+            var book = context.Books.First();
+
+            await shoppingCartService.AddBookToShoppingCartAsync(book.Id, username);
+
+            var actualResult = await shoppingCartService.DecreaseQuantityAsync(book.Id, username);
+
+            var expectedQuantity = 1;
+            var shoppingCartBook = context.ShoppingCartBooks.First();
+
+            var actualQuantity = shoppingCartBook.Quantity;
+
+            Assert.False(actualResult);
+            Assert.Equal(expectedQuantity, actualQuantity);
+        }
+
+        [Fact]
+        public async Task DecreaseQuantityAsync_WithNonExistingUser_ShouldNotDecreaseBookQuantity()
+        {
             var context = BookStoreDbContextInMemoryFactory.InitializeContext();
             await SeedData(context);
 
@@ -388,9 +409,8 @@ namespace BookStore.Tests.Services
         }
 
         [Fact]
-        public async Task DecreaseQuantityAsync_WithNonExistingBook_ShouldNotDecreaseBookQuantitySuccessfully()
+        public async Task DecreaseQuantityAsync_WithNonExistingBook_ShouldNotDecreaseBookQuantity()
         {
-
             var context = BookStoreDbContextInMemoryFactory.InitializeContext();
             await SeedData(context);
 
@@ -420,9 +440,8 @@ namespace BookStore.Tests.Services
         }
 
         [Fact]
-        public async Task RemoveBooksFromShoppingCartAsync_ShouldRemoveBooksSuccessfully()
+        public async Task RemoveBooksFromShoppingCartAsync_ShouldRemoveBooks()
         {
-
             var context = BookStoreDbContextInMemoryFactory.InitializeContext();
             await SeedData(context);
 

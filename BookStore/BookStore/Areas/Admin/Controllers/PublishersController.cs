@@ -1,12 +1,8 @@
 ﻿using BookStore.Services.Admin;
-using BookStore.Services.Admin.Models.Publishers;
 using BookStore.Web.Areas.Admin.Models.Publishers;
 using BookStore.Web.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace BookStore.Web.Areas.Admin.Controllers
@@ -43,12 +39,9 @@ namespace BookStore.Web.Areas.Admin.Controllers
 
             if (result == false)
             {
-                // TODO errormessage
+                this.TempData.AddErrorMessage(WebAdminConstants.PublisherNotCreated);
+                return RedirectToAction(nameof(Index));
             }
-
-            //this.TempData.AddSuccessMessage(string.Format(
-            //   WebAdminConstants.PublisherCreatedMsg,
-            //   publisherModel.Name));
 
             return this.RedirectToAction(nameof(Index));
         }
@@ -59,7 +52,7 @@ namespace BookStore.Web.Areas.Admin.Controllers
 
             if (publisher == null)
             {
-                this.TempData.AddErrorMessage(WebAdminConstants.PublisherNotFoundMsg);
+                this.TempData.AddErrorMessage(WebAdminConstants.PublisherNotFound);
                 return RedirectToAction(nameof(Index));
             }
 
@@ -84,12 +77,13 @@ namespace BookStore.Web.Areas.Admin.Controllers
 
             if (result == false)
             {
-                // TODO errormessage
+                this.TempData.AddErrorMessage(WebAdminConstants.PublisherNotEdited);
+                return RedirectToAction(nameof(Index));
             }
 
-            //this.TempData.AddSuccessMessage(string.Format(
-            //    WebAdminConstants.PublisherUpdatedMsg,
-            //    publisherModel.Name));
+            this.TempData.AddSuccessMessage(string.Format(
+                WebAdminConstants.PublisherUpdated,
+                publisherModel.Name));
 
             return this.RedirectToAction(nameof(Index));
         }
@@ -101,7 +95,7 @@ namespace BookStore.Web.Areas.Admin.Controllers
 
             if (publisher == null)
             {
-                this.TempData.AddErrorMessage(WebAdminConstants.PublisherNotFoundMsg);
+                this.TempData.AddErrorMessage(WebAdminConstants.PublisherNotFound);
                 return RedirectToAction(nameof(Index));
             }
 
@@ -109,14 +103,14 @@ namespace BookStore.Web.Areas.Admin.Controllers
 
             if (result == false)
             {
-                this.TempData.AddErrorMessage(string.Format(WebAdminConstants.PublisherIncludesBooksMsg,
+                this.TempData.AddErrorMessage(string.Format(WebAdminConstants.PublisherIncludesBooks,
                     publisher.Name));
                 return RedirectToAction(nameof(Index));
             }
 
-            //this.TempData.AddSuccessMessage(string.Format(
-            //  WebAdminConstants.PublisherHiddenMsg,
-            //  publisher.Name));
+            this.TempData.AddSuccessMessage(string.Format(
+              WebAdminConstants.PublisherHidden,
+              publisher.Name));
 
             return this.RedirectToAction(nameof(Index));
         }
@@ -128,14 +122,14 @@ namespace BookStore.Web.Areas.Admin.Controllers
 
             if (publisher == null)
             {
-                this.TempData.AddErrorMessage(WebAdminConstants.PublisherNotFoundMsg);
+                this.TempData.AddErrorMessage(WebAdminConstants.PublisherNotFound);
                 return RedirectToAction(nameof(Index));
             }
             await this.publisherService.ShowAsync(id);
 
-            //this.TempData.AddSuccessMessage(string.Format(
-            //  WebAdminConstants.PublisherShowedMsg,
-            //  publisher.Name));
+            this.TempData.AddSuccessMessage(string.Format(
+              WebAdminConstants.PublisherShowed,
+              publisher.Name));
 
             return this.RedirectToAction(nameof(Index));
         }

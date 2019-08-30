@@ -1,12 +1,8 @@
 ﻿using BookStore.Services.Admin;
-using BookStore.Services.Admin.Models.Authors;
 using BookStore.Web.Areas.Admin.Models.Authors;
 using BookStore.Web.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace BookStore.Web.Areas.Admin.Controllers
@@ -45,13 +41,9 @@ namespace BookStore.Web.Areas.Admin.Controllers
 
             if (result == false)
             {
-                // TODO errormessage
+                this.TempData.AddErrorMessage(WebAdminConstants.AuthorNotCreated);
+                return RedirectToAction(nameof(Index));
             }
-
-            //this.TempData.AddSuccessMessage(string.Format(
-            //   WebAdminConstants.AuthorCreatedMsg,
-            //   authorModel.FirstName,
-            //   authorModel.LastName));
 
             return this.RedirectToAction(nameof(Index));
         }
@@ -63,7 +55,7 @@ namespace BookStore.Web.Areas.Admin.Controllers
 
             if (author == null)
             {
-                this.TempData.AddErrorMessage(WebAdminConstants.AuthorNotFoundMsg);
+                this.TempData.AddErrorMessage(WebAdminConstants.AuthorNotFound);
                 return RedirectToAction(nameof(Index));
             }
 
@@ -90,13 +82,14 @@ namespace BookStore.Web.Areas.Admin.Controllers
 
             if (result == false)
             {
-                // TODO errormessage
+                this.TempData.AddErrorMessage(WebAdminConstants.AuthorNotEdited);
+                return RedirectToAction(nameof(Index));
             }
 
-            //this.TempData.AddSuccessMessage(string.Format(
-            //    WebAdminConstants.AuthorUpdatedMsg,
-            //    authorModel.FirstName,
-            //    authorModel.LastName));
+            this.TempData.AddSuccessMessage(string.Format(
+                WebAdminConstants.AuthorUpdated,
+                authorModel.FirstName,
+                authorModel.LastName));
 
             return this.RedirectToAction(nameof(Index));
         }
@@ -108,7 +101,7 @@ namespace BookStore.Web.Areas.Admin.Controllers
 
             if (author == null)
             {
-                this.TempData.AddErrorMessage(WebAdminConstants.AuthorNotFoundMsg);
+                this.TempData.AddErrorMessage(WebAdminConstants.AuthorNotFound);
                 return RedirectToAction(nameof(Index));
             }
 
@@ -116,15 +109,15 @@ namespace BookStore.Web.Areas.Admin.Controllers
 
             if (result == false)
             {
-                this.TempData.AddErrorMessage(string.Format(WebAdminConstants.AuthorIncludesBooksMsg,
+                this.TempData.AddErrorMessage(string.Format(WebAdminConstants.AuthorIncludesBooks,
                    $"{author.FirstName} {author.LastName}"));
                 return RedirectToAction(nameof(Index));
             }
 
-            //this.TempData.AddSuccessMessage(string.Format(
-            //  WebAdminConstants.AuthorHiddenMsg,
-            //  author.FirstName,
-            //  author.LastName));
+            this.TempData.AddSuccessMessage(string.Format(
+              WebAdminConstants.AuthorHidden,
+              author.FirstName,
+              author.LastName));
 
             return this.RedirectToAction(nameof(Index));
         }
@@ -136,16 +129,16 @@ namespace BookStore.Web.Areas.Admin.Controllers
 
             if (author == null)
             {
-                this.TempData.AddErrorMessage(WebAdminConstants.AuthorNotFoundMsg);
+                this.TempData.AddErrorMessage(WebAdminConstants.AuthorNotFound);
                 return RedirectToAction(nameof(Index));
             }
 
             await this.authorService.ShowAsync(id);
 
-            //this.TempData.AddSuccessMessage(string.Format(
-            //  WebAdminConstants.AuthorShowedMsg,
-            //  author.FirstName,
-            //  author.LastName));
+            this.TempData.AddSuccessMessage(string.Format(
+              WebAdminConstants.AuthorShowed,
+              author.FirstName,
+              author.LastName));
 
             return this.RedirectToAction(nameof(Index));
         }

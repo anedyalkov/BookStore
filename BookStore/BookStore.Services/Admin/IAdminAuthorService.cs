@@ -1,8 +1,5 @@
 ﻿using BookStore.Services.Admin.Models.Authors;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BookStore.Services.Admin
@@ -10,6 +7,7 @@ namespace BookStore.Services.Admin
     public interface IAdminAuthorService
     {
         IQueryable<AdminAuthorListingServiceModel> GetAllAuthors();
+
         IQueryable<AdminAuthorListingServiceModel> GetAllActiveAuthors();
 
         Task<bool> CreateAsync(string firstName, string lastName);

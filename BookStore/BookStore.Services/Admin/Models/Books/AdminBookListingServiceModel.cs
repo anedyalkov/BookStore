@@ -2,11 +2,9 @@
 using BookStore.Domain;
 using BookStore.Services.Admin.Models.Categories;
 using BookStore.Services.Mapping;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace BookStore.Services.Admin.Models.Books
 {
@@ -26,7 +24,7 @@ namespace BookStore.Services.Admin.Models.Books
 
         public bool IsDeleted { get; set; }
 
-        public IEnumerable<AdminCategoryListingServiceModel> Categories { get; set; } /*= new List<AdminCategoryListingServiceModel>();*/
+        public IEnumerable<AdminCategoryListingServiceModel> Categories { get; set; } 
 
         public void CreateMappings(IProfileExpression configuration)
         {

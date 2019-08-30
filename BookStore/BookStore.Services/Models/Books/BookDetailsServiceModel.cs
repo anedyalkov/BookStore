@@ -3,10 +3,8 @@ using BookStore.Domain;
 using BookStore.Services.Mapping;
 using BookStore.Services.Models.Categories;
 using BookStore.Services.Models.Reviews;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace BookStore.Services.Models.Books
 {
@@ -32,8 +30,7 @@ namespace BookStore.Services.Models.Books
 
         public IEnumerable<ReviewListingServiceModel> Reviews { get; set; }
 
-        public IEnumerable<CategoryBasicServiceModel> Categories { get; set; } /*= new List<CategoryBasicServiceModel>();*/
-
+        public IEnumerable<CategoryBasicServiceModel> Categories { get; set; }
         public void CreateMappings(IProfileExpression configuration)
         {
             configuration

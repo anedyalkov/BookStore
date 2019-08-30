@@ -1,9 +1,7 @@
 ﻿using BookStore.Domain;
 using BookStore.Services.Mapping;
 using BookStore.Services.Models.Reviews;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace BookStore.Web.Models.Books
 {

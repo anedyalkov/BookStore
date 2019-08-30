@@ -1,8 +1,5 @@
 ﻿using BookStore.Services.Admin.Models.Categories;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BookStore.Services.Admin
@@ -10,6 +7,7 @@ namespace BookStore.Services.Admin
     public interface IAdminCategoryService
     {
         IQueryable<AdminCategoryListingServiceModel> GetAllCategories();
+
         IQueryable<AdminCategoryListingServiceModel> GetAllActiveCategories();
 
         Task<bool> CreateAsync(string name);

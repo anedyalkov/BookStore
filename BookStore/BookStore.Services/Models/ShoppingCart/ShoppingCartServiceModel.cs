@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace BookStore.Services.Models.ShoppingCart
+﻿namespace BookStore.Services.Models.ShoppingCart
 {
     public class ShoppingCartServiceModel
     {

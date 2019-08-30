@@ -1,27 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using BookStore.Data;
+using BookStore.Domain;
+using BookStore.Models;
+using BookStore.Services;
+using BookStore.Services.Admin;
+using BookStore.Services.Admin.Models.Users;
+using BookStore.Services.Mapping;
+using BookStore.Web.Infrastructure.Extensions;
+using CloudinaryDotNet;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using BookStore.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using BookStore.Domain;
-using BookStore.Web.Infrastructure.Extensions;
-using BookStore.Models;
-using BookStore.Services.Mapping;
 using System.Reflection;
-using BookStore.Services.Admin.Models.Users;
-using BookStore.Services.Admin;
-using CloudinaryDotNet;
-using BookStore.Services;
 
 namespace BookStore
 {
@@ -37,13 +30,6 @@ namespace BookStore
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.Configure<CookiePolicyOptions>(options =>
-            //{
-            //    // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-            //    options.CheckConsentNeeded = context => true;
-            //    options.MinimumSameSitePolicy = SameSiteMode.None;
-            //});
-
             services.AddDbContext<BookStoreDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
@@ -88,15 +74,20 @@ namespace BookStore
             services.AddTransient<IShoppingCartService, ShoppingCartService>();
             services.AddTransient<IOrderService, OrderService>();
 
-            //services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-
             services.AddMvc(options =>
             {
                 options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
             }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services
+                .ConfigureApplicationCookie(options =>
+                {
+                    options.LoginPath = $"/Identity/Account/Login";
+                    options.LogoutPath = $"/Identity/Account/Logout";
+                    options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
+                });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             AutoMapperConfig.RegisterMappings(
@@ -113,13 +104,11 @@ namespace BookStore
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            //app.UseCookiePolicy();
 
             app.UseAuthentication();
 

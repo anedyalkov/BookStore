@@ -13,8 +13,14 @@ namespace BookStore.Web
         public const string TempDataSuccessMessageKey = "SuccessMessage";
         public const string TempDataErrorMessageKey = "ErrorMessage";
 
-        public const string BookNotFoundMsg = "Книгата не беше намерена.";
-        public const string OrderErrorMsg = "Поръчката не може да бъде завършена";
+        public const string BookNotFound = "Книгата не беше намерена.";
+       
+        public const string OrderError = "Поръчката не може да бъде завършена";
+
+        public const string ReviewNotCreated = "Мнението не беше създадено.";
+
+        public const string BookNotAddedToCart = "Книгата не беше добавена в количката.";
+        public const string BookNotRemovedFromCart = "Книгата не беше премахнта от количката.";
 
     }
 }

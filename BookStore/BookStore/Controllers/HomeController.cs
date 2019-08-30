@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using BookStore.Models;
-using BookStore.Services;
-using Microsoft.EntityFrameworkCore;
+﻿using BookStore.Services;
 using BookStore.Web.Models.Home;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace BookStore.Controllers
 {

@@ -5,10 +5,8 @@ using BookStore.Services.Admin.Models.Users;
 using BookStore.Services.Mapping;
 using BookStore.Tests.Common;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -52,8 +50,7 @@ namespace BookStore.Tests.Services.Admin
             var context = BookStoreDbContextInMemoryFactory.InitializeContext();
             await SeedData(context);
             this.userService = new AdminUserService(context);
-
-           
+      
             List<AdminUserListingServiceModel> expectedData = GetTestData().To<AdminUserListingServiceModel>().ToList();
             List<AdminUserListingServiceModel> actualData = await this.userService.GetAllUsers().ToListAsync();
 
@@ -63,7 +60,16 @@ namespace BookStore.Tests.Services.Admin
             {
                 Assert.True(expectedData.Any(user => actualUser.Username == user.Username
                 && actualUser.Email == user.Email),"AdminUserService GetAllUsers() does not work properly");
-            }       
+            }
+
+            for (int i = 0; i < expectedData.Count; i++)
+            {
+                var expectedEntry = expectedData[i];
+                var actualEntry = actualData[i];
+
+                Assert.True(expectedEntry.Username == actualEntry.Username, "Username is not returned properly.");
+                Assert.True(expectedEntry.Email == actualEntry.Email, "Email is not returned properly.");
+            }
         }
 
         [Fact]

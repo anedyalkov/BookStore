@@ -1,13 +1,8 @@
-﻿using BookStore.Services;
-using BookStore.Services.Admin;
-using BookStore.Services.Admin.Models.Categories;
+﻿using BookStore.Services.Admin;
 using BookStore.Web.Areas.Admin.Models.Categories;
 using BookStore.Web.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace BookStore.Web.Areas.Admin.Controllers
@@ -45,12 +40,9 @@ namespace BookStore.Web.Areas.Admin.Controllers
 
             if (result == false)
             {
-                // TODO errormessage
+                this.TempData.AddErrorMessage(WebAdminConstants.CategoryNotCreated);
+                return RedirectToAction(nameof(Index));
             }
-
-            //this.TempData.AddSuccessMessage(string.Format(
-            //   WebAdminConstants.CategoryCreatedMsg,
-            //   categoryModel.Name));
 
             return this.RedirectToAction(nameof(Index));
         }
@@ -62,7 +54,7 @@ namespace BookStore.Web.Areas.Admin.Controllers
 
             if (category == null)
             {
-                this.TempData.AddErrorMessage(WebAdminConstants.CategoryNotFoundMsg);
+                this.TempData.AddErrorMessage(WebAdminConstants.CategoryNotFound);
                 return RedirectToAction(nameof(Index));
             }
 
@@ -87,12 +79,13 @@ namespace BookStore.Web.Areas.Admin.Controllers
 
             if (result == false)
             {
-                // TODO errormessage
+                this.TempData.AddErrorMessage(WebAdminConstants.CategoryNotEdited);
+                return RedirectToAction(nameof(Index));
             }
 
-            //this.TempData.AddSuccessMessage(string.Format(
-            //    WebAdminConstants.CategoryUpdatedMsg,
-            //    categoryModel.Name));
+            this.TempData.AddSuccessMessage(string.Format(
+                WebAdminConstants.CategoryUpdated,
+                categoryModel.Name));
 
             return this.RedirectToAction(nameof(Index));
         }
@@ -104,7 +97,7 @@ namespace BookStore.Web.Areas.Admin.Controllers
 
             if (category == null)
             {
-                this.TempData.AddErrorMessage(WebAdminConstants.CategoryNotFoundMsg);
+                this.TempData.AddErrorMessage(WebAdminConstants.CategoryNotFound);
                 return RedirectToAction(nameof(Index));
             }
 
@@ -112,14 +105,14 @@ namespace BookStore.Web.Areas.Admin.Controllers
 
             if (result == false)
             {
-                this.TempData.AddErrorMessage(string.Format(WebAdminConstants.CategoryIncludesBooksMsg,
+                this.TempData.AddErrorMessage(string.Format(WebAdminConstants.CategoryIncludesBooks,
                     category.Name));
                 return RedirectToAction(nameof(Index));
             }
 
-            //this.TempData.AddSuccessMessage(string.Format(
-            //  WebAdminConstants.CategoryHiddenMsg,
-            //  category.Name));
+            this.TempData.AddSuccessMessage(string.Format(
+              WebAdminConstants.CategoryHidden,
+              category.Name));
 
             return this.RedirectToAction(nameof(Index));
         }
@@ -131,13 +124,13 @@ namespace BookStore.Web.Areas.Admin.Controllers
 
             if (category == null)
             {
-                this.TempData.AddErrorMessage(WebAdminConstants.CategoryNotFoundMsg);
+                this.TempData.AddErrorMessage(WebAdminConstants.CategoryNotFound);
                 return RedirectToAction(nameof(Index));
             }
             await this.categoryService.ShowAsync(id);
 
             this.TempData.AddSuccessMessage(string.Format(
-              WebAdminConstants.CategoryShowedMsg,
+              WebAdminConstants.CategoryShowed,
               category.Name));
 
             return this.RedirectToAction(nameof(Index));

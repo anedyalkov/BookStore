@@ -9,7 +9,6 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -18,6 +17,7 @@ namespace BookStore.Tests.Services
     public class ReviewServiceTests
     {
         IReviewService reviewService;
+
         public ReviewServiceTests()
         {
             MapperInitializer.InitializeMapper();
@@ -94,7 +94,7 @@ namespace BookStore.Tests.Services
         }
 
         [Fact]
-        public async Task CreateAsync_ShouldSuccessfullyCreateBook()
+        public async Task CreateAsync_ShouldCreateBook()
         {
             var context = BookStoreDbContextInMemoryFactory.InitializeContext();
             await SeedData(context);
@@ -107,7 +107,7 @@ namespace BookStore.Tests.Services
         }
 
         [Fact]
-        public async Task GetReviewsByBook_ShouldReturnAllReviews()
+        public async Task GetReviewsByBook_ShouldReturnAllBookReviews()
         {
             var context = BookStoreDbContextInMemoryFactory.InitializeContext();
             await SeedData(context);
@@ -131,6 +131,42 @@ namespace BookStore.Tests.Services
                 Assert.True(expectedEntry.CreatorUserName == actualEntry.CreatorUserName, "CreatorUserName is not returned properly.");
                 Assert.True(expectedEntry.Text == actualEntry.Text, "Text is not returned properly.");
             }
+        }
+
+        [Fact]
+        public async Task GetReviewsByBookWithoutReviews_ShouldReturnEmptyList()
+        {
+            var context = BookStoreDbContextInMemoryFactory.InitializeContext();
+            //await SeedData(context);
+            this.reviewService = new ReviewService(context);
+
+            var book = new Book
+            {
+                Title = "Под Игото",
+                Author = new Author
+                {
+                    FirstName = "Иван",
+                    LastName = "Вазов"
+                },
+                Publisher = new Publisher
+                {
+                    Name = "Култура"
+                },
+
+                Language = "български",
+                Description = "описание",
+                Image = "image",
+                Price = 6.99M,
+                CreatedOn = DateTime.UtcNow.AddDays(-10)
+            };
+            context.Books.Add(book);
+            await context.SaveChangesAsync();
+
+            var bookFromDb = context.Books.First().To<BookListingServiceModel>();
+
+            List<ReviewListingServiceModel> actualData = await this.reviewService.GetReviewsByBook(book.Id).ToListAsync();
+
+            Assert.Empty(actualData);
         }
     }
 }

@@ -1,12 +1,9 @@
 ﻿using BookStore.Data;
 using BookStore.Domain;
 using BookStore.Services.Mapping;
-using BookStore.Services.Models.Books;
 using BookStore.Services.Models.Reviews;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BookStore.Services
@@ -19,6 +16,7 @@ namespace BookStore.Services
         {
             this.db = db;
         }
+
         public async Task<bool> CreateAsync(int bookId, string text, string creatorId)
         {
             var review = new Review

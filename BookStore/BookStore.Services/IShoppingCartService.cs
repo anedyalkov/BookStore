@@ -1,8 +1,5 @@
-﻿using BookStore.Domain;
-using BookStore.Services.Models.ShoppingCart;
-using System;
+﻿using BookStore.Services.Models.ShoppingCart;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BookStore.Services

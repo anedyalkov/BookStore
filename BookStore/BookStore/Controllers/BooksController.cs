@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using BookStore.Controllers;
+﻿using BookStore.Controllers;
 using BookStore.Services;
-using BookStore.Services.Models.Books;
 using BookStore.Web.Infrastructure.Extensions;
-using BookStore.Web.Models.Books;
 using BookStore.Web.Models.Reviews;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace BookStore.Web.Controllers
 {
@@ -34,7 +29,7 @@ namespace BookStore.Web.Controllers
 
             if (book == null)
             {
-                this.TempData.AddErrorMessage(WebConstants.BookNotFoundMsg);
+                this.TempData.AddErrorMessage(WebConstants.BookNotFound);
                 return this.RedirectToAction(nameof(HomeController.Index), "Home");
             }
 
@@ -49,7 +44,13 @@ namespace BookStore.Web.Controllers
         {
             var creatorId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
-            await this.reviewService.CreateAsync(reviewModel.BookId, reviewModel.Text, creatorId);
+            var result  = await this.reviewService.CreateAsync(reviewModel.BookId, reviewModel.Text, creatorId);
+
+            if (result == false)
+            {
+                this.TempData.AddErrorMessage(WebConstants.ReviewNotCreated);
+                return RedirectToAction(nameof(Details));
+            }
 
             return this.RedirectToAction(nameof(Details), new { id = reviewModel.BookId });
         }

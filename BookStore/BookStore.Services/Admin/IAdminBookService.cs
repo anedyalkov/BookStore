@@ -1,10 +1,6 @@
 ﻿using BookStore.Services.Admin.Models.Books;
-using BookStore.Services.Admin.Models.Categories;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BookStore.Services.Admin

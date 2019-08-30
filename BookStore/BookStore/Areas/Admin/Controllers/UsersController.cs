@@ -6,8 +6,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -55,7 +53,7 @@ namespace BookStore.Web.Areas.Admin.Controllers
 
             if (user == null)
             {
-                this.ModelState.AddModelError(string.Empty, WebAdminConstants.UserInvalidIdentityDetailsMsg);
+                this.ModelState.AddModelError(string.Empty, WebAdminConstants.UserInvalidIdentityDetails);
             }
             var roles = await this.userManager.GetRolesAsync(user);
 
@@ -86,7 +84,7 @@ namespace BookStore.Web.Areas.Admin.Controllers
 
             if (!roleExists || user == null)
             {
-                this.ModelState.AddModelError(string.Empty, WebAdminConstants.UserInvalidIdentityDetailsMsg);
+                this.ModelState.AddModelError(string.Empty, WebAdminConstants.UserInvalidIdentityDetails);
             }
 
             if (!this.ModelState.IsValid)
@@ -97,7 +95,7 @@ namespace BookStore.Web.Areas.Admin.Controllers
             await this.userManager.AddToRoleAsync(user, model.Role);
 
             this.TempData.AddSuccessMessage(string.Format(
-                WebAdminConstants.UserAddedToRoleMsg,
+                WebAdminConstants.UserAddedToRole,
                 user.UserName,
                 model.Role));
 
@@ -112,7 +110,7 @@ namespace BookStore.Web.Areas.Admin.Controllers
 
             if (!roleExists || user == null)
             {
-                this.ModelState.AddModelError(string.Empty, WebAdminConstants.UserInvalidIdentityDetailsMsg);
+                this.ModelState.AddModelError(string.Empty, WebAdminConstants.UserInvalidIdentityDetails);
             }
 
             if (!this.ModelState.IsValid)
@@ -123,7 +121,7 @@ namespace BookStore.Web.Areas.Admin.Controllers
             await this.userManager.RemoveFromRoleAsync(user, model.Role);
 
             this.TempData.AddSuccessMessage(string.Format(
-                WebAdminConstants.UserRemovedFromRoleMsg,
+                WebAdminConstants.UserRemovedFromRole,
                 user.UserName,
                 model.Role));
 

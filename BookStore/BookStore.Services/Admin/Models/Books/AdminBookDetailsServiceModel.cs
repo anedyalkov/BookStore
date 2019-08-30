@@ -3,8 +3,6 @@ using BookStore.Domain;
 using BookStore.Services.Mapping;
 using Microsoft.AspNetCore.Http;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace BookStore.Services.Admin.Models.Books
 {

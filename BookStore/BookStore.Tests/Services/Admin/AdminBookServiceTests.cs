@@ -8,7 +8,6 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -17,6 +16,7 @@ namespace BookStore.Tests.Services.Admin
     public class AdminBookServiceTests
     {
         private IAdminBookService bookService;
+
         public AdminBookServiceTests()
         {
             MapperInitializer.InitializeMapper();
@@ -74,7 +74,7 @@ namespace BookStore.Tests.Services.Admin
         }
 
         [Fact]
-        public async Task CreateAsync_ShouldSuccessfullyCreateBook()
+        public async Task CreateAsync_ShouldCreateBook()
         {
             var context = BookStoreDbContextInMemoryFactory.InitializeContext();
             await SeedData(context);
@@ -159,7 +159,7 @@ namespace BookStore.Tests.Services.Admin
         }
 
         [Fact]
-        public async Task AddCategoryAsync_ShouldAddCategoryToBookSuccessfully()
+        public async Task AddCategoryAsync_ShouldAddCategoryToBook()
         {
             var context = BookStoreDbContextInMemoryFactory.InitializeContext();
             await SeedData(context);
@@ -185,12 +185,6 @@ namespace BookStore.Tests.Services.Admin
         {
             var context = BookStoreDbContextInMemoryFactory.InitializeContext();
             await SeedData(context);
-            //var category = new Category
-            //{
-            //    Name = "Художествена литература"
-            //};
-            //context.Categories.Add(category);
-            //await context.SaveChangesAsync();
 
             this.bookService = new AdminBookService(context);
 
@@ -217,7 +211,7 @@ namespace BookStore.Tests.Services.Admin
         }
 
         [Fact]
-        public async Task RemoveCategoryAsync_ShouldRemoveCategoryFromBookSuccessfully()
+        public async Task RemoveCategoryAsync_ShouldRemoveCategoryFromBook()
         {
             var context = BookStoreDbContextInMemoryFactory.InitializeContext();
             await SeedData(context);
@@ -239,7 +233,6 @@ namespace BookStore.Tests.Services.Admin
             Assert.True(actualResult);
         }
 
-
         [Fact]
         public async Task RemoveCategoryAsync_WithNonExistingCategoryIdShouldReturnFalse()
         {
@@ -252,14 +245,16 @@ namespace BookStore.Tests.Services.Admin
             context.Categories.Add(category);
             await context.SaveChangesAsync();
 
+            var bookFromDb = context.Books.First();
+            var categoryFromDb = context.Categories.First();
+
             this.bookService = new AdminBookService(context);
 
-            await this.bookService.AddCategoryAsync(1, 1);
+            await this.bookService.AddCategoryAsync(bookFromDb.Id, categoryFromDb.Id);
 
-            bool actualResult = await this.bookService.RemoveCategoryAsync(1, -1);
+            bool actualResult = await this.bookService.RemoveCategoryAsync(bookFromDb.Id, -1);
             Assert.False(actualResult);
         }
-
 
         [Fact]
         public async Task RemoveCategoryAsync_WithNonExistingBookIdShouldReturnFalse()
@@ -273,33 +268,19 @@ namespace BookStore.Tests.Services.Admin
             context.Categories.Add(category);
             await context.SaveChangesAsync();
 
+            var bookFromDb = context.Books.First();
+            var categoryFromDb = context.Categories.First();
+
             this.bookService = new AdminBookService(context);
 
-            await this.bookService.AddCategoryAsync(1, 1);
+            await this.bookService.AddCategoryAsync(bookFromDb.Id, categoryFromDb.Id);
 
-            bool actualResult = await this.bookService.RemoveCategoryAsync(-1, 1);
+            bool actualResult = await this.bookService.RemoveCategoryAsync(-1, categoryFromDb.Id);
             Assert.False(actualResult);
         }
 
         [Fact]
-        public async Task EditAsync_ShouldPassSuccessfully()
-        {
-            var context = BookStoreDbContextInMemoryFactory.InitializeContext();
-            await SeedData(context);
-            this.bookService = new AdminBookService(context);
-
-            var expectedData = context.Books.First();
-
-            bool actualData = await this.bookService.EditAsync(expectedData.Id, 
-                expectedData.Title, expectedData.AuthorId, expectedData.PublisherId,
-                expectedData.Language,expectedData.Description, expectedData.Image, expectedData.CreatedOn,
-                expectedData.Price);
-
-            Assert.True(actualData);
-        }
-
-        [Fact]
-        public async Task EditAsync_ShouldEditBookCorrectly()
+        public async Task EditAsync_ShouldEditBook()
         {
             var context = BookStoreDbContextInMemoryFactory.InitializeContext();
             await SeedData(context);
@@ -331,23 +312,8 @@ namespace BookStore.Tests.Services.Admin
             Assert.True(actualData.Price == expectedData.Price, "Price not edited properly.");
         }
 
-
         [Fact]
-        public async Task HideAsync_WithCorrectData_ShouldPassSuccessfully()
-        {
-            var context = BookStoreDbContextInMemoryFactory.InitializeContext();
-            await SeedData(context);
-            this.bookService = new AdminBookService(context);
-
-            int id = context.Books.First().Id;
-
-            bool actualResult = await this.bookService.HideAsync(id);
-
-            Assert.True(actualResult);
-        }
-
-        [Fact]
-        public async Task HideAsync_WithCorrectData_ShouldHideBookSuccessfully()
+        public async Task HideAsync_ShouldHideBook()
         {
             var context = BookStoreDbContextInMemoryFactory.InitializeContext();
             await SeedData(context);
@@ -372,7 +338,7 @@ namespace BookStore.Tests.Services.Admin
             await SeedData(context);
             this.bookService = new AdminBookService(context);
 
-            bool actualResult = await this.bookService.HideAsync(int.MinValue);
+            bool actualResult = await this.bookService.HideAsync(-1);
 
             int expectedCount = 2;
             int actualCount = context.Books.Count();
@@ -382,25 +348,7 @@ namespace BookStore.Tests.Services.Admin
         }
 
         [Fact]
-        public async Task ShowAsync_WithCorrectData_ShouldPassSuccessfully()
-        {
-            var context = BookStoreDbContextInMemoryFactory.InitializeContext();
-            await SeedData(context);
-            this.bookService = new AdminBookService(context);
-
-            int id = context.Books.First().Id;
-            var book = context.Books.First();
-            book.IsDeleted = true;
-            context.Books.Update(book);
-            await context.SaveChangesAsync();
-
-            bool actualResult = await this.bookService.ShowAsync(id);
-
-            Assert.True(actualResult);
-        }
-
-        [Fact]
-        public async Task ShowAsync_WithCorrectData_ShouldShowBookSuccessfully()
+        public async Task ShowAsync_ShouldShowBook()
         {
             var context = BookStoreDbContextInMemoryFactory.InitializeContext();
             await SeedData(context);

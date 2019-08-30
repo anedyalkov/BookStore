@@ -5,10 +5,8 @@ using BookStore.Services.Admin.Models.Categories;
 using BookStore.Services.Mapping;
 using BookStore.Tests.Common;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -17,6 +15,7 @@ namespace BookStore.Tests.Services.Admin
     public class AdminCategoryServiceTests
     {
         private IAdminCategoryService categoryService;
+
         public AdminCategoryServiceTests()
         {
             MapperInitializer.InitializeMapper();
@@ -50,9 +49,7 @@ namespace BookStore.Tests.Services.Admin
             await SeedData(context);
             this.categoryService = new AdminCategoryService(context);
 
-
             List<AdminCategoryListingServiceModel> expectedData = GetTestData()
-                .OrderBy(c => c.Name)
                 .To<AdminCategoryListingServiceModel>().ToList();
 
             List<AdminCategoryListingServiceModel> actualData = await this.categoryService.GetAllCategories().ToListAsync();
@@ -86,7 +83,6 @@ namespace BookStore.Tests.Services.Admin
             await SeedData(context);
             this.categoryService = new AdminCategoryService(context);
 
-
             List<AdminCategoryListingServiceModel> expectedData = GetTestData()
                 .Where(c => c.IsDeleted == false)
                 .To<AdminCategoryListingServiceModel>().ToList();
@@ -94,14 +90,14 @@ namespace BookStore.Tests.Services.Admin
 
             Assert.Equal(expectedData.Count, actualData.Count);
 
-            foreach (var actualCategory in actualData)
+            for (int i = 0; i < expectedData.Count; i++)
             {
-                Assert.True(expectedData.Any(category => actualCategory.Name == category.Name
-                && actualCategory.IsDeleted == category.IsDeleted),
-                    "AdminCategoryService GetAllActiveCategories() does not work properly");
+                var expectedEntry = expectedData[i];
+                var actualEntry = actualData[i];
+
+                Assert.True(expectedEntry.Name == actualEntry.Name, "Name is not returned properly.");
             }
         }
-
 
         [Fact]
         public async Task GetAllActiveCategories_WithoutData_ShouldReturnEmptyList()
@@ -112,33 +108,6 @@ namespace BookStore.Tests.Services.Admin
             List<AdminCategoryListingServiceModel> actualData = await this.categoryService.GetAllActiveCategories().ToListAsync();
 
             Assert.Empty(actualData);
-        }
-
-        [Fact]
-        public async Task GetAllActiveCategories_WithDataOrderedByNameAscending_ShouldReturnCorrectResults()
-        {
-            var context = BookStoreDbContextInMemoryFactory.InitializeContext();
-            await SeedData(context);
-            this.categoryService = new AdminCategoryService(context);
-
-
-            List<AdminCategoryListingServiceModel> expectedData = GetTestData()
-                .Where(c => c.IsDeleted == false)
-                .OrderBy(c => c.Name)
-                .To<AdminCategoryListingServiceModel>().ToList();
-
-            List<AdminCategoryListingServiceModel> actualData = await this.categoryService.GetAllActiveCategories().ToListAsync();
-
-            Assert.Equal(expectedData.Count, actualData.Count);
-
-
-            for (int i = 0; i < expectedData.Count; i++)
-            {
-                var expectedEntry = expectedData[i];
-                var actualEntry = actualData[i];
-
-                Assert.True(expectedEntry.Name == actualEntry.Name, "Name is not returned properly.");
-            }
         }
 
         [Fact]
@@ -163,7 +132,7 @@ namespace BookStore.Tests.Services.Admin
             await SeedData(context);
             this.categoryService = new AdminCategoryService(context);
 
-            AdminCategoryListingServiceModel actualData = await this.categoryService.GetByIdAsync(int.MinValue);
+            AdminCategoryListingServiceModel actualData = await this.categoryService.GetByIdAsync(-1);
 
             Assert.True(actualData == null);
         }
@@ -180,21 +149,7 @@ namespace BookStore.Tests.Services.Admin
         }
 
         [Fact]
-        public async Task EditAsync_ShouldPassSuccessfully()
-        {
-            var context = BookStoreDbContextInMemoryFactory.InitializeContext();
-            await SeedData(context);
-            this.categoryService = new AdminCategoryService(context);
-
-            AdminCategoryListingServiceModel expectedData = context.Categories.First().To<AdminCategoryListingServiceModel>();
-
-            bool actualData = await this.categoryService.EditAsync(expectedData.Id, expectedData.Name);
-
-            Assert.True(actualData);
-        }
-
-        [Fact]
-        public async Task EditAsync_ShouldEditCategoryCorrectly()
+        public async Task EditAsync_ShouldEditCategory()
         {
 
             var context = BookStoreDbContextInMemoryFactory.InitializeContext();
@@ -213,22 +168,7 @@ namespace BookStore.Tests.Services.Admin
         }
 
         [Fact]
-        public async Task HideAsync_WithCorrectData_ShouldPassSuccessfully()
-        {
-            var context = BookStoreDbContextInMemoryFactory.InitializeContext();
-            await SeedData(context);
-            this.categoryService = new AdminCategoryService(context);
-
-            int id = context.Categories.First().Id;
-
-            bool actualResult = await this.categoryService.HideAsync(id);
-
-            Assert.True(actualResult);
-        }
-
-
-        [Fact]
-        public async Task HideAsync_WithCorrectData_ShouldHideCategorySuccessfully()
+        public async Task HideAsync_ShouldHideCategory()
         {
             var context = BookStoreDbContextInMemoryFactory.InitializeContext();
             await SeedData(context);
@@ -262,26 +202,7 @@ namespace BookStore.Tests.Services.Admin
         }
 
         [Fact]
-        public async Task ShowAsync_WithCorrectData_ShouldPassSuccessfully()
-        {
-            var context = BookStoreDbContextInMemoryFactory.InitializeContext();
-            await SeedData(context);
-            this.categoryService = new AdminCategoryService(context);
-
-            int id = context.Categories.First().Id;
-            var category = context.Categories.First();
-            category.IsDeleted = true;
-            context.Categories.Update(category);
-            await context.SaveChangesAsync();
-
-            bool actualResult = await this.categoryService.ShowAsync(id);
-
-            Assert.True(actualResult);
-        }
-
-
-        [Fact]
-        public async Task ShowAsync_WithCorrectData_ShouldShowCategorySuccessfully()
+        public async Task ShowAsync_ShouldShowCategory()
         {
             var context = BookStoreDbContextInMemoryFactory.InitializeContext();
             await SeedData(context);

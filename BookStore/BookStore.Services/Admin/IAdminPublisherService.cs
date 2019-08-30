@@ -1,9 +1,5 @@
-﻿using BookStore.Domain;
-using BookStore.Services.Admin.Models.Publishers;
-using System;
-using System.Collections.Generic;
+﻿using BookStore.Services.Admin.Models.Publishers;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BookStore.Services.Admin

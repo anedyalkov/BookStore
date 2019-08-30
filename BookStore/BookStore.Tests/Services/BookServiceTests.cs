@@ -9,7 +9,6 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -82,7 +81,6 @@ namespace BookStore.Tests.Services
             await SeedData(context);
             this.bookService = new BookService(context);
 
-
             List<BookListingServiceModel> expectedData = GetTestData()
                 .Where(c => c.IsDeleted == false)
                 .To<BookListingServiceModel>().ToList();
@@ -113,10 +111,10 @@ namespace BookStore.Tests.Services
 
             Assert.Empty(actualData);
         }
+
         [Fact]
         public async Task GetByIdAsync_WithExistentId_ShouldReturnCorrectResult()
         {
-
             var context = BookStoreDbContextInMemoryFactory.InitializeContext();
             await SeedData(context);
             this.bookService = new BookService(context);
@@ -142,7 +140,6 @@ namespace BookStore.Tests.Services
         [Fact]
         public async Task GetBooksByCategory_ShouldReturnAllCategoryBooks()
         {
-
             var context = BookStoreDbContextInMemoryFactory.InitializeContext();
             await SeedData(context);
             this.bookService = new BookService(context);
@@ -182,7 +179,6 @@ namespace BookStore.Tests.Services
         [Fact]
         public async Task GetBooksFilter_ShouldReturnAllCategoryBooks()
         {
-
             var context = BookStoreDbContextInMemoryFactory.InitializeContext();
             await SeedData(context);
             this.bookService = new BookService(context);
@@ -222,7 +218,6 @@ namespace BookStore.Tests.Services
         [Fact]
         public async Task GetBooksFilter_ShouldReturnAllActiveBooks()
         {
-
             var context = BookStoreDbContextInMemoryFactory.InitializeContext();
             await SeedData(context);
             this.bookService = new BookService(context);
@@ -252,14 +247,14 @@ namespace BookStore.Tests.Services
         [InlineData("св")]
         [InlineData("иван")]
         [InlineData("иванов")]
-        public async Task FindBooks_ShouldReturnAllBooksByPublisher(string searchtext)
+        public async Task FindBooks_ShouldReturnAllBooksBySearchText(string searchText)
         {
             var context = BookStoreDbContextInMemoryFactory.InitializeContext();
             await SeedData(context);
             this.bookService = new BookService(context);
 
             int expectedCount = 2;
-            List<BookListingServiceModel> actualData = await this.bookService.FindBooks(searchtext).ToListAsync();
+            List<BookListingServiceModel> actualData = await this.bookService.FindBooks(searchText).ToListAsync();
 
             Assert.Equal(expectedCount, actualData.Count);
         }
@@ -267,7 +262,6 @@ namespace BookStore.Tests.Services
         [Fact]
         public async Task FindBooksByAuthorWithData_ShouldReturnAllAuthorBooks()
         {
-
             var context = BookStoreDbContextInMemoryFactory.InitializeContext();
             await SeedData(context);
             this.bookService = new BookService(context);
@@ -284,7 +278,6 @@ namespace BookStore.Tests.Services
         [Fact]
         public async Task FindBooksByAuthorWithoutData_ShouldReturnEmptyList()
         {
-
             var context = BookStoreDbContextInMemoryFactory.InitializeContext();
             this.bookService = new BookService(context);
 
@@ -294,9 +287,8 @@ namespace BookStore.Tests.Services
         }
 
         [Fact]
-        public async Task FindBooksByAuthor_ShouldReturnAllPublisherBooks()
+        public async Task FindBooksByAuthor_ShouldReturnAllAuthorBooks()
         {
-
             var context = BookStoreDbContextInMemoryFactory.InitializeContext();
             await SeedData(context);
             this.bookService = new BookService(context);
@@ -313,7 +305,6 @@ namespace BookStore.Tests.Services
         [Fact]
         public async Task FindBooksByPublisherWithoutData_ShouldReturnEmptyList()
         {
-
             var context = BookStoreDbContextInMemoryFactory.InitializeContext();
             this.bookService = new BookService(context);
 

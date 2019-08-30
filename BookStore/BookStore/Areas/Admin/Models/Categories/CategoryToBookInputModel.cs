@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace BookStore.Web.Areas.Admin.Models.Categories
+﻿namespace BookStore.Web.Areas.Admin.Models.Categories
 {
     public class CategoryToBookInputModel
     {

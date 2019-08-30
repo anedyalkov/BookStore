@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BookStore.Data;
+﻿using BookStore.Data;
 using BookStore.Services.Admin.Models.Reviews;
 using BookStore.Services.Mapping;
-using BookStore.Services.Models.Reviews;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace BookStore.Services.Admin
 {

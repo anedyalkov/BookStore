@@ -1,5 +1,4 @@
-﻿
-using BookStore.Domain;
+﻿using BookStore.Domain;
 using BookStore.Models;
 using BookStore.Services.Admin.Models.Users;
 using BookStore.Services.Mapping;

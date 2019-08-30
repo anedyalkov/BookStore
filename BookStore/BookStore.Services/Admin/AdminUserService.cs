@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BookStore.Data;
-using BookStore.Services.Mapping;
+﻿using BookStore.Data;
 using BookStore.Services.Admin.Models.Users;
+using BookStore.Services.Mapping;
+using System.Linq;
 
 namespace BookStore.Services.Admin
 {

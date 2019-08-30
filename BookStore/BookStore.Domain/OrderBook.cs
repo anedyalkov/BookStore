@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace BookStore.Domain
+﻿namespace BookStore.Domain
 {
     public class OrderBook
     {

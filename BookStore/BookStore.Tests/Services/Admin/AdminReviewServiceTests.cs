@@ -8,7 +8,6 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -17,6 +16,7 @@ namespace BookStore.Tests.Services.Admin
     public class AdminReviewServiceTests
     {
         private IAdminReviewService reviewService;
+
         public AdminReviewServiceTests()
         {
             MapperInitializer.InitializeMapper();
@@ -95,7 +95,6 @@ namespace BookStore.Tests.Services.Admin
         [Fact]
         public async Task GetByIdAsync_WithExistentId_ShouldReturnCorrectResult()
         {
-
             var context = BookStoreDbContextInMemoryFactory.InitializeContext();
             await SeedData(context);
             this.reviewService = new AdminReviewService(context);
@@ -113,7 +112,7 @@ namespace BookStore.Tests.Services.Admin
             await SeedData(context);
             this.reviewService = new AdminReviewService(context);
 
-            AdminReviewListingServiceModel actualData = await this.reviewService.GetByIdAsync(int.MinValue);
+            AdminReviewListingServiceModel actualData = await this.reviewService.GetByIdAsync(-1);
 
             Assert.True(actualData == null);
         }
@@ -125,14 +124,12 @@ namespace BookStore.Tests.Services.Admin
             await SeedData(context);
             this.reviewService = new AdminReviewService(context);
 
-
             List<AdminReviewListingServiceModel> expectedData = GetTestData()
                 .To<AdminReviewListingServiceModel>().ToList();
 
             List<AdminReviewListingServiceModel> actualData = await this.reviewService.GetAllReviews().ToListAsync();
 
             Assert.Equal(expectedData.Count, actualData.Count);
-
 
             for (int i = 0; i < expectedData.Count; i++)
             {
@@ -157,9 +154,8 @@ namespace BookStore.Tests.Services.Admin
         }
 
         [Fact]
-        public async Task RemoveAsync_WithCorrectData_ShouldDeleteReviewSuccessfully()
+        public async Task RemoveAsync_WithCorrectData_ShouldDeleteReview()
         {
-
             var context = BookStoreDbContextInMemoryFactory.InitializeContext();
             await SeedData(context);
             this.reviewService = new AdminReviewService(context);

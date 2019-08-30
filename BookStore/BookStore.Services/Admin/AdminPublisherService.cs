@@ -4,9 +4,7 @@ using BookStore.Services.Admin.Models.Publishers;
 using BookStore.Services.Mapping;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BookStore.Services.Admin
@@ -23,7 +21,6 @@ namespace BookStore.Services.Admin
         public IQueryable<AdminPublisherListingServiceModel> GetAllPublishers()
         {
             return db.Publishers
-                .OrderBy(c => c.Name)
                 .To<AdminPublisherListingServiceModel>();
         }
 
@@ -31,7 +28,6 @@ namespace BookStore.Services.Admin
         {
             return db.Publishers
                 .Where(p => p.IsDeleted == false)
-                .OrderBy(p => p.Name)
                 .To<AdminPublisherListingServiceModel>();
         }
 

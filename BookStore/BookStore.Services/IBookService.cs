@@ -1,8 +1,5 @@
 ﻿using BookStore.Services.Models.Books;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BookStore.Services
@@ -18,7 +15,9 @@ namespace BookStore.Services
         IQueryable<BookListingServiceModel> GetBooksByCategory(int categoryId);
 
         IQueryable<BookListingServiceModel> FindBooks(string searchText);
+
         IQueryable<BookListingServiceModel> FindBooksByAuthor(string author);
+
         IQueryable<BookListingServiceModel> FindBooksByPublisher(string publisher);
     }
 }

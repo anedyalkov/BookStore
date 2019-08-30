@@ -4,14 +4,12 @@ using BookStore.Domain.Enums;
 using BookStore.Services;
 using BookStore.Services.Mapping;
 using BookStore.Services.Models.Orders;
-using BookStore.Services.Models.ShoppingCart;
 using BookStore.Tests.Common;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -21,6 +19,7 @@ namespace BookStore.Tests.Services
     {
         private IOrderService orderService;
         private IShoppingCartService shoppingCartService;
+
         public OrderServiceTests()
         {
             MapperInitializer.InitializeMapper();
@@ -191,13 +190,11 @@ namespace BookStore.Tests.Services
         {
             context.AddRange(GetTestData());
             context.AddRange(GetTestUsers());
-            //context.AddRange(GetTestOrders());
             await context.SaveChangesAsync();
         }
 
-
         [Fact]
-        public async Task CreateAsync_ShouldCreateOrderSuccessfully()
+        public async Task CreateAsync_ShouldCreateOrder()
         {
 
             var context = BookStoreDbContextInMemoryFactory.InitializeContext();
@@ -223,7 +220,6 @@ namespace BookStore.Tests.Services
         [Fact]
         public async Task GetUserOrdersWithData_ShouldRetunAllUserOrders()
         {
-
             var context = BookStoreDbContextInMemoryFactory.InitializeContext();
             await SeedData(context);
             context.AddRange(GetTestOrders());
@@ -237,12 +233,6 @@ namespace BookStore.Tests.Services
             this.shoppingCartService = new ShoppingCartService(context, userService.Object);
             this.orderService = new OrderService(context, userService.Object, shoppingCartService);
 
-            //var book = context.Books.First();
-
-            //await shoppingCartService.AddBookToShoppingCartAsync(book.Id, username);
-
-            //var actualResult = await orderService.CreateAsync(username);
-
             List<OrderListingServiceModel> expectedData = GetTestOrders()
                 .To<OrderListingServiceModel>().ToList();
 
@@ -250,7 +240,6 @@ namespace BookStore.Tests.Services
 
             Assert.Equal(expectedData.Count, actualData.Count);
 
-            //Assert.True(actualResult);
         }
 
         [Fact]

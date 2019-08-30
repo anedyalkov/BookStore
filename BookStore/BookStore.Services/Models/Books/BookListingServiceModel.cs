@@ -1,11 +1,7 @@
-﻿using AutoMapper;
-using BookStore.Domain;
+﻿using BookStore.Domain;
 using BookStore.Services.Mapping;
 using BookStore.Services.Models.Reviews;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace BookStore.Services.Models.Books
 {
@@ -23,7 +19,6 @@ namespace BookStore.Services.Models.Books
 
         public bool IsDeleted { get; set; }
 
-        public IEnumerable<ReviewListingServiceModel> Reviews { get; set; } /*= new List<ReviewListingServiceModel>();*/
-
+        public IEnumerable<ReviewListingServiceModel> Reviews { get; set; }
     }
 }
