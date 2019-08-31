@@ -85,6 +85,7 @@ namespace BookStore.Tests.Services.Admin
 
             List<AdminCategoryListingServiceModel> expectedData = GetTestData()
                 .Where(c => c.IsDeleted == false)
+
                 .To<AdminCategoryListingServiceModel>().ToList();
             List<AdminCategoryListingServiceModel> actualData = await this.categoryService.GetAllActiveCategories().ToListAsync();
 

@@ -56,7 +56,6 @@ namespace BookStore.Tests.Services.Admin
 
 
             List<AdminAuthorListingServiceModel> expectedData = GetTestData()
-                .OrderBy(a => a.FullName)
                 .To<AdminAuthorListingServiceModel>().ToList();
 
             List<AdminAuthorListingServiceModel> actualData = await this.authorService.GetAllAuthors().ToListAsync();
@@ -94,7 +93,6 @@ namespace BookStore.Tests.Services.Admin
 
             List<AdminAuthorListingServiceModel> expectedData = GetTestData()
                 .Where(c => c.IsDeleted == false)
-                .OrderBy(a => a.FullName)
                 .To<AdminAuthorListingServiceModel>().ToList();
 
             List<AdminAuthorListingServiceModel> actualData = await this.authorService.GetAllActiveAuthors().ToListAsync();

@@ -28,7 +28,7 @@ namespace BookStore.Web.Controllers
        
             if (result == false)
             {
-                this.TempData.AddErrorMessage(WebConstants.BookNotAddedToCart);
+                this.TempData.AddErrorMessage(WebConstants.BookExistInCart);
                 return RedirectToAction(nameof(Index));
             }
 

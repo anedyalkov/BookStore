@@ -10,10 +10,12 @@ namespace BookStore.Web.Areas.Admin.Controllers
     public class CategoriesController : AdminController
     {
         private readonly IAdminCategoryService categoryService;
+        private readonly IAdminBookService bookService;
 
-        public CategoriesController(IAdminCategoryService categoryService)
+        public CategoriesController(IAdminCategoryService categoryService, IAdminBookService bookService)
         {
             this.categoryService = categoryService;
+            this.bookService = bookService;
         }
         public async Task<IActionResult> Index()
         {
@@ -44,6 +46,19 @@ namespace BookStore.Web.Areas.Admin.Controllers
             }
 
             return this.RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> Books(int id)
+        {
+            var category = await this.categoryService.GetByIdAsync(id);
+
+            if (category == null)
+            {
+                this.TempData.AddErrorMessage(WebAdminConstants.CategoryNotFound);
+                return this.RedirectToAction(nameof(Index));
+            }
+            var books = bookService.GetBooksByCategoryId(id);
+            return this.View(books);
         }
 
         public async Task<IActionResult> Edit(int id)

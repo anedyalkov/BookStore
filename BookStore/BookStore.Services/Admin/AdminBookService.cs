@@ -47,9 +47,28 @@ namespace BookStore.Services.Admin
         public IQueryable<AdminBookListingServiceModel> GetAllBooks()
         {
             return db.Books
-                .Include(b => b.Author)
-                .OrderBy(b => b.Author.FullName)
                 .To<AdminBookListingServiceModel>();
+        }
+
+        public IQueryable<AdminBookListingServiceModel> GetBooksByPublisherId(int publisherId)
+        {
+            var books = db.Books.Where(b => b.PublisherId == publisherId).To<AdminBookListingServiceModel>();
+
+            return books;
+        }
+
+        public IQueryable<AdminBookListingServiceModel> GetBooksByAuthorId(int authorId)
+        {
+            var books = db.Books.Where(b => b.AuthorId == authorId).To<AdminBookListingServiceModel>();
+
+            return books;
+        }
+
+        public IQueryable<AdminBookListingServiceModel> GetBooksByCategoryId(int categoryId)
+        {
+            var books = db.Books.Where(b => b.CategoryBooks.Any(cb => cb.CategoryId == categoryId)).To<AdminBookListingServiceModel>();
+
+            return books;
         }
 
         public async Task<TModel> GetByIdAsync<TModel>(int id)

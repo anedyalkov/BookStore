@@ -10,10 +10,12 @@ namespace BookStore.Web.Areas.Admin.Controllers
     public class AuthorsController : AdminController
     {
         private readonly IAdminAuthorService authorService;
+        private readonly IAdminBookService bookService;
 
-        public AuthorsController(IAdminAuthorService authorService)
+        public AuthorsController(IAdminAuthorService authorService, IAdminBookService bookService)
         {
             this.authorService = authorService;
+            this.bookService = bookService;
         }
 
         public async Task<IActionResult> Index()
@@ -46,6 +48,19 @@ namespace BookStore.Web.Areas.Admin.Controllers
             }
 
             return this.RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> Books(int id)
+        {
+            var author = await this.authorService.GetByIdAsync(id);
+
+            if (author == null)
+            {
+                this.TempData.AddErrorMessage(WebAdminConstants.AuthorNotFound);
+                return this.RedirectToAction(nameof(Index));
+            }
+            var books = bookService.GetBooksByAuthorId(id);
+            return this.View(books);
         }
 
         public async Task<IActionResult> Edit(int id)

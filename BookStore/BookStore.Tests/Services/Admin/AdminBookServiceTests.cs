@@ -101,7 +101,6 @@ namespace BookStore.Tests.Services.Admin
 
 
             List<AdminBookListingServiceModel> expectedData = GetTestData()
-                .OrderBy(b => b.Author.FullName)
                 .To<AdminBookListingServiceModel>().ToList();
 
             List<AdminBookListingServiceModel> actualData = await this.bookService.GetAllBooks().ToListAsync();
@@ -119,6 +118,75 @@ namespace BookStore.Tests.Services.Admin
                 Assert.True(expectedEntry.PublisherName == actualEntry.PublisherName, "PublisherName is not returned properly.");
                 Assert.True(expectedEntry.Price == actualEntry.Price, "Price is not returned properly.");
             }
+        }
+
+        [Fact]
+        public async Task GetBooksByPublisherId_ShouldReturnAllPublisherBooks()
+        {
+            var context = BookStoreDbContextInMemoryFactory.InitializeContext();
+            await SeedData(context);
+            this.bookService = new AdminBookService(context);
+
+            var book = context.Books.First();
+            var publisher = book.Publisher;
+
+            int expectedCount = 1;
+            List<AdminBookListingServiceModel> actualData = await this.bookService.GetBooksByPublisherId(publisher.Id).ToListAsync();
+
+            Assert.Equal(expectedCount, actualData.Count);
+        }
+
+        [Fact]
+        public async Task GetBooksByCategory_ShouldReturnAllCategoryBooks()
+        {
+            var context = BookStoreDbContextInMemoryFactory.InitializeContext();
+            await SeedData(context);
+            //this.bookService = new BookService(context);
+            this.bookService = new AdminBookService(context);
+
+            var category = new Category
+            {
+                Name = "Изкуство"
+            };
+            context.Categories.Add(category);
+            await context.SaveChangesAsync();
+
+            var bookFromDb = context.Books.First();
+            var categoryFromDb = context.Categories.First();
+
+            await this.bookService.AddCategoryAsync(bookFromDb.Id, categoryFromDb.Id);
+
+            var expectedData = categoryFromDb.CategoryBooks.ToList();
+
+            List<AdminBookListingServiceModel> actualData = await this.bookService.GetBooksByCategoryId(categoryFromDb.Id).ToListAsync();
+
+            Assert.Equal(expectedData.Count, actualData.Count);
+
+            for (int i = 0; i < expectedData.Count; i++)
+            {
+                var expectedEntry = expectedData[i];
+                var actualEntry = actualData[i];
+
+                Assert.True(expectedEntry.Book.Title == actualEntry.Title, "Title is not returned properly.");
+                Assert.True(expectedEntry.Book.Price == actualEntry.Price, "Price is not returned properly.");
+                Assert.True(expectedEntry.Book.Author.FullName == actualEntry.AuthorFullName, "AuthorFullName is not returned properly.");
+            }
+        }
+
+        [Fact]
+        public async Task GetBooksByAuthorId_ShouldReturnAllAuthorBooks()
+        {
+            var context = BookStoreDbContextInMemoryFactory.InitializeContext();
+            await SeedData(context);
+            this.bookService = new AdminBookService(context);
+
+            var book = context.Books.First();
+            var author = book.Author;
+
+            int expectedCount = 1;
+            List<AdminBookListingServiceModel> actualData = await this.bookService.GetBooksByAuthorId(author.Id).ToListAsync();
+
+            Assert.Equal(expectedCount, actualData.Count);
         }
 
         [Fact]

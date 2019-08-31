@@ -22,19 +22,21 @@ namespace BookStore.Services
         {
             var book = this.db.Books.Find(id);
             var user = await this.userService.GetByUsernameAsync(username);
-            var shoppingCart = this.db.ShoppingCarts.Find(user?.ShoppingCartId);
+            
 
             if (book == null || user == null)
             {
                 return false;
             }
-
+            
             var shoppingCartBook = GetShoppingCartBook(id, user.ShoppingCartId);
 
             if (shoppingCartBook != null)
             {
                 return false;
             }
+
+            var shoppingCart = this.db.ShoppingCarts.Find(user.ShoppingCartId);
 
             shoppingCart.ShoppingCartBooks.Add(new ShoppingCartBook
             {

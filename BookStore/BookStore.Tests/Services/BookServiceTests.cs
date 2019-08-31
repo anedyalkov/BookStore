@@ -260,7 +260,7 @@ namespace BookStore.Tests.Services
         }
 
         [Fact]
-        public async Task FindBooksByAuthorWithData_ShouldReturnAllAuthorBooks()
+        public async Task FindBooksByAuthor_ShouldReturnAllAuthorBooks()
         {
             var context = BookStoreDbContextInMemoryFactory.InitializeContext();
             await SeedData(context);
@@ -287,7 +287,7 @@ namespace BookStore.Tests.Services
         }
 
         [Fact]
-        public async Task FindBooksByAuthor_ShouldReturnAllAuthorBooks()
+        public async Task FindBooksByPublisher_ShouldReturnAllPublisherBooks()
         {
             var context = BookStoreDbContextInMemoryFactory.InitializeContext();
             await SeedData(context);
@@ -300,17 +300,6 @@ namespace BookStore.Tests.Services
             List<BookListingServiceModel> actualData = await this.bookService.FindBooksByPublisher(publisher).ToListAsync();
 
             Assert.Equal(expectedCount, actualData.Count);
-        }
-
-        [Fact]
-        public async Task FindBooksByPublisherWithoutData_ShouldReturnEmptyList()
-        {
-            var context = BookStoreDbContextInMemoryFactory.InitializeContext();
-            this.bookService = new BookService(context);
-
-            List<BookListingServiceModel> actualData = await this.bookService.FindBooksByPublisher("Свобода").ToListAsync();
-
-            Assert.Empty(actualData);
         }
     }
 }

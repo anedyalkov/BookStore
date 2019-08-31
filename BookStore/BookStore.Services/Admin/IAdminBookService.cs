@@ -9,6 +9,12 @@ namespace BookStore.Services.Admin
     {
         IQueryable<AdminBookListingServiceModel> GetAllBooks();
 
+        IQueryable<AdminBookListingServiceModel> GetBooksByPublisherId(int publisherId);
+
+        IQueryable<AdminBookListingServiceModel> GetBooksByAuthorId(int authorId);
+
+        IQueryable<AdminBookListingServiceModel> GetBooksByCategoryId(int categoryId);
+
         Task<bool> CreateAsync(
             string title,
             int authorId,
@@ -19,6 +25,7 @@ namespace BookStore.Services.Admin
             DateTime createdOn,
             decimal price
             );
+
         Task<TModel> GetByIdAsync<TModel>(int id);
 
         Task<bool> AddCategoryAsync(int id, int categoryId);

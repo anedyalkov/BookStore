@@ -39,6 +39,7 @@ else
                                 <a asp-action=@nameof(PublishersController.Edit) asp-route-id=@publisher.Id class="btn btn-warning m-1">Редактирай</a>
                                 <a asp-action=@nameof(PublishersController.Hide) asp-route-id=@publisher.Id class="btn btn-danger m-1">Скрий</a>
                                 <a asp-action=@nameof(PublishersController.Show) asp-route-id=@publisher.Id class="btn btn-success m-1 disabled">Покажи</a>
+                                <a asp-action=@nameof(PublishersController.Books) asp-route-id=@publisher.Id class="btn btn-primary pull-right m-1">Книги</a>
                             }
                             else
                             {

@@ -1,5 +1,7 @@
 ﻿using BookStore.Domain;
+using BookStore.Services.Admin.Models.Books;
 using BookStore.Services.Mapping;
+using System.Collections.Generic;
 
 namespace BookStore.Services.Admin.Models.Authors
 {
@@ -12,5 +14,7 @@ namespace BookStore.Services.Admin.Models.Authors
         public string LastName { get; set; }
 
         public bool IsDeleted { get; set; }
+
+        public IEnumerable<AdminBookListingServiceModel> Books { get; set; }
     }
 }

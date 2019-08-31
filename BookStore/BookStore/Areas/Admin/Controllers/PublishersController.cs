@@ -10,10 +10,12 @@ namespace BookStore.Web.Areas.Admin.Controllers
     public class PublishersController : AdminController
     {
         private readonly IAdminPublisherService publisherService;
+        private readonly IAdminBookService bookService;
 
-        public PublishersController(IAdminPublisherService publisherService)
+        public PublishersController(IAdminPublisherService publisherService, IAdminBookService bookService)
         {
             this.publisherService = publisherService;
+            this.bookService = bookService;
         }
         public async Task<IActionResult> Index()
         {
@@ -45,6 +47,20 @@ namespace BookStore.Web.Areas.Admin.Controllers
 
             return this.RedirectToAction(nameof(Index));
         }
+
+        public async Task<IActionResult> Books(int id)
+        {
+            var publisher = await this.publisherService.GetByIdAsync(id);
+
+            if (publisher == null)
+            {
+                this.TempData.AddErrorMessage(WebAdminConstants.PublisherNotFound);
+                return this.RedirectToAction(nameof(Index));
+            }
+            var books = bookService.GetBooksByPublisherId(id);
+            return this.View(books);
+        }
+
         public async Task<IActionResult> Edit(int id)
         {
             var publisher = await this.publisherService

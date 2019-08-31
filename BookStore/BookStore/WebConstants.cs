@@ -19,7 +19,7 @@ namespace BookStore.Web
 
         public const string ReviewNotCreated = "Мнението не беше създадено.";
 
-        public const string BookNotAddedToCart = "Книгата не беше добавена в количката.";
+        public const string BookExistInCart = "Книгата вече е добавена в количката.";
         public const string BookNotRemovedFromCart = "Книгата не беше премахнта от количката.";
 
     }

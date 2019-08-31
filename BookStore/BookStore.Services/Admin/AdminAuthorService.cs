@@ -1,6 +1,7 @@
 ﻿using BookStore.Data;
 using BookStore.Domain;
 using BookStore.Services.Admin.Models.Authors;
+using BookStore.Services.Admin.Models.Books;
 using BookStore.Services.Mapping;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -21,7 +22,6 @@ namespace BookStore.Services.Admin
         public IQueryable<AdminAuthorListingServiceModel> GetAllAuthors()
         {
             return db.Authors
-                .OrderBy(a => a.FullName)
                 .To<AdminAuthorListingServiceModel>();
         }
 
@@ -29,7 +29,6 @@ namespace BookStore.Services.Admin
         {
             return db.Authors
                 .Where(a => a.IsDeleted == false)
-                .OrderBy(a => a.FullName)
                 .To<AdminAuthorListingServiceModel>();
         }
 

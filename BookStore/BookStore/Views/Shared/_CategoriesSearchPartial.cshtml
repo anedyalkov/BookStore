@@ -5,10 +5,7 @@
         <ul class="cateogry-filters-list">
             @foreach (var category in Model.Categories)
             {
-                @if (category.Books.Any())
-                {
-                    <li> <a asp-controller="Home" asp-action="Index" asp-route-CategoryId="@category.Id" class="text-info font-weight-bold">@category.Name</a></li>
-                }
+                <li> <a asp-controller="Home" asp-action="Index" asp-route-CategoryId="@category.Id" class="text-info font-weight-bold">@category.Name</a></li>
             }
         </ul>
     </aside>

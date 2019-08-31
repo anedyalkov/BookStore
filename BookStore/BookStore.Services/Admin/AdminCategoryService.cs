@@ -1,5 +1,6 @@
 ﻿using BookStore.Data;
 using BookStore.Domain;
+using BookStore.Services.Admin.Models.Books;
 using BookStore.Services.Admin.Models.Categories;
 using BookStore.Services.Mapping;
 using Microsoft.EntityFrameworkCore;
@@ -72,10 +73,15 @@ namespace BookStore.Services.Admin
         public async Task<bool> HideAsync(int id)
         {
             var category = this.db.Categories
-                .Include(c => c.CategoryBooks)
-                .FirstOrDefault(x => x.Id == id);
+                .FirstOrDefault(c => c.Id == id);
 
-            if (category == null || category.CategoryBooks.Any(cb => cb.Book.IsDeleted == false))
+            var success = this.db.Categories
+                .Where(c => c.Id == id)
+                .SelectMany(cb => cb.CategoryBooks)
+                .Select(x => x.Book)
+                .Any(b => b.IsDeleted == false);
+
+            if (category == null || success == true)
             {
                  return false;
             }

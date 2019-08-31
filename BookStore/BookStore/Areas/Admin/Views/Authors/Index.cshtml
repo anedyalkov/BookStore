@@ -41,12 +41,14 @@ else
                                 <a asp-action=@nameof(AuthorsController.Edit) asp-route-id=@author.Id class="btn btn-warning m-1">Редактирай</a>
                                 <a asp-action=@nameof(AuthorsController.Hide) asp-route-id=@author.Id class="btn btn-danger m-1">Скрий</a>
                                 <a asp-action=@nameof(AuthorsController.Show) asp-route-id=@author.Id class="btn btn-success disabled m-1">Покажи</a>
+                                <a asp-action=@nameof(AuthorsController.Books) asp-route-id=@author.Id class="btn btn-primary pull-right m-1">Книги</a>
                             }
                             else
                             {
                                 <a asp-action=@nameof(AuthorsController.Edit) asp-route-id=@author.Id class="btn btn-warning m-1">Редактирай</a>
                                 <a asp-action=@nameof(AuthorsController.Hide) asp-route-id=@author.Id class="btn btn-danger disabled m-1">Скрий</a>
                                 <a asp-action=@nameof(AuthorsController.Show) asp-route-id=@author.Id class="btn btn-success m-1">Покажи</a>
+                                <a asp-action=@nameof(AuthorsController.Books) asp-route-id=@author.Id class="btn btn-primary pull-right m-1">Книги</a>
                             }
                         </td>
                     </tr>
