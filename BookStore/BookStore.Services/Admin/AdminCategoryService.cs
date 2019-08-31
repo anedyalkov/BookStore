@@ -75,7 +75,7 @@ namespace BookStore.Services.Admin
                 .Include(c => c.CategoryBooks)
                 .FirstOrDefault(x => x.Id == id);
 
-            if (category == null || category.CategoryBooks.Any())
+            if (category == null || category.CategoryBooks.Any(cb => cb.Book.IsDeleted == false))
             {
                  return false;
             }

@@ -27,7 +27,6 @@ namespace BookStore.Web.Areas.Admin.Controllers
             return this.View();
         }
 
-
         [HttpPost]
         public async Task<IActionResult> Create(CategoryInputModel categoryModel)
         {
