@@ -5,11 +5,13 @@
         <form method="post">
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
-                <input asp-for="FirstName" placeholder="Име" class="form-control" />
+                <label asp-for="FirstName"></label>
+                <input asp-for="FirstName" class="form-control" />
                 <span asp-validation-for="FirstName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input asp-for="LastName" placeholder="Фамилия" class="form-control" />
+                <label asp-for="LastName"></label>
+                <input asp-for="LastName"  class="form-control" />
                 <span asp-validation-for="LastName" class="text-danger"></span>
             </div>
             <button type="submit" class="btn btn-block btn-primary">Запази автор</button>
