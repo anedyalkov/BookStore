@@ -8,7 +8,6 @@ namespace BookStore.Web.Areas.Admin.Models.Categories
         [Required(ErrorMessage = (WebAdminConstants.Error))]
         [MaxLength(DataConstants.CategoryNameMaxLength)]
         [Display(Name = "Име")]
-
         public string Name { get; set; }
     }
 }

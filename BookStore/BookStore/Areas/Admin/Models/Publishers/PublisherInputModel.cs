@@ -8,7 +8,6 @@ namespace BookStore.Web.Areas.Admin.Models.Publishers
         [Required(ErrorMessage = (WebAdminConstants.Error))]
         [MaxLength(DataConstants.PublisherNameMaxLength)]
         [Display(Name = "Име")]
-
         public string Name { get; set; }
     }
 }

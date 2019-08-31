@@ -46,7 +46,7 @@ namespace BookStore.Web.Areas.Admin.Models.Books
         [Display(Name = "Дата на създаване")]
         public DateTime? CreatedOn { get; set; }
 
-        public IEnumerable<SelectListItem> Authors { get; set; } /*= new List<SelectListItem>();*/
-        public IEnumerable<SelectListItem> Publishers { get; set; } /*= new List<SelectListItem>();*/
+        public IEnumerable<SelectListItem> Authors { get; set; }
+        public IEnumerable<SelectListItem> Publishers { get; set; }
     }
 }
